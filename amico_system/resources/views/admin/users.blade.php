@@ -32,7 +32,7 @@
                     <div class="menu-items">
                     <a href="#" class="item">Dashboard</a>
                     <a href="{{ route('admin/users') }}" id="active_tab" class="item1">Users</a>
-                    <a href="#" class="item" id="active_tab">Asset Management</a>
+                    <a href="#" class="item" id="#">Asset Management</a>
                     <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>
                     <a href="#" class="item">Logout</a>
