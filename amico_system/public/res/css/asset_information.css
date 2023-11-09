@@ -107,7 +107,7 @@ p {
 .table-title .add-new {
     position: relative;
     background-color: rgb(23, 23, 177);
-    border-radius: 25px;
+    border-radius: 15px;
     box-shadow: rgb(37, 76, 161) 0px 4px 2px 0px;
     padding: 5px;
     background-repeat: no-repeat;
@@ -120,6 +120,7 @@ p {
     transition: all .3s ease-in-out;
     z-index: 1;
     overflow: hidden;
+    margin-top: 10px;
 }
 /*rgb(121, 18, 55) 0px 4px 0px 0px,*/
 .table-title .add-new::before {

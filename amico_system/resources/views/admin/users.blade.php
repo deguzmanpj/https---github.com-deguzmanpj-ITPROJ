@@ -43,7 +43,8 @@
         
         <div class="header"> 
             <!-- <p class="pageTitle">User Management</p>  -->
-            <p>AMICO USER MANAGEMENT</p>
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div> 
+        <div><p class="pageTitle">USER MANAGEMENT</p></div>  
         </div> 
         
         <div class="table-title">
@@ -96,7 +97,6 @@
                     <div class="container">
                     <div class="table-wrapper">
                     <div class="table-title">
-                        <h2>User Management</h2>
                         </div>
 
                         <script>
