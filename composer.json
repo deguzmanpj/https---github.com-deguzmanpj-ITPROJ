@@ -1,0 +1,6 @@
+{
+    "require": {
+        "smalot/pdfparser": "^2.7",
+        "setasign/fpdf": "^1.8"
+    }
+}
