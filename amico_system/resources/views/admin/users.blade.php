@@ -65,7 +65,7 @@
                                 <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
-                        </div>
+                    </div>
                         @endif
                                 <label for="userId">User ID</label>
                                 <input class="inputForm" type=text id="userId" name="userId" required>
