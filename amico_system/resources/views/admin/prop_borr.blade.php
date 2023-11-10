@@ -41,11 +41,13 @@
         </div>
     </div>
 
-    <div class="header">
-        <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
-        <div><p class="pageTitle">PROPERTY BORROWING</p></div>
+    <div class ="container">
+        <div class="header">
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
+            <div><p class="pageTitle">PROPERTY BORROWING</p></div>
+        </div>
     </div>
-
+    
     <div class="container">
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">

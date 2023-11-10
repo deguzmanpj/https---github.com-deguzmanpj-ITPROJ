@@ -40,9 +40,11 @@
         </div>
     </div>
 
-    <div class="header">
-        <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
-        <div><p class="pageTitle">ASSET INFORMATION</p></div>
+    <div class = "container">
+        <div class="header">
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
+            <div><p class="pageTitle">ASSET INFORMATION</p></div>
+        </div>
     </div>
 
     <div class="container">

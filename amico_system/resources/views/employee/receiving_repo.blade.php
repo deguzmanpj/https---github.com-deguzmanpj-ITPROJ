@@ -41,9 +41,11 @@
         </div>
     </div>
 
-    <div class="header">
-        <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div> 
-        <div><p class="pageTitle">RECEIVING REPORT</p></div>   
+    <div class = "container">
+        <div class="header">
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
+            <div><p class="pageTitle">RECEIVING REPORT</p> </div>
+        </div>
     </div>
 
     <div id="overlay" class="cover blur-in">

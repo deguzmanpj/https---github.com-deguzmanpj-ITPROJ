@@ -41,11 +41,12 @@
             </div> 
         </div> 
         
-        <div class="header"> 
-            <!-- <p class="pageTitle">User Management</p>  -->
-            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div> 
-        <div><p class="pageTitle">USER MANAGEMENT</p></div>  
-        </div> 
+    <div class = "container">
+        <div class="header">
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
+            <div><p class="pageTitle">USER MANAGEMENT</p> </div>
+        </div>
+    </div>
         
         <div class="table-title">
             <div class="row">

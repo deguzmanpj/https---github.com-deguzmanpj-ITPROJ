@@ -42,9 +42,11 @@
         </div>
     </div>
 
-    <div class="header">
-        <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div> 
-        <div><p class="pageTitle">RECEIVING REPORT</p></div>   
+    <div class = "container">
+        <div class="header">
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
+            <div><p class="pageTitle">RECEIVING REPORT</p> </div>
+        </div>
     </div>
 
     <div id="overlay" class="cover blur-in">
@@ -71,7 +73,7 @@
                 </div>
                 @endif
             </div>
-
+           
             <div class="table-title">
                 <div class="row">
                     <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add Entry</button>

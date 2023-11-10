@@ -44,9 +44,11 @@
 
     </div>
 
-    <div class="header">
-        <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
-        <div><p class="pageTitle">ACKNOWLEDGEMENT REPORT</p></div>
+    <div class="container">
+        <div class="header">
+            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
+            <div><p class="pageTitle">ACKNOWLEDGEMENT REPORT</p></div>
+        </div>
     </div>
 
     <div class="container">
