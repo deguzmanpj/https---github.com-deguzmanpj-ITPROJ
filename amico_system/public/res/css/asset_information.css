@@ -98,8 +98,8 @@ p {
 .table-title .add-new {
     position: relative;
     background-color: rgb(23, 23, 177);
-    border-radius: 15px;
-    box-shadow: rgb(37, 76, 161) 0px 4px 2px 0px;
+    border-radius: 10px;
+    box-shadow: #1d46b8 3px 4px 0px 0px;
     padding: 5px;
     background-repeat: no-repeat;
     box-sizing: border-box;
@@ -108,34 +108,23 @@ p {
     color: #fff;
     border: none;
     font-size: 20px;
-    transition: all .3s ease-in-out;
+    transition: all .1s ease-in-out;
     z-index: 1;
     overflow: hidden;
     margin-top: 10px;
 }
-/*rgb(121, 18, 55) 0px 4px 0px 0px,*/
-.table-title .add-new::before {
-    content: "";
-    background-color: rgb(10, 10, 107);
-    width: 0;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: width 300ms ease-in-out;
-    display: inline-block;
-  }
 
-  .table-title .add-new:hover::before {
-    width: 100%;
-  }
-  /*#e4d802*/
+.table-title .add-new:active {
+    transform: translateY(3px) translateX(3px);
+    box-shadow: #1d46b8 4px 4px 0px;
+}
+
+  /*#e4d802*/    
 .table-title .leave-note {
     position: relative;
     background-color: rgb(207, 219, 37);
-    border-radius: 25px;
-    box-shadow: rgb(184, 187, 28) 0px 4px 2px 0px;
+    border-radius: 10px;
+    box-shadow: rgb(184, 187, 28) 3px 4px 0px 0px;
     padding: 5px;
     background-repeat: no-repeat;
     box-sizing: border-box;
@@ -144,28 +133,14 @@ p {
     color: #fff;
     border: none;
     font-size: 20px;
-    transition: all .3s ease-in-out;
+    transition: all .1s ease-in-out;
     z-index: 1;
     overflow: hidden;
+    margin-top: 10px;
 }
-.table-title .leave-note::before {
-    content: "";
-    background-color: rgb(141, 150, 68);
-    width: 0;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: width 300ms ease-in-out;
-    display: inline-block;
-}
-
-.table-title .leave-note:hover::before {
-    width: 100%;
-  }
-.table-title .add-new i {
-    margin-right: 4px;
+.table-title .leave-note:active {
+    transform: translateY(3px) translateX(3px);
+    box-shadow: rgb(184, 187, 28) 4px 4px 0px 0px;
 }
 
 table.table {
@@ -882,3 +857,38 @@ active page */
      opacity: 0.4;
     }
 }
+
+.btn.edit-user {
+    background-color: #007bff;
+    box-shadow: #094c66 4px 4px 0px;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    transition: transform 200ms, box-shadow 200ms;
+}
+
+.btn.edit-user:active {
+    transform: translateY(4px) translateX(4px);
+    box-shadow: #094c66 0px 0px 0px;
+}
+
+.btn.delete-user{
+    background-color: #dc3545;
+    box-shadow: #660f09 4px 4px 0px;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    transition: transform 200ms, box-shadow 200ms;
+}
+
+.btn.delete-user:active {
+    transform: translateY(4px) translateX(4px);
+    box-shadow: #660f09 0px 0px 0px;
+}
+
+
+
