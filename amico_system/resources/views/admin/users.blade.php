@@ -50,6 +50,11 @@
         
         <div class="table-title">
             <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" id="userSearch" placeholder="Search" class="form-control">
+                </div>
+                <button type="button" id="sortByUserId" class="btn btn-info"><i class="fa fa-sort"></i>Sort by User ID</button>
+                <button id="sortByName" class="btn btn-info">Sort by Name</button>
                 <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add User</button> 
             </div> 
         </div>
@@ -267,6 +272,140 @@
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
                 <script src="../res/js/asset_information.js"></script>
                 <script src="../res/js/navbar.js"></script>
-                </body>
 
-                </html>
+                <!-- Place this script in the head or at the end of the body -->
+                <script>
+                    $(document).ready(function () {
+                        // Function to sort the table by name
+                        function sortTable() {
+                            var table, rows, switching, i, x, y, shouldSwitch;
+                            table = document.getElementById("user-table");
+                            switching = true;
+
+                            // Run loop until no switching is needed
+                            while (switching) {
+                                switching = false;
+                                rows = table.rows;
+
+                                // Loop through all table rows (except the header)
+                                for (i = 1; i < (rows.length - 1); i++) {
+                                    shouldSwitch = false;
+
+                                    // Compare the two names
+                                    x = rows[i].getElementsByTagName("td")[1]; // Change index if the name column is different
+                                    y = rows[i + 1].getElementsByTagName("td")[1];
+
+                                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                        shouldSwitch = true;
+                                        break;
+                                    }
+                                }
+
+                                if (shouldSwitch) {
+                                    // Swap the rows and mark that switching is done
+                                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                                    switching = true;
+                                }
+                            }
+                        }
+
+                        // Add click event listener to the sort button
+                        $("#sortByName").on("click", function () {
+                            sortTable();
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        // Add a click event listener to the "Sort by User ID" button
+                        $('#sortByUserId').on('click', function () {
+                            sortTableByUserId();
+                        });
+
+                        // Add a click event listener to all buttons with the class "edit-user"
+                        $('.edit-user').on('click', function () {
+                            var userId = $(this).data('userid');
+                            $('#editUserId').val(userId);
+                        });
+
+                        // Add a click event listener to all buttons with the class "delete-user"
+                        $('.delete-user').on('click', function () {
+                            var userId = $(this).data('userid');
+                            $('#deleteUserModal' + userId).modal('show');
+                        });
+
+                        // Function to sort the table by User ID
+                        function sortTableByUserId() {
+                            var table, rows, switching, i, x, y, shouldSwitch;
+                            table = document.getElementById("user-table");
+                            switching = true;
+
+                            while (switching) {
+                                switching = false;
+                                rows = table.getElementsByTagName("tr");
+
+                                for (i = 1; i < (rows.length - 1); i++) {
+                                    shouldSwitch = false;
+                                    x = rows[i].getElementsByTagName("td")[0];
+                                    y = rows[i + 1].getElementsByTagName("td")[0];
+
+                                    if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                                        shouldSwitch = true;
+                                        break;
+                                    }
+                                }
+
+                                if (shouldSwitch) {
+                                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                                    switching = true;
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        // Add an input event listener to the search input field
+                        $('#userSearch').on('input', function () {
+                            searchTable();
+                        });
+
+                        function searchTable() {
+                            var input, filter, table, tr, td, i, j, txtValue;
+                            input = document.getElementById("userSearch");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("user-table");
+                            tr = table.getElementsByTagName("tr");
+
+                            // Loop through all table rows
+                            for (i = 0; i < tr.length; i++) {
+                                var display = false;
+                                td = tr[i].getElementsByTagName("td");
+
+                                // Loop through all columns in the current row
+                                for (j = 0; j < td.length; j++) {
+                                    txtValue = td[j].textContent || td[j].innerText;
+
+                                    // If any column matches the search query, set display to true
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        display = true;
+                                        break; // No need to check other columns in this row
+                                    }
+                                }
+
+                                // Show or hide the row based on the search result
+                                if (display) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+                </script>
+
+            </body>
+
+        </html>

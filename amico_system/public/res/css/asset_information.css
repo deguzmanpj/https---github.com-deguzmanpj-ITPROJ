@@ -112,6 +112,7 @@ p {
     z-index: 1;
     overflow: hidden;
     margin-top: 10px;
+    margin-left: 10px;
 }
 
 .table-title .add-new:active {
@@ -890,5 +891,58 @@ active page */
     box-shadow: #660f09 0px 0px 0px;
 }
 
+#userSearch{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+#sortByUserId{
+    position: relative;
+    background-color: rgb(23, 23, 177);
+    border-radius: 10px;
+    box-shadow: #1d46b8 3px 4px 0px 0px;
+    padding: 5px;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    width: 148px;
+    height: 37px;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    transition: all .1s ease-in-out;
+    z-index: 1;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 10px;
+}
 
 
+#sortByUserId.add-new:active {
+    transform: translateY(3px) translateX(3px);
+    box-shadow: #1d46b8 4px 4px 0px;
+}
+
+#sortByName{
+    position: relative;
+    background-color: rgb(23, 23, 177);
+    border-radius: 10px;
+    box-shadow: #1d46b8 3px 4px 0px 0px;
+    padding: 5px;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    width: 148px;
+    height: 37px;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    transition: all .1s ease-in-out;
+    z-index: 1;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#sortByName.add-new:active {
+    transform: translateY(3px) translateX(3px);
+    box-shadow: #1d46b8 4px 4px 0px;
+}
