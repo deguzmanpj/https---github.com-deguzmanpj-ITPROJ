@@ -2,7 +2,9 @@
 <html lang="en"> 
     <head> 
         <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
+        <!--<script src="../res/js/searchusers.js"></script>-->
+
         <title>User Management</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
@@ -50,10 +52,16 @@
         
         <div class="table-title">
             <div class="row">
-                <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add User</button> 
-            </div> 
-        </div>
-    </div> 
+                <div class="search-container">
+                    <label for="search">Search:</label>
+                    <input type="text" id="search" placeholder="Enter a keyword">
+                    <button onclick="searchUsers()">Search</button>
+                </div>
+                <button type="button" id="sortUserIdBtn" class="btn btn-default">Sort by UserID</button>
+                <button id="sortNameBtn" class="btn btn-default">Sort by Name</button>
+                <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add User</button>
+            </div>
+        </div> 
                 
                     <div class="row pop-up">
                         <button class="close-button"> x </button> <div class=entry> <div class="form">
@@ -100,23 +108,6 @@
                     <div class="table-title">
                         </div>
 
-                        <script>
-                        // Wait for the document to be ready
-                        $(document).ready(function () {
-                        // Add a click event listener to all buttons with the class "edit-user"
-                        $('.edit-user ').on('click ', function () {
-                        var userId = $(this).data('userid '); // Get the "data-userid" attribute value
-                        $('#editUserId').val(userId); // Set the value of the hidden input field in the edit modal
-                        });
-
-                        // Add a click event listener to all buttons with the class "delete-user"
-                        $('.delete-user').on('click', function () {
-                        var userId = $(this).data('userid'); // Get the "data-userid" attribute value
-                        // You can use this "userId" value for any further actions related to deletion
-                        $('#deleteUserModal' + userId).modal('show'); // Show the delete modal
-                        });
-                        });
-                        </script>
 
                         <table class="table table-bordered" id="user-table">
                             <thead>
@@ -262,11 +253,12 @@
                     </div>
                 </div>
             @endforeach
-                                    
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                <script src="../res/js/asset_information.js"></script>
-                <script src="../res/js/navbar.js"></script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="../res/js/asset_information.js"></script>
+            <script src="../res/js/navbar.js"></script>
+            <script src="../res/js/users.js"> </script>
             </body>
 
         </html>

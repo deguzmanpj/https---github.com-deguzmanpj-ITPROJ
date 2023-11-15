@@ -891,12 +891,44 @@ active page */
     box-shadow: #660f09 0px 0px 0px;
 }
 
-#userSearch{
-    margin-left: 50px;
-    margin-top: 20px;
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 300px; /* Adjust the width as needed */
+    margin: 20px 0; /* Adjust margins as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 60px;
 }
 
-#sortByUserId{
+.search-container label {
+    margin-right: 10px;
+    color: #333;
+}
+
+.search-container input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+}
+
+.search-container button {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+}
+
+#sortUserIdBtn {
     position: relative;
     background-color: rgb(23, 23, 177);
     border-radius: 10px;
@@ -908,7 +940,7 @@ active page */
     height: 37px;
     color: #fff;
     border: none;
-    font-size: 15px;
+    font-size: 20px;
     transition: all .1s ease-in-out;
     z-index: 1;
     overflow: hidden;
@@ -916,13 +948,12 @@ active page */
     margin-left: 10px;
 }
 
-
-#sortByUserId.add-new:active {
+#sortUserIdBtn:active {
     transform: translateY(3px) translateX(3px);
     box-shadow: #1d46b8 4px 4px 0px;
 }
 
-#sortByName{
+#sortNameBtn {
     position: relative;
     background-color: rgb(23, 23, 177);
     border-radius: 10px;
@@ -934,7 +965,7 @@ active page */
     height: 37px;
     color: #fff;
     border: none;
-    font-size: 15px;
+    font-size: 20px;
     transition: all .1s ease-in-out;
     z-index: 1;
     overflow: hidden;
@@ -942,7 +973,12 @@ active page */
     margin-left: 10px;
 }
 
-#sortByName.add-new:active {
+#sortNameBtn:active {
     transform: translateY(3px) translateX(3px);
     box-shadow: #1d46b8 4px 4px 0px;
+}
+
+.about-us {
+    display: none;
+    padding: 20px;
 }
