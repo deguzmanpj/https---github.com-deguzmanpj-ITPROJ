@@ -66,22 +66,120 @@
                 Saint Louis University. AMICO handles the items that go in and out of the capital assets.</p>
             </div>
             <div class="about-container">
-            <div class="about">
-                <div class="about-image">
-                    <img src="images/slu.png">
-                </div>
-                <div class="about-content">
-                    <h2> Vision and Mission </h2>
-                </p>In partnership with our stakeholders, the Asset Management and Inventory Control 
-                Office envisions safeguarding all assets of Saint Louis University
-                and encouraging them to be good stewards of the things entrusted to us.
-                The Asset Management and Inventory Control Office are committed to continuously 
-                developing and improving the effectiveness in managing all assets of
-                Saint Louis University aligned with the direction of Saint Louis University 
-                that are creative, competent, socially involved, and imbued with a Christian spirit.</p>
+                <div class="about">
+                    <div class="about-image">
+                        <img src="images/slu.png">
+                    </div>
+                    <div class="about-content">
+                        <h2> Vision and Mission </h2>
+                    </p>In partnership with our stakeholders, the Asset Management and Inventory Control 
+                    Office envisions safeguarding all assets of Saint Louis University
+                    and encouraging them to be good stewards of the things entrusted to us.
+                    The Asset Management and Inventory Control Office are committed to continuously 
+                    developing and improving the effectiveness in managing all assets of
+                    Saint Louis University aligned with the direction of Saint Louis University 
+                    that are creative, competent, socially involved, and imbued with a Christian spirit.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section>
+            <div>
+                <h1>THE DEVELOPERS</h1>
+            </div>
+            <div class="row">
+                <!-- Column 1-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="images/rovin.jpg" />
+                        </div>
+                        <h3>Rovin Matthew Navarro</h3>
+                        <p>Team Leader</p>
+                    </div>
+                </div>
+
+                <!-- Column 2-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="images/godric.png" />
+                        </div>
+                        <h3>Godric Egon Neal Tampinco</h3>
+                        <p>LEAD Developer</p>
+                    </div>
+                </div>
+
+                <!-- Column 3-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="images/paj.jpg" />
+                        </div>
+                        <h3>Prince Jefferson De Guzman</h3>
+                        <p>Muntik na Developer</p>
+                    </div>
+                </div>
+
+                <!-- Column 4-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="images/roms.png" />
+                        </div>
+                        <h3>Romuel Lacuesta</h3>
+                        <p>Muntik na Developer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Column 1-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="rovin.png" />
+                        </div>
+                        <h3>Olsen Daim Valente</h3>
+                        <p>Database</p>
+                    </div>
+                </div>
+
+                <!-- Column 2-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="profile-img-2.png" />
+                        </div>
+                        <h3>Marc Justin Ramos</h3>
+                        <p>Database</p>
+                    </div>
+                </div>
+
+                <!-- Column 3-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="profile-img-3.png" />
+                        </div>
+                        <h3>Cyver Grant Rafael</h3>
+                        <p>System Analyst</p>
+                    </div>
+                </div>
+
+                <!-- Column 4-->
+                <div class="column">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="rovin.png" />
+                        </div>
+                        <h3>Adrian Salinas</h3>
+                        <p>Database</p>
+                    </div>
+                </div>
+            </div>
+
         </section>
     </div>
     
