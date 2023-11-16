@@ -115,21 +115,22 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="images/paj.jpg" />
+                            <img src="rovin.png" />
                         </div>
-                        <h3>Prince Jefferson De Guzman</h3>
-                        <p>Muntik na Developer</p>
+                        <h3>Olsen Daim Valente</h3>
+                        <p>Database</p>
                     </div>
                 </div>
+                
 
                 <!-- Column 4-->
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="images/roms.png" />
+                            <img src="profile-img-2.png" />
                         </div>
-                        <h3>Romuel Lacuesta</h3>
-                        <p>Muntik na Developer</p>
+                        <h3>Marc Justin Ramos</h3>
+                        <p>Database</p>
                     </div>
                 </div>
             </div>
@@ -139,10 +140,10 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="rovin.png" />
+                            <img src="images/paj.jpg" />
                         </div>
-                        <h3>Olsen Daim Valente</h3>
-                        <p>Database</p>
+                        <h3>Prince Jefferson De Guzman</h3>
+                        <p>Muntik na Developer</p>
                     </div>
                 </div>
 
@@ -150,10 +151,10 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="profile-img-2.png" />
+                            <img src="images/roms.png" />
                         </div>
-                        <h3>Marc Justin Ramos</h3>
-                        <p>Database</p>
+                        <h3>Romuel Lacuesta</h3>
+                        <p>Muntik na Developer</p>
                     </div>
                 </div>
 

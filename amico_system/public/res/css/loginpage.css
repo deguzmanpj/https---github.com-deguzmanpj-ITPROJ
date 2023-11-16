@@ -135,7 +135,6 @@ input::-moz-focus-inner {
 .container{
   scroll-snap-type: y mandatory;
   height: 94vh;
-  overflow-y: scroll;
 }
 
 section{
@@ -231,7 +230,7 @@ section{
     width: 100%;
     text-align: center;
     font-size: 2.5em;
-    color: #1f003b;
+    color: #300755;
   }
   .card {
     box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);

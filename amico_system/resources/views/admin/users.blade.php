@@ -37,7 +37,7 @@
                     <a href="#" class="item" id="active_tab">Asset Management</a>
                     <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="#" class="item" id="logoutButton">Logout</a>
                     </div>
                 </div>
             </div> 
@@ -258,7 +258,7 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             <script src="../res/js/asset_information.js"></script>
             <script src="../res/js/navbar.js"></script>
-            <script src="../res/js/users.js"> </script>
+            <script src="../res/js/users.js"> </script>           
             </body>
 
         </html>
