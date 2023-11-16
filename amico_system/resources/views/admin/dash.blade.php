@@ -17,7 +17,7 @@
 
     <style>
     #assetStatusChart { 
-    width: 23%;
+    width: 20%;
     }
 
     #chartContainer {
