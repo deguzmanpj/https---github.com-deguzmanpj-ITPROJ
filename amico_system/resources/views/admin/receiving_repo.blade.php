@@ -31,7 +31,7 @@
         <div class="main">
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
-                    <a href="#" class="item">Dashboard</a>
+                    <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
                     <a href="{{ route('admin/users') }}" class="item1">Users</a>
                     <a href="{{ route ('admin/asset_info')}}" id="active_tab" class="item1">Asset Management</a>
                     <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->

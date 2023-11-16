@@ -3,9 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvController;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -139,6 +142,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//Dashboard route
+Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin/dash');
+Route::get('employee/dash', [DashboardController::class, 'index'])->name('employee/dash');
 
 Route::get('pdf',[PdfExtractorController::class,'extractPdf']);
 

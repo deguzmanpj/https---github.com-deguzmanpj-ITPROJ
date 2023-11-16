@@ -32,12 +32,13 @@
                 <div class="main">
                 <div id="sideMenu" class="side-menu">
                     <div class="menu-items">
-                    <a href="#" class="item">Dashboard</a>
+                    <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
                     <a href="{{ route('admin/users') }}" id="active_tab" class="item1">Users</a>
                     <a href="#" class="item" id="active_tab">Asset Management</a>
                     <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>
                     <a href="#" class="item">Logout</a>
+
                     </div>
                 </div>
             </div> 
@@ -259,6 +260,7 @@
             <script src="../res/js/asset_information.js"></script>
             <script src="../res/js/navbar.js"></script>
             <script src="../res/js/users.js"> </script>
+
             </body>
 
         </html>
