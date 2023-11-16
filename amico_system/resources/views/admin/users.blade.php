@@ -38,7 +38,6 @@
                     <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>
                     <a href="#" class="item">Logout</a>
-
                     </div>
                 </div>
             </div> 
@@ -260,7 +259,6 @@
             <script src="../res/js/asset_information.js"></script>
             <script src="../res/js/navbar.js"></script>
             <script src="../res/js/users.js"> </script>
-
             </body>
 
         </html>
