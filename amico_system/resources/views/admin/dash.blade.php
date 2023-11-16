@@ -15,12 +15,8 @@
         <link rel="stylesheet" href="../res/css/asset_information.css"> 
         <link rel="stylesheet" href="../res/css/navbar.css">
 
-        width 32
-        marigin auto
-        assetStatusChart
     <style>
-    #assetStatusChart {
-    margin: auto;
+    #assetStatusChart { 
     width: 23%;
     }
 
@@ -28,10 +24,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     }
 
     #realTimeTable {
         max-width: 300px; /* Adjust the width as needed */
+        margin-left: 20px; /* Add some margin between the chart and the table */
     }
 
     table {
@@ -48,6 +46,17 @@
 
     th {
         background-color: #f2f2f2;
+    }
+
+    @media (max-width: 768px) {
+        #chartContainer {
+            flex-direction: column; /* Stack items vertically on small screens */
+        }
+        
+        .real-time-table {
+            margin-left: 0; /* Reset the margin for small screens */
+            margin-top: 20px; /* Add margin at the top for better spacing */
+        }
     }
     </style>
 
@@ -166,13 +175,12 @@
 </div>
 
 <!-- Add a canvas element where the chart will be rendered -->
-<div id="chartContainer">
-    <canvas id="assetStatusChart"></canvas>
-</div>
+    <div id="chartContainer">
+        <canvas id="assetStatusChart"></canvas>
+    </div>
 
-<div id="chartContainer" class="chart-container">
-    <canvas id="assetStatusChart"></canvas>
-    <div id="realTimeTable" class="real-time-table">
+    
+    <div class="real-time-table">
         <table>
             <thead>
                 <tr>
@@ -204,7 +212,9 @@
             </tbody>
         </table>
     </div>
+
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
