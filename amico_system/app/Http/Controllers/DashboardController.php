@@ -31,23 +31,23 @@ class DashboardController extends Controller
             DB::raw('COUNT(CASE WHEN `status` = "acknowledged" THEN 1 END) as acknowledged')
         );
 
-        // Fetch counts
-        $assetStatusCounts = $assetStatusQuery->first();
+            // Fetch counts
+            $assetStatusCounts = $assetStatusQuery->first();
 
-        // Debugging: Output counts for each status
-        echo "Condemned Count: {$assetStatusCounts->condemned}\n";
-        echo "Maintenance Count: {$assetStatusCounts->maintenance}\n";
-        echo "Borrowed Count: {$assetStatusCounts->borrowed}\n";
-        echo "Calibration Count: {$assetStatusCounts->calibration}\n";
-        echo "Acknowledged Count: {$assetStatusCounts->acknowledged}\n";
+            // Debugging: Output counts for each status
+            echo "Condemned Count: {$assetStatusCounts->condemned}\n";
+            echo "Maintenance Count: {$assetStatusCounts->maintenance}\n";
+            echo "Borrowed Count: {$assetStatusCounts->borrowed}\n";
+            echo "Calibration Count: {$assetStatusCounts->calibration}\n";
+            echo "Acknowledged Count: {$assetStatusCounts->acknowledged}\n";
 
-        // Uncomment the line below to see the generated SQL query
-        // dd($assetStatusQuery->toSql());
+            // Uncomment the line below to see the generated SQL query
+            // dd($assetStatusQuery->toSql());
 
-        return view('admin.dash', compact('assetStatusCounts', 'unitFilter'));
-    } catch (\Exception $e) {
-        // Log or handle the exception as needed
-        return response()->json(['error' => $e->getMessage()], 500);
+            return view('admin.dash', compact('assetStatusCounts', 'unitFilter'));
+        } catch (\Exception $e) {
+            // Log or handle the exception as needed
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-}
 }

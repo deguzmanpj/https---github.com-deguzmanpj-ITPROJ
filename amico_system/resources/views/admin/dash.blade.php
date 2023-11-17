@@ -16,48 +16,10 @@
         <link rel="stylesheet" href="../res/css/navbar.css">
 
     <style>
-    #assetStatusChart { 
-    width: 20%;
-    }
-
-    #chartContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    }
-
-    #realTimeTable {
-        max-width: 300px; /* Adjust the width as needed */
-        margin-left: 20px; /* Add some margin between the chart and the table */
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px; /* Adjust the margin as needed */
-    }
-
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    @media (max-width: 768px) {
-        #chartContainer {
-            flex-direction: column; /* Stack items vertically on small screens */
+        #assetStatusChart {
+            width: 22%; 
+            margin: auto;
         }
-        
-        .real-time-table {
-            margin-left: 0; /* Reset the margin for small screens */
-            margin-top: 20px; /* Add margin at the top for better spacing */
-        }
-    }
     </style>
 
 </head>
@@ -175,13 +137,14 @@
 </div>
 
 <!-- Add a canvas element where the chart will be rendered -->
-    <div id="chartContainer">
-        <canvas id="assetStatusChart"></canvas>
-    </div>
+<div id="chartContainer">
+    <canvas id="assetStatusChart"></canvas>
+</div>
 
-    
-    <div class="real-time-table">
-        <table>
+<div class="container">
+    <div class="real-time-monitoring">
+        <h2>Real-Time Monitoring</h2>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Status</th>
@@ -191,30 +154,28 @@
             <tbody>
                 <tr>
                     <td>Condemned</td>
-                    <td id="condemnedCount">0</td>
+                    <td id="condemnedCount"></td>
                 </tr>
                 <tr>
                     <td>Maintenance</td>
-                    <td id="maintenanceCount">0</td>
+                    <td id="maintenanceCount"></td>
                 </tr>
                 <tr>
                     <td>Borrowed</td>
-                    <td id="borrowedCount">0</td>
+                    <td id="borrowedCount"></td>
                 </tr>
                 <tr>
                     <td>Calibration</td>
-                    <td id="calibrationCount">0</td>
+                    <td id="calibrationCount"></td>
                 </tr>
                 <tr>
                     <td>Acknowledged</td>
-                    <td id="acknowledgedCount">0</td>
+                    <td id="acknowledgedCount"></td>
                 </tr>
             </tbody>
         </table>
     </div>
-
 </div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
