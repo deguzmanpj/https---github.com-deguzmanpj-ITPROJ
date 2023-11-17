@@ -12,28 +12,29 @@ use Illuminate\Support\Facades\Storage;
 class InvController extends Controller
 {
     public function showDashboard()
-    {
+{
+    $number = request('number');
+    $password = request('password'); // Retrieve the password from the form
 
-        // $output = new \Symfony\Component\Console\Output\ConsoleOutput();
-        // $output->writeln(request('password'));
+    $user = DB::table('users')
+        ->where('contact_no', $number)
+        ->where('pass', $password) // Add this line to check the password
+        ->select('role')
+        ->first();
 
-        $number = request('number');
+    if ($user) {
+        $role = $user->role;
 
-        $role = DB::table('users')
-            ->where('contact_no', $number)
-            ->select('role')
-            ->first(); //retrieve the first record (row) that matches the query criteria
-
-        // Access the "role" property of the $role object and convert it to a string
-        $roleAsString = $role->role;
-
-        if ($roleAsString == "admin") {
+        if ($role == "admin") {
             return redirect("admin/asset_info");
-        } else if ($roleAsString == "employee") {
+        } else if ($role == "employee") {
             return redirect("employee/asset_info");
-        } else {
         }
     }
+
+    // Handle incorrect login credentials
+    return redirect()->back()->with('error', 'Invalid login credentials, please try again or contact your admin.');
+}
 
 
     public function uploadCsvFile(Request $request)
