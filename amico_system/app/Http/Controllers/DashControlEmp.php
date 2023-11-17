@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class DashControlEmp extends Controller
 {
     public function index(Request $request)
 {
@@ -44,7 +44,7 @@ class DashboardController extends Controller
             // Uncomment the line below to see the generated SQL query
             // dd($assetStatusQuery->toSql());
 
-            return view('admin.dash', compact('assetStatusCounts', 'unitFilter'));
+            return view('employee.dashB', compact('assetStatusCounts', 'unitFilter'));
         } catch (\Exception $e) {
             // Log or handle the exception as needed
             return response()->json(['error' => $e->getMessage()], 500);

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashControlEmp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -236,7 +237,8 @@ Route::middleware('auth')->group(function () {
 
 //Dashboard route
 Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin/dash');
-Route::get('employee/dash', [DashboardController::class, 'index'])->name('employee/dash');
+
+Route::get('employee/dashB', [DashControlEmp::class, 'index'])->name('employee/dashB');
 
 Route::get('pdf',[PdfExtractorController::class,'extractPdf']);
 

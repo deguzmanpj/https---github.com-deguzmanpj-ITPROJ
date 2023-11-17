@@ -30,8 +30,7 @@
         <div class="main">
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
-                <a href="{{ route ('employee/dash')}}" class="item1">Dashboard</a>
-                    <a href="#" class="item">Users</a>
+                    <a href="{{ route ('employee/dashB')}}" class="item1">Dashboard</a>
                     <a href="{{ route ('employee/asset_info')}}" id="active_tab" class="one">Asset Information</a>
                     <a href="{{ route ('employee/receiving_repo')}}"  class="item1">Forms</a>
                     <a href="#" class="item">Logout</a>

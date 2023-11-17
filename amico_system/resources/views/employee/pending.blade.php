@@ -32,8 +32,7 @@
         <div class="main">
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
-                    <a href="{{ route ('employee/dash')}}" class="item1">Dashboard</a>
-                    <a href="#" class="item">Users</a>
+                    <a href="{{ route ('employee/dashB')}}" class="item1">Dashboard</a>
                     <a href="{{ route ('employee/receiving_repo')}}" class="item1">Asset Information</a>
                     <a href="{{ route ('employee/pending')}}"  id = "active_tab" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>

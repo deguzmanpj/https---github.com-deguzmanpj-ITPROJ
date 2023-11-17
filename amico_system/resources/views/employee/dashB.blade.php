@@ -1,4 +1,4 @@
-dash.admin
+dashB.blade.php
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,9 +18,15 @@ dash.admin
         <link rel="stylesheet" href="../res/css/navbar.css">
 
     <style>
-        #assetStatusChart {
-            width: 22%; 
+        #chartContainer {
+            width: 70%; 
             margin: auto;
+        }
+        .selected-unit {
+            font-weight: bold;
+            font-size: 30px;
+            border-style: groove;
+            margin-top: 10px;
         }
     </style>
 
@@ -42,11 +48,9 @@ dash.admin
     <div class="main">
         <div id="sideMenu" class="side-menu">
             <div class="menu-items">
-                <a href="{{ route('admin/dash') }}" id="active_tab" class="item1">Dashboard</a>
-                <a href="{{ route('admin/users') }}"  class="item1">Users</a>
-                <a href="{{ route('admin/asset_info') }}" class="item1">Asset Management</a>
-                <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a>
-                <a href="#" class="item">Forms</a>
+                <a href="{{ route('employee/dashB') }}"id= "active_tab" class="item1">Dashboard</a>
+                <a href="{{ route('employee/asset_info') }}" class="item1">Asset Management</a>
+                <a href="{{ route ('employee/receiving_repo')}}" class="item1">Forms</a>
                 <a href="#" class="item">Logout</a>
             </div>
         </div>
@@ -72,7 +76,7 @@ dash.admin
 
 <!-- Filter -->
 <div class="container">
-    <form action="{{ route('admin/dash') }}" method="GET">
+    <form action="{{ route('employee/dashB') }}" method="GET">
         <label for="unit">Select Unit:</label>
         <select name="unit" id="unit">
             <!-- Add options for each unit -->
@@ -186,17 +190,9 @@ dash.admin
 <script src="../res/js/navbar.js"></script>
 <script src="../res/js/users.js"></script>
 
-        <!-- <nav>
-            <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
-            <a href="{{ route ('admin/receiving_repo')}}" class="item1" >Receiving Report</a>
-            <a href="{{ route ('admin/ack_repo')}}" class="item1"  id = "active_page" >Acknowledgement Report</a>
-            <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
-            <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
-            <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
-        </nav> -->
-
+<!-- SCRIPT FOR DASHBOARD -->
 <script>
-    $(document).ready(function () {
+     $(document).ready(function () {
     // Mock data for testing
     var data = {!! json_encode($assetStatusCounts) !!};
 
