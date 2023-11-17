@@ -26,9 +26,41 @@ Route::post('/loginpage', [InvController::class, 'showDashboard']);
 
 Route::post('/rr_report', [InvController::class, 'addEntry']);
 
+Route::post('/update_rr', [InvController::class, 'updateRR']);
+
+Route::post('/ack_report', [InvController::class, 'addAckR']);
+
+Route::post('/update_ack', [InvController::class, 'updateAck']);
+
+Route::post('/prop_report', [InvController::class, 'addProp']);
+
+Route::post('/update_prop', [InvController::class, 'updateProp']);
+
+Route::post('/main_report', [InvController::class, 'addMain']);
+
+Route::post('/update_main', [InvController::class, 'updateMain']);
+
+Route::post('/condemn_report', [InvController::class, 'addCond']);
+
+Route::post('/update_condemn', [InvController::class, 'updateCond']);
+
+Route::post('/calib_report', [InvController::class, 'addCalib']);
+
+Route::post('/update_calib', [InvController::class, 'updateCalib']);
+
 Route::post('/add_to_asset_info', [InvController::class, 'addToAssetInfo']);
 
 Route::post('/see_form', [InvController::class, 'seeForm']);
+
+Route::post('/see_ack_form', [InvController::class, 'seeAckForm']);
+
+Route::post('/see_prop_borr', [InvController::class, 'seePropBorr']);
+
+Route::post('/see_main', [InvController::class, 'seeMain']);
+
+Route::post('/see_condemn', [InvController::class, 'seeCondemn']);
+
+Route::post('/see_calib', [InvController::class, 'seeCalib']);
 
 Route::post('/decline_request', [InvController::class, 'declineRequest']);
 
@@ -78,6 +110,21 @@ Route::get('employee/receiving_repo', function () {
     return view('employee/receiving_repo', compact('results')); 
 })->name('employee/receiving_repo');
 
+Route::get('employee/ack_repo', function () {
+    $results = DB::select('select * from acknowledgement_report where status = "pending" or status = "declined"');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('employee/ack_repo', compact('results')); 
+})->name('employee/ack_repo');
+
+Route::get('employee/prop_borr', function () {
+    $results = DB::select('select * from property_borrowing where status = "pending" or status = "declined"');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('employee/prop_borr', compact('results')); 
+})->name('employee/prop_borr');
 
 // Route::get('employee/receiving_repo', function () {
 //     $results = DB::select('select * from receiving_report where req_status = "accepted" ');
@@ -87,11 +134,30 @@ Route::get('employee/receiving_repo', function () {
 //     return view('employee/receiving_repo', compact('results')); 
 // })->name('employee/receiving_repo');
 
-Route::view('employee/ack_repo', 'employee/ack_repo')->name('employee/ack_repo');
-Route::view('employee/prop_borr', 'employee/prop_borr')->name('employee/prop_borr');
-Route::view('employee/main_req', 'employee/main_req')->name('employee/main_req');
-Route::view('employee/calib_req', 'employee/calib_req')->name('employee/calib_req');
-Route::view('employee/condemn_req', 'employee/condemn_req')->name('employee/condemn_req');
+Route::get('employee/main_req', function () {
+    $results = DB::select('select * from maintenance_report where status = "pending" or status = "declined"');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('employee/main_req', compact('results')); 
+})->name('employee/main_req');
+
+Route::get('employee/condemn_req', function () {
+    $results = DB::select('select * from condemnation where status = "pending" or status = "declined"');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('employee/condemn_req', compact('results')); 
+})->name('employee/condemn_req');
+
+Route::get('employee/calib_req', function () {
+    $results = DB::select('select * from calibration where status = "pending" or status = "declined"');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('employee/calib_req', compact('results')); 
+})->name('employee/calib_req');
+
 Route::view('employee/asset_info', 'employee/asset_info')->name('employee/asset_info');
 
 
@@ -107,6 +173,31 @@ Route::get('employee/ack_form', function () {
     $results = (array)$results;
     return view('employee/ack_form', compact('results')); 
 })->name('employee/ack_form');
+
+Route::get('employee/prop_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('employee/prop_form', compact('results')); 
+})->name('employee/prop_form');
+
+Route::get('employee/main_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('employee/main_form', compact('results')); 
+})->name('employee/main_form');
+
+
+Route::get('employee/condemn_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('employee/condemn_form', compact('results')); 
+})->name('employee/condemn_form');
+
+Route::get('employee/calib_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('employee/calib_form', compact('results')); 
+})->name('employee/calib_form');
 
 //User Management
 Route::get('admin/users', function () {

@@ -7,6 +7,9 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <style type="text/css">
+        input[type="radio"]{
+            transform: scale(2.3);
+        }
         #unit_copy {
             font-size: 100%;
             height: max-content;
@@ -46,7 +49,7 @@
         .input_text {
             font-size: 100%;
             height: max-content;
-            width: 2000px;
+            width: max-content;
             border-top: black;
             border-right: black;
             border-left: black;
@@ -3973,11 +3976,7 @@
         }
     </style>
     <script>
-        /*
- Copyright 2012 Mozilla Foundation 
- Copyright 2013 Lu Wang <coolwanglu@gmail.com>
- Apachine License Version 2.0 
-*/
+  
         (function() {
             function b(a, b, e, f) {
                 var c = (a.className || "").split(/\s+/g);
@@ -4027,11 +4026,7 @@
     </script>
     <script>
         (function() {
-            /*
-             pdf2htmlEX.js: Core UI functions for pdf2htmlEX 
-             Copyright 2012,2013 Lu Wang <coolwanglu@gmail.com> and other contributors 
-             https://github.com/coolwanglu/pdf2htmlEX/blob/master/share/LICENSE 
-            */
+            
             var pdf2htmlEX = window.pdf2htmlEX = window.pdf2htmlEX || {},
                 CSS_CLASS_NAMES = {
                     page_frame: "pf",
@@ -4492,7 +4487,7 @@
 </head>
 
 <body>
-    <form method="post" action="/save_request">
+    <form method="post" action="/update_rr">
         @csrf
         <div id="sidebar">
             <div id="outline">
@@ -4510,13 +4505,32 @@
                     <div class="t m0 x3 h5 y6 ff2 fs2 fc0 sc0 ls0 ws0">SAINT LOUIS UNIVERSITY</div>
                     <div class="t m0 x4 h6 y7 ff2 fs3 fc0 sc0 ls0 ws0">ASSET MANAGEMENT AND INVENTORY CONTROL OFFICE</div>
                     <div class="t m0 x5 h7 y8 ff2 fs4 fc0 sc0 ls0 ws0">A. Unit <span class="ff3 fs1">(School | Department | Oce)<span class="_ _4"> </span></span>UNIT Code<span class="_ _5"> </span>AMC-RR No.<span class="_ _6"> </span>Date</div>
-                    <div class="t m0 x6 h7 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_purchase_goods_services" id="checkbox_one" value="checkbox_value"><span class="_ _8"> </span><span class="ff2 fs4">Purchase goods</span></span></div>
+                    <div class="t m0 x6 h7 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="radio" class = "checkboxes" name="a_cb" id="checkbox_one" value="Purchase goods and services" onclick = "setACbValue()"><span class="_ _8"> </span><span class="ff2 fs4">Purchase goods</span></span></div>
                     <div class="t m0 x7 h7 ya ff2 fs4 fc0 sc0 ls0 ws0">and services</div>
-                    <div class="t m0 x8 h8 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_transfer_property_equipment" id="checkbox_two" value="checkbox_value"><span class="_ _8"> </span><span class="ff3 fs4">T<span class="_ _9"></span>ransfer of property</span></span></div>
+                    <div class="t m0 x8 h8 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="radio" class = "checkboxes" name="a_cb" id="checkbox_two" value="Transfer of property and equipment" onclick = "setACbValue()"><span class="_ _8"> </span><span class="ff3 fs4">T<span class="_ _9"></span>ransfer of property</span></span></div>
                     <div class="t m0 x9 h7 ya ff2 fs4 fc0 sc0 ls0 ws0">and equipment</div>
-                    <div class="t m0 xa h7 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_donation" id="checkbox_three" value="checkbox_value"><span class="_ _8"> </span><span class="ff2 fs4">Donation</span></span></div>
-                    <div class="t m0 xa h7 ya ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_grant" id="checkbox_four" value="checkbox_value"><span class="_ _8"> </span><span class="ff2 fs4">Grant</span></span></div>
-                    <div class="t m0 xb h7 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_other" id="checkbox_five" value="checkbox_value" onclick="specifyOther()"><span class="_ _8"> </span><span class="ff2 fs4">Other <span class="ff3 fs1">(specify)</span>:</span></span></div>
+                    <div class="t m0 xa h7 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="radio" class = "checkboxes" name="a_cb" id="checkbox_three" value="Donation" onclick = "setACbValue()"><span class="_ _8"> </span><span class="ff2 fs4">Donation</span></span></div>
+                    <div class="t m0 xa h7 ya ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="radio" class = "checkboxes" name="a_cb" id="checkbox_four" value="Grant" onclick = "setACbValue()"><span class="_ _8"> </span><span class="ff2 fs4">Grant</span></span></div>
+                    <div class="t m0 xb h7 y9 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="radio" class = "checkboxes" name="a_cb" id="checkbox_five" onclick="specifyOther()"><span class="_ _8"> </span><span class="ff2 fs4">Other <span class="ff3 fs1">(specify)</span>:</span></span></div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            <?php
+                            if ($results[0]->cb_a === "Purchase goods and services") {
+                                echo 'document.getElementById("checkbox_one").checked = true;';
+                            } elseif ($results[0]->cb_a === "Transfer of property and equipment") {
+                                echo 'document.getElementById("checkbox_two").checked = true;';
+                            } elseif ($results[0]->cb_a === "Donation") {
+                                echo 'document.getElementById("checkbox_three").checked = true;';
+                            } elseif ($results[0]->cb_a === "Grant") {
+                                echo 'document.getElementById("checkbox_four").checked = true;';
+                            }else{
+                                echo 'document.getElementById("checkbox_five").checked = true;';
+                            }
+                            ?>
+                        });
+                    </script>
+
                     <div class="t m0 xc h7 yb ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _a"></span><span class="ff5">●<span class="_ _b"> </span><span class="ff2">Reference <span class="ff3 fs1">(Purchase Order / Requisition Slip / Document No. | Date)</span>:</span></span></div>
                     <div class="t m0 xc h7 yc ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _a"></span><span class="ff5">●<span class="_ _b"> </span><span class="ff2">Received from:</span></span></div>
                     <div class="t m0 xd h9 yd ff3 fs6 fc0 sc0 ls0 ws0">Supplier / Inter-Department (Unit) / Donor / Grantor / Other<span class="_ _c"> </span>Reference (e.g., Invoice / Delivery Receipt / Acknowledgment Receipt)</div>
@@ -4533,41 +4547,50 @@
                     <div class="t m0 x14 h7 y14 ff3 fs4 fc0 sc0 ls0 ws0">Qty<span class="_ _0"> </span><span class="ff2">UOM</span></div>
                     <div class="t m0 xc h7 y17 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _a"></span><span class="ff5">●<span class="_ _b"> </span><span class="ff3">Received by:</span></span></div>
                     <div class="t m0 xc h7 y18 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _a"></span><span class="ff5">●<span class="_ _b"> </span><span class="ff3">Checked by:</span></span></div>
-                    <div class="c x7 y19 w2 hb">
-                        <?php
+                    <div class="c x7 y19 w2 hb"><div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0"><select name="unit" class="dropdown" id="unit_dropdown" onchange="updateOfficeOptions()">
+                    <?php
+                    $addedUnits = []; // Initialize an array to track added unit values
 
-                        use function PHPUnit\Framework\isEmpty;
+                    foreach ($units as $unit) {
+                        // Check if the unit value has not been added already
+                        if (!in_array($unit->unit, $addedUnits)) {
+                            // Check if this option should be the initial selected option
+                            $selected = ($unit->unit == $results[0]->unit) ? 'selected' : '';
 
-                        echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "unit" value = "' . $results[0]->unit . '" ></input>';
-                        echo '</div>';
-                        ?>
+                            // Output the option with the selected attribute as needed
+                            echo '<option value="' . $unit->unit . '" ' . $selected . '>' . $unit->unit . '</option>';
+
+                            $addedUnits[] = $unit->unit; // Add the unit value to the tracking array
+                        }
+                    }
+                    ?>
+                    </select></div>
                     </div>
                     <div class="c x16 y1b w3 hb">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "office" value = "' . $results[0]->office . '" ></input>';
+                        echo '<select name="office" class="dropdown" id="office_dropdown"  value = "' . $results[0]->office . '" ></select>';
                         echo '</div>';
                         ?>
                     </div>
                     <div class="c x17 y19 w4 hb">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "unit_code" value = "' . $results[0]->unit_code . '" ></input>';
+                        echo '<input type = "text" class = "input_text" id = "unit_code" name = "unit_code" value = "' . $results[0]->unit_code . '" ></input>';
                         echo '</div>';
                         ?>
                     </div>
                     <div class="c x19 y1d w5 hd">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "rr_no"  value = "' . $results[0]->rr_no . '" ></input>';
+                        echo '<input type = "text" class = "input_text" name = "rr_no"  id = "rr_no" value = "' . $results[0]->rr_no . '" ></input>';
                         echo '</div>';
                         ?>
                     </div>
                     <div class="c x14 y1d w6 hd">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "date_acq" value = "' . $results[0]->date_acq . '" ></input>';
+                        echo '<input type = "date" class = "input_text" name = "date_acq" id = "date_acq" value = "' . $results[0]->date_acq . '" ></input>';
                         echo '</div>';
                         ?>
                     </div>
@@ -4575,22 +4598,31 @@
 
                     <div class="c x1e y21 w8 hb">
                         <?php
+                        if ($results[0]->cb_a === "Purchase goods and services") {
+                            $results[0]->cb_a  = "";
+                        } elseif ($results[0]->cb_a === "Transfer of property and equipment") {
+                            $results[0]->cb_a  = "";
+                        } elseif ($results[0]->cb_a === "Donation") {
+                            $results[0]->cb_a  = "";
+                        } elseif ($results[0]->cb_a === "Grant") {
+                            $results[0]->cb_a  = "";
+                        }
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "cb_other" value = "' . $results[0]->cb_other . '" ></input>';
+                        echo '<input type = "text" class = "input_text" id = "text_other" name = "text_other" value = "' . $results[0]->cb_a . '" readonly></input>';
                         echo '</div>';
                         ?>
                     </div>
                     <div class="c x1f y23 w9 hb">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "reference" value = "' . $results[0]->reference . '" ></input>';
+                        echo '<input type="input" class="input_text" name="reference" id="reference" value = "'.$results[0]->reference.'"></input>||<input type="date" class="input_text" name="reference_date" value = "'.$results[0]->reference_date.'"></input>';
                         echo '</div>';
                         ?>
                     </div>
                     <div class="c x20 y24 wa hb">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" name = "received_from" value = "' . $results[0]->received_from . '" ></input>';
+                        echo '<input type = "text" class = "input_text" name = "received_from" id ="received_from" value = "' . $results[0]->received_from . '" ></input>';
                         echo '</div>';
                         ?>
                     </div>
@@ -4625,8 +4657,8 @@
                         $qty = "";
                         $uom = "";
                     }
-                        echo '<div class="c x23 y26 wb hd">';
-                    echo '<div class="t m0 x24 h10 y27 ff6 fs9 fc1 sc0 ls0 ws0"><input type="input" class="input_text"              name="asset_tag[]" value = "' . $asset_tag . '"></input></div>';
+                    echo '<div class="c x23 y26 wb hd">';
+                    echo '<div class="t m0 x24 h10 y27 ff6 fs9 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]" value = "' . $asset_tag . '"></input></div>';
                     echo '</div>';
                     echo '<div class="c x25 y26 wc h11">';
                     echo '<div class="t m0 x26 hc y28 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id = "asset_desc"';
@@ -4710,25 +4742,24 @@
                         $qty = "";
                         $uom = "";
                     }
-                    if ($results[2]->asset_tag != null)
-                        echo '<div class="c x23 y32 wb hd">
-                            <div class="t m0 x24 h10 y27 ff6 fs9 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]" value = "' . $asset_tag . '"></div>
-                        </div>
-                        <div class="c x25 y32 wc h11">
-                            <div class="t m0 x26 hc y2d ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]" value = "' . $asset_desc . '" ></input>||<input type="input" class="input_text" id="brand" name="brand[]" value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]" value = "' . $model . '"></input><span class="fc4 sc0">2H</span></div>
-                        </div>
-                        <div class="c x27 y33 wd hb">
-                            <div class="t m0 x1b h12 y2a ff8 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></input></div>
-                        </div>
-                        <div class="c x28 y32 we hd">
-                            <div class="t m0 x21 hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_class[]" value = "' . $asset_class . '"></input></div>
-                        </div>
-                        <div class="c x29 y33 wf hb">
-                            <div class="t m0 x1d hc y1a ff6 fs7 fc3 sc0 ls0 ws0"><input type="input" class="input_text" name="qty[]" value = "' . $qty . '"></input></div>
-                        </div>
-                        <div class="c x2a y32 w10 hd">
-                            <div class="t m0 x1b hc y1e ff6 fs7 fc3 sc0 ls0 ws0"><input type="input" class="input_text" name="uom[]" value = "' . $uom . '"></input></div>
-                        </div>'
+                    echo '<div class="c x23 y32 wb hd">
+                        <div class="t m0 x24 h10 y27 ff6 fs9 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]" value = "' . $asset_tag . '"></div>
+                    </div>
+                    <div class="c x25 y32 wc h11">
+                        <div class="t m0 x26 hc y2d ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]" value = "' . $asset_desc . '" ></input>||<input type="input" class="input_text" id="brand" name="brand[]" value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]" value = "' . $model . '"></input><span class="fc4 sc0">2H</span></div>
+                    </div>
+                    <div class="c x27 y33 wd hb">
+                        <div class="t m0 x1b h12 y2a ff8 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></input></div>
+                    </div>
+                    <div class="c x28 y32 we hd">
+                        <div class="t m0 x21 hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_class[]" value = "' . $asset_class . '"></input></div>
+                    </div>
+                    <div class="c x29 y33 wf hb">
+                        <div class="t m0 x1d hc y1a ff6 fs7 fc3 sc0 ls0 ws0"><input type="input" class="input_text" name="qty[]" value = "' . $qty . '"></input></div>
+                    </div>
+                    <div class="c x2a y32 w10 hd">
+                        <div class="t m0 x1b hc y1e ff6 fs7 fc3 sc0 ls0 ws0"><input type="input" class="input_text" name="uom[]" value = "' . $uom . '"></input></div>
+                    </div>'
                     ?>
 
 
@@ -5539,7 +5570,7 @@
                         $qty = "";
                         $uom = "";
                     }
-                    '<div class="c x23 y7d wb h24">
+                    echo '<div class="c x23 y7d wb h24">
                     <div class="t m0 x24 h10 y27 ff6 fs9 fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]" value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x25 y7f w12 h22">
@@ -5694,7 +5725,7 @@
                     </div>
                     <div class="c x2d y95 w14 h28">
                         <?php
-                        echo '<div class="t m0 x22 h29 y96 ff6 fsa fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="amico_prepared_by" value = "' . $results[0]->amico_prepared_by . '"></input>||<input type="date" class="input_text" name="amico_prepared_by_date" value = "' . $results[0]->amico_prepared_by . '"></input></div>'
+                        echo '<div class="t m0 x22 h29 y96 ff6 fsa fc1 sc0 ls0 ws0"><input type="input" class="input_text" name="amico_prepared_by" value = "' . $results[0]->amico_prepared_by . '"></input>||<input type="date" class="input_text" name="amico_prepared_by_date" value = "' . $results[0]->amico_prepared_by_date . '"></input></div>'
                         ?>
                     </div>
                     <div class="c x17 y95 w14 h28">
@@ -5729,14 +5760,41 @@
                     <div class="t m0 x3 h5 y6 ff2 fs2 fc0 sc0 ls0 ws0">SAINT LOUIS UNIVERSITY</div>
                     <div class="t m0 x4 h6 y7 ff2 fs3 fc0 sc0 ls0 ws0">ASSET MANAGEMENT AND INVENTORY CONTROL OFFICE</div>
                     <div class="t m0 x5 ha y8 ff3 fs4 fc0 sc0 ls0 ws0">D. Assisting Unit (T<span class="_ _9"></span>o be lled out by the personnel or department providing technical assistance.)</div>
-                    <div class="t m0 x6 h7 ya0 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="au_cpmsd" id="checkbox_six" value="checkbox_value"><span class="_ _8"> </span><span class="ff2 fs4">CPMSD </span></span></div>
+                    <div class="t m0 x6 h7 ya0 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_d" id="checkbox_six" value="CPMSD" onclick="setDCbValue()"><span class="_ _8"> </span><span class="ff2 fs4">CPMSD </span></span></div>
                     <div class="t m0 x7 h4 ya1 ff3 fs1 fc0 sc0 ls0 ws0">for property and equipment</div>
-                    <div class="t m0 x32 h7 ya0 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="au_tmdd" id="checkbox_seven" value="checkbox_value"><span class="_ _8"> </span><span class="ff2 fs4">TMDD </span></span></div>
+                    <div class="t m0 x32 h7 ya0 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_d" id="checkbox_seven" value="TMDD" onclick="setDCbValue()"><span class="_ _8"> </span><span class="ff2 fs4">TMDD </span></span></div>
                     <div class="t m0 x33 h4 ya1 ff3 fs1 fc0 sc0 ls0 ws0">for computer hardware and software</div>
-                    <div class="t m0 x34 h7 ya0 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="au_other" id="checkbox_eight" value="checkbox_value" onclick="specifyOtherAu()"><span class="_ _8"> </span><span class="ff2 fs4">Other <span class="ff3 fs1">(specify)</span>:</span></span></div>
+                    <div class="t m0 x34 h7 ya0 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="cb_d" id="checkbox_eight" value="checkbox_value" onclick="specifyOtherAu()"><span class="_ _8"> </span><span class="ff2 fs4">Other <span class="ff3 fs1">(specify)</span>:</span></span></div>
                     <div class="t m0 xc h7 ya2 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _a"></span><span class="ff5">●<span class="_ _b"> </span><span class="ff3">Received by:</span></span></div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            <?php
+                            if ($results[0]->cb_d === "CPMSD") {
+                                echo 'document.getElementById("checkbox_six").checked = true;';
+                            } elseif ($results[0]->cb_d === "TMDD") {
+                                echo 'document.getElementById("checkbox_seven").checked = true;';
+                            } else {
+                                echo 'document.getElementById("checkbox_eight").checked = true;';
+                            }
+                            ?>
+                        });
+                    </script>
+
+
                     <div class="t m0 x35 h2c ya3 ff2 fs6 fc0 sc0 ls0 ws0">Name and Signature | Date</div>
                     <div class="t m0 x6 h8 ya4 ff4 fs5 fc0 sc0 ls0 ws0"> <span class="_ _7"></span><span class="ff5"><input type="checkbox" name="au_condition" id="checkbox_nine" value="checkbox_value"><span class="_ _8"> </span><span class="ff3 fs7">All goods and services stated in section B of this form are in good working condition.</span></span></div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            <?php
+                            if ($results[0]->au_condition === "checked") {
+                                echo 'document.getElementById("checkbox_nine").checked = true;';
+                            }
+                            ?>
+                        });
+                    </script>
+
                     <div class="t m0 xc h7 ya5 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _a"></span><span class="ff5">●<span class="_ _b"> </span><span class="ff3 fs7">Remarks (specify):</span></span></div>
                     <div class="t m0 x5 h4 ya6 ff3 fs1 fc0 sc0 ls0 ws0">T<span class="_ _9"></span>echnical Sta</div>
                     <div class="t m0 xe h7 ya7 ff2 fs4 fc0 sc0 ls0 ws0">Name and Signature | Date</div>
@@ -5758,7 +5816,17 @@
                     <div class="t m0 x36 h2b yb5 ff3 fs7 fc5 sc0 ls0 ws0">discounts and surcharges due to delay of payment. Thank you!</div>
 
                     <div class="c x38 yb7 w17 h28">
-                        <div class="t m0 x15 h3 yb8 ff6 fs1 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="au_text_other" name="au_text_other" ></input></div>
+                    <?php
+                        if ($results[0]->cb_d === "CPMSD") {
+                            $results[0]->cb_d = "";
+                        } elseif ($results[0]->cb_d === "TMDD") {
+                            $results[0]->cb_d = "";
+                        } 
+                        echo '<div class="t m0 x15 h3 yb8 ff6 fs1 fc1 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "au_text_other" name = "au_text_other" value = "' . $results[0]->cb_d . '" readonly></input>';
+                        echo '</div>';
+                        ?>
+
                     </div>
 
                     <div class="c x39 yb9 w18 h28">
@@ -5771,21 +5839,20 @@
                     <div class="c x23 ybc w19 h2d">
                         <?php
                         $remarks = explode(",", $results[0]->au_remarks);
-
-                        foreach ($remarks as $remark) {
-                            echo '<div class="t m0 x15 hc ybe ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]" value="' . $remark . '" ></div>';
+                        $totalNum = 1;
+                        
+                        echo '<div class="t m0 x15 hc yc0 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]" value="' . $remarks[0] . '"></div>';
+                    
+                        for ($num = 1; $num<sizeof($remarks); $num++ ) {
+                            echo '<div class="t m0 x15 hc yc'.($num) .' ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]" value="' . $remarks[$num] . '" ></div>';
+                            $totalNum = $totalNum + 1;
                         }
+
+                        for ($num = $totalNum; $num<8; $num++ ) {
+                            echo '<div class="t m0 x15 hc yc'.$num.' ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>';
+                        }
+                        
                         ?>
-                        <!-- <div class="t m0 x15 hc ybf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc0 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc1 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc2 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc3 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc4 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc5 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc6 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc7 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div>
-                        <div class="t m0 x15 hc yc8 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="au_remarks[]"></div> -->
                     </div>
 
 
@@ -5826,38 +5893,47 @@
                         ?>
                     </div>
                     <div class="c x23 ycd w19 h2e">
-                    
-                        <div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value = "hello"></div>
-                        <div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value = "hello"></div>
-                        <div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value = "hello"></div>
-                        <div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value = "hello"></div>
-                        <div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value = "hello"></div>
-                        <<div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value = "hello"></div>
+                    <?php
+                        $notes = explode(",", $results[0]->notes);
+                        $totalNum = 1;
+                        Log::info($notes);
+                        
+                        echo '<div class="t m0 x15 hc ycf ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value="' . $notes[0] . '"></div>';
+                        for ($num = 1; $num<sizeof($notes); $num++ ) {
+                            echo '<div class="t m0 x15 hc yd'.($num - 1).' ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]" value="' . $notes[$num] . '" ></div>';
+                            $totalNum = $totalNum + 1;
+                        }
+
+                        for ($num = $totalNum; $num<6; $num++ ) {
+                            echo '<div class="t m0 x15 hc yd'.$num.' ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" id="au_remarks" class="input_text" name="notes[]"></div>';
+                        }
+                        
+                        ?>
                     </div>
 
                     <div class="c x42 yd5 w5 hd">
-                        <div class="t m0 x1a hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="rr_copy_two" name="rr_copy_two" ></div>
+                        <div class="t m0 x1a hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="rr_copy_two" name="rr_copy_two" readonly></div>
                     </div>
                     <div class="c x43 yd5 w1e hd">
-                        <div class="t m0 x1b hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="date" class="input_text" id="date_acq_copy" name="date_acq_copy" ></div>
+                        <div class="t m0 x1b hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="date" class="input_text" id="date_acq_copy" name="date_acq_copy" readonly></div>
                     </div>
                     <div class="c x0 yd6 wa hb">
-                        <div class="t m0 x2f hc yd7 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="received_from_copy" name="received_from_copy" ></div>
+                        <div class="t m0 x2f hc yd7 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="received_from_copy" name="received_from_copy" readonly></div>
                     </div>
                     <div class="c x44 yd8 w1f h2f">
-                        <div class="t m0 x26 hc yd9 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="reference_copy" name="reference_copy" ></div>
+                        <div class="t m0 x26 hc yd9 ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="reference_copy" name="reference_copy" readonly></div>
                     </div>
                     <div class="c x45 yd8 w5 hd">
-                        <div class="t m0 x1a hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="rr_copy_three" name="rr_copy_three" ></div>
+                        <div class="t m0 x1a hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="rr_copy_three" name="rr_copy_three" readonly></div>
                     </div>
                     <div class="c x46 yd8 w1e hd">
-                        <div class="t m0 x1b hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="date" class="input_text" id="date_acq_copy_two" name="date_acq_copy_two" ></div>
+                        <div class="t m0 x1b hc y1e ff6 fs7 fc1 sc0 ls0 ws0"><input type="date" class="input_text" id="date_acq_copy_two" name="date_acq_copy_two" readonly></div>
                     </div>
                     <div class="c x47 yda w2 h30">
-                        <div class="t m0 x15 h31 ydb ff6 fsb fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="unit_copy" name="unit_copy" ></div>
+                        <div class="t m0 x15 h31 ydb ff6 fsb fc1 sc0 ls0 ws0"><input type="input" class="input_text" id="unit_copy" name="unit_copy" readonly></div>
                     </div>
                     <div class="c x0 ydc w3 h32">
-                        <div class="t m0 x15 h33 ydd ff6 fsc fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="office_copy" name="office_copy" ></div>
+                        <div class="t m0 x15 h33 ydd ff6 fsc fc2 sc0 ls0 ws0"><input type="input" class="input_text"  id= "office_copy" name="office_copy" readonly></div>
                     </div>
                 </div>
                 <div class="pi" data-data='{"ctm":[1.200000,0.000000,0.000000,1.200000,0.000000,0.000000]}'></div>
@@ -5866,9 +5942,16 @@
         <div class="loading-indicator">
             <img alt="" src="data:image/png;base64,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" />
         </div>
-
-        <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
+        
+    <?php
+        echo '<input type = "hidden" id = "cb_a" name = "cb_a" value = "'.$results[0]->cb_a.'" >';
+             '<input type = "hidden" id = "cb_d" name = "cb_d" value = "'.$results[0]->cb_d.'" >';
+    ?>
+    
+    <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
+    <div id="unitsData" data-results="{{ json_encode($units) }}"></div>
     </form>
 </body>
 
+<script src="../res/js/rr_form_edit.js"></script>
 </html>

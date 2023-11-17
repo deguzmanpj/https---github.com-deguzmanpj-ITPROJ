@@ -33,8 +33,8 @@
                 <div class="menu-items">
                     <a href="#" class="item">Dashboard</a>
                     <a href="#" class="item">Users</a>
-                    <a href="{{ route ('employee/asset_info')}}" id="active_tab" class="item1">Asset Management</a>
-                    <a href="#" class="item">Forms</a>
+                    <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('employee/receiving_repo')}}" id="active_tab" class="item1">Forms</a>
                     <a href="#" class="item">Logout</a>
                 </div>
             </div>
@@ -147,11 +147,11 @@
 
             <nav>
                 <a href="{{ route ('employee/receiving_repo')}}" class="two" id="active_page">Receiving Report</a>
-                <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
                 <a href="{{ route ('employee/ack_repo')}}" class="item1">Acknowledgement Report</a>
                 <a href="{{ route ('employee/prop_borr')}}" class="item1">Property Borrowing</a>
                 <a href="{{ route ('employee/main_req')}}" class="item1">Maintenance Request</a>
                 <a href="{{ route ('employee/condemn_req')}}" class="item1">Condemnation Request</a>
+                <a href="{{ route ('employee/calib_req')}}" class="six">Calibration Request</a>
             </nav>
 
         </div>

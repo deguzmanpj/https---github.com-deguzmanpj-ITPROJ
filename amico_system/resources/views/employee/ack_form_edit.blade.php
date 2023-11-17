@@ -2180,7 +2180,6 @@
     </script>
     <script>
         (function() {
-            
             var pdf2htmlEX = window.pdf2htmlEX = window.pdf2htmlEX || {},
                 CSS_CLASS_NAMES = {
                     page_frame: "pf",
@@ -2641,7 +2640,7 @@
 </head>
 
 <body>
-    <form method="post" action="/ack_report">
+    <form method="post" action="/update_ack">
         @csrf
         <div id="sidebar">
             <div id="outline">
@@ -2659,12 +2658,11 @@
                     <div class="t m0 x2 h3 y5 ff2 fs1 fc0 sc0 ls0 ws0">Page<span class="_ _3"> </span><span class="ff1">1 of 1</span></div>
                     <div class="t m0 x3 h5 y6 ff2 fs2 fc0 sc0 ls0 ws0">SAINT LOUIS UNIVERSITY</div>
                     <div class="t m0 x4 h6 y7 ff2 fs3 fc0 sc0 ls0 ws0">ASSET MANAGEMENT AND INVENTORY CONTROL OFFICE</div>
-                    <div class="t m0 x5 h7 y8 ff3 fs4 fc0 sc0 ls0 ws0">A. Name of Employee <select name="office" class="dropdown" id="office_dropdown">
-                            <!-- The options for the office dropdown will be populated dynamically via JavaScript -->
-                        </select><span class="_ _4"></div>
-
-
-                    <div class="t m0 x6 h8 y9 ff2 fs5 fc0 sc0 ls0 ws0" id="idNum">ID Number    AMC-AR No.</div>
+                    <?php
+                    echo '<div class="t m0 x5 h7 y8 ff3 fs4 fc0 sc0 ls0 ws0">A. Name of Employee <select name="office" class="dropdown" id="office_dropdown"  value = "' . $results[0]->office . '" ></select>';
+                    echo '<span class="_ _4"></div>';
+                    ?>
+                    <div class="t m0 x6 h8 y9 ff2 fs5 fc0 sc0 ls0 ws0" id="idNum">ID Number AMC-AR No.</div>
                     <style type="text/css">
                         #idNum {
                             margin-left: -9%
@@ -2682,6 +2680,21 @@
                     <div class="t m0 xb h7 y10 ff2 fs4 fc0 sc0 ls0 ws0">Asset T<span class="_ _7"></span>ag<span class="_ _8"> </span>Particulars (Asset Description | Brand | Model)<span class="_ _9"> </span>Serial Number<span class="_ _a"> </span>Date Purchased</div>
                     <div class="t m0 x5 h7 y11 ff2 fs4 fc0 sc0 ls0 ws0">Unit <span class="ff3 fs1">(School | Department | Oce)<span class="fs4">:</span></span></div>
                     <div class="t m0 xc h7 y12 ff4 fs6 fc0 sc0 ls0 ws0"> <span class="_ _b"></span><span class="ff5"><input type="radio" name="cb_record" id="cb_one" value="New Record" onclick="setACbValue()"><span class="_ _c"> </span><span class="ff2 fs4">New Record<span class="_ _d"> </span></span><span class="ff4"> <span class="_ _b"></span><span class="ff5"><input type="radio" name="cb_record" id="cb_two" value="Update of Record" onclick="specifyOther()"><span class="_ _c"> </span><span class="ff3 fs4">Update of Record: This supersedes the AR No. / Date</span></span></span></span></div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            <?php
+                            if ($results[0]->cb_record === "New Record") {
+                                echo 'document.getElementById("cb_one").checked = true;';
+                            } else {
+                                echo 'document.getElementById("cb_two").checked = true;';
+                            }
+                            ?>
+                        });
+                    </script>
+
+
+
                     <div class="t m0 x5 h9 y13 ff3 fs4 fc0 sc0 ls0 ws0">D. Employee Accountable</div>
                     <div class="t m0 xd h7 y14 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _e"></span><span class="ff5">●<span class="_ _f"> </span><span class="ff3 fs7">By signing this form, I agree to the following:</span></span></div>
                     <div class="t m0 xe ha y15 ff2 fs7 fc0 sc0 ls0 ws0">1. <span class="_ _10"> </span><span class="ff3">I am responsible for the property and equipment issued to me.</span></div>
@@ -2698,15 +2711,14 @@
                     <div class="t m0 x9 hb y1f ff3 fs7 fc0 sc0 ls0 ws0">Noted by:</div>
                     <div class="t m0 x10 h7 y20 ff2 fs4 fc0 sc0 ls0 ws0">INVENTORY OF SLU PROPERTY AND EQUIPMENT UPON SEP<span class="_ _7"></span>ARATION FROM SERVICE</div>
                     <div class="t m0 x5 h7 y21 ff2 fs4 fc0 sc0 ls0 ws0">I. AMICO</div>
-                    <div class="t m0 xd h7 y22 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _e"></span><span class="ff5">●<span class="_ _f"> </span><span class="ff3 fs7">Remarks: <input type="input" id="note" class="input_text" name="note"></span></span></div>
+                    <div class="t m0 xd h7 y22 ff2 fs4 fc0 sc0 ls0 ws0"> <span class="_ _e"></span><span class="ff5">●<span class="_ _f"> </span><span class="ff3 fs7">Remarks:  <?php
+                        echo '<input type = "text" class = "input_text" id = "note" name = "note" value = "' . $results[0]->note . '" ></input>';
+                        ?></span></span></div>
                     <style type="text/css">
                         #note {
                             width: 1800px
                         }
                     </style>
-
-
-
 
                     <div class="t m0 x8 h7 y23 ff2 fs4 fc0 sc0 ls0 ws0">Name and Signature | Date</div>
                     <div class="t m0 x9 h4 y24 ff3 fs1 fc0 sc0 ls0 ws0">Head of Oce</div>
@@ -2714,7 +2726,11 @@
                     <div class="t m0 x5 hb y25 ff3 fs7 fc0 sc0 ls0 ws0">Checked by:</div>
                     <div class="t m0 x9 hb y26 ff3 fs7 fc0 sc0 ls0 ws0">Noted by:</div>
                     <div class="c x11 y27 w2 hd">
-                        <div class="t m0 x12 ha y28 ff6 fs7 fc2 sc0 ls0 ws0"><input type="text" class="input_text" id="name_employee" name="name_employee"></div>
+                        <?php
+                        echo '<div class="t m0 x12 ha y28 ff6 fs7 fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "name_employee" name = "name_employee" value = "' . $results[0]->name_employee . '" ></input>';
+                        echo '</div>';
+                        ?>
                         <style type="text/css">
                             #name_employee {
                                 width: 800px
@@ -2723,7 +2739,11 @@
                     </div>
 
                     <div class="c x13 y27 w3 hd">
-                        <div class="t m0 x14 ha y28 ff6 fs7 fc2 sc0 ls0 ws0"><input type="text" class="input_text" id="id_number" name="id_number"></div>
+                        <?php
+                        echo '<div class="t m0 x14 ha y28 ff6 fs7 fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "id_number" name = "id_number" value = "' . $results[0]->id_number . '" ></input>';
+                        echo '</div>';
+                        ?>
                         <style type="text/css">
                             #id_number {
                                 margin-left: -50px;
@@ -2732,7 +2752,11 @@
                         </style>
                     </div>
                     <div class="c x15 y27 w4 hd">
-                        <div class="t m0 x16 ha y28 ff7 fs7 fc2 sc0 ls0 ws0"><input type="text" class="input_text" id="ar_no" name="ar_no"></div>
+                        <?php
+                        echo '<div class="t m0 x16 ha y28 ff7 fs7 fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "ar_no" name = "ar_no" value = "' . $results[0]->ar_no . '" ></input>';
+                        echo '</div>';
+                        ?>
                         <style type="text/css">
                             #ar_no {
                                 margin-left: -50px;
@@ -2741,7 +2765,11 @@
                         </style>
                     </div>
                     <div class="c x17 y27 w5 hd">
-                        <div class="t m0 x18 ha y28 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" id="ar_date" name="ar_date"></div>
+                        <?php
+                        echo '<div class="t m0 x18 ha y28 ff6 fs7 fc2 sc0 ls0 ws0">';
+                        echo '<input type = "date" class = "input_text" id = "ar_date" name = "ar_date" value = "' . $results[0]->ar_date . '" ></input>';
+                        echo '</div>';
+                        ?>
                         <style type="text/css">
                             #ar_date {
                                 margin-left: -20px;
@@ -2753,216 +2781,489 @@
 
                     <div class="c x19 y29 w6 he">
                         <div class="t m0 x1a ha y2a ff6 fs7 fc2 sc0 ls0 ws0"><select name="unit" class="dropdown" id="unit_dropdown" onchange="updateOfficeOptions()">
-                    <?php
-                    $addedUnits = []; // Initialize an array to track added unit values
-                    $units = $results;
-                    foreach ($units as $unit) {
-                        // Check if the unit value has not been added already
-                        if (!in_array($unit->unit, $addedUnits)) {
-                            // Check if this option should be the initial selected option
-                            $selected = ($unit->unit == $results[0]->unit) ? 'selected' : '';
+                                <?php
+                                $addedUnits = []; // Initialize an array to track added unit values
 
-                            // Output the option with the selected attribute as needed
-                            echo '<option value="' . $unit->unit . '" ' . $selected . '>' . $unit->unit . '</option>';
+                                foreach ($units as $unit) {
+                                    // Check if the unit value has not been added already
+                                    if (!in_array($unit->unit, $addedUnits)) {
+                                        // Check if this option should be the initial selected option
+                                        $selected = ($unit->unit == $results[0]->unit) ? 'selected' : '';
 
-                            $addedUnits[] = $unit->unit; // Add the unit value to the tracking array
-                        }
-                    }
-                    ?>
-                    </select>
-                        </div>
+                                        // Output the option with the selected attribute as needed
+                                        echo '<option value="' . $unit->unit . '" ' . $selected . '>' . $unit->unit . '</option>';
+
+                                        $addedUnits[] = $unit->unit; // Add the unit value to the tracking array
+                                    }
+                                }
+                                ?>
+                            </select></div>
                     </div>
 
 
                     <div class="c x1c y2d w8 h11">
-                        <div class="t m0 x12 ha y2e ff6 fs7 fc2 sc0 ls0 ws0"><input type="text" class="input_text" name="new_record" id="new_record"></div>
+                    <?php
+                      if ($results[0]->cb_record === "New Record") {
+                        $results[0]->cb_record = "";
+                    } 
+                        echo '<div class="t m0 x12 ha y2e ff6 fs7 fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "new_record" name = "new_record" value = "' . $results[0]->cb_record . '" readonly></input>';
+                        echo '</div>';
+                        ?>
+
                     </div>
                     <div class="c x11 y2f w9 h12">
-                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                        <?php
+                        $num = 0;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+
+                        echo '<div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y2f wa h12">
-                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y2f wb h12">
-                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y2f wc h12">
-                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y33 w9 h12">
-                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+                        <?php
+                        $num = 1;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y33 w9 h12">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y33 wa h12">
-                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y33 wb h12">
-                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y33 wc h12">
-                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y34 w9 h15">
-                        <div class="t m0 x1d h13 y35 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+                        <?php
+                        $num = 2;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y34 w9 h15">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y36 wa h16">
-                        <div class="t m0 x12 ha y37 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y36 wb h16">
-                        <div class="t m0 x20 h14 y38 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y36 wc h16">
-                        <div class="t m0 x20 ha y37 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y39 w9 h12">
-                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+                        <?php
+                        $num = 3;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y39 w9 h12">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y39 wa h12">
-                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y39 wb h12">
-                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y39 wc h12">
-                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y3a w9 h12">
-                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+
+                        <?php
+                        $num = 4;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y3a w9 h12">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y3a wa h12">
-                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y3a wb h12">
-                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y3a wc h12">
-                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y3b w9 h15">
-                        <div class="t m0 x1d h13 y3c ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+
+                        <?php
+                        $num = 5;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y3b w9 h15">
+                   <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y3b wa h15">
-                        <div class="t m0 x12 ha y3d ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y3b wb h15">
-                        <div class="t m0 x20 h14 y3e ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y3b wc h15">
-                        <div class="t m0 x20 ha y3d ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y3f w9 h12">
-                        <div class="t m0 x1d h13 y40 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+
+                        <?php
+                        $num = 6;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y3f w9 h12">
+                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y3f wa h12">
-                        <div class="t m0 x12 ha y41 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y3f wb h12">
-                        <div class="t m0 x20 h14 y42 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                       <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y3f wc h12">
-                        <div class="t m0 x20 ha y41 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y43 w9 h12">
-                        <div class="t m0 x1d h13 y40 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+                        <?php
+                        $num = 7;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y43 w9 h12">
+                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y43 wa h12">
-                        <div class="t m0 x12 ha y41 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y43 wb h12">
-                        <div class="t m0 x20 h14 y42 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                       <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y43 wc h12">
-                        <div class="t m0 x20 ha y41 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y44 w9 h15">
-                        <div class="t m0 x1d h13 y45 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+
+                        <?php
+                        $num = 8;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo ' <div class="c x11 y44 w9 h15">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y44 wa h15">
-                        <div class="t m0 x12 ha y46 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y44 wb h15">
-                        <div class="t m0 x20 h14 y47 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y44 wc h15">
-                        <div class="t m0 x20 ha y46 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y48 w9 h12">
-                        <div class="t m0 x1d h13 y40 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+
+                        <?php
+                        $num = 9;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y48 w9 h12">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y48 wa h12">
-                        <div class="t m0 x12 ha y41 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y48 wb h12">
-                        <div class="t m0 x20 h14 y42 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                       <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y48 wc h12">
-                        <div class="t m0 x20 ha y41 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y49 w9 h12">
-                        <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+
+                        <?php
+                        $num = 10;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y49 w9 h12">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y49 wa h12">
-                        <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y49 wb h12">
-                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                    <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y49 wc h12">
-                        <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x11 y4a w9 h15">
-                        <div class="t m0 x1d h13 y45 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"></div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
+
+                        <?php
+                        $num = 11;
+                        if (isset($results[$num])) {
+                            $asset_tag = $results[$num]->asset_tag;
+                            $asset_desc = $results[$num]->asset_desc;
+                            $brand = $results[$num]->brand;
+                            $model = $results[$num]->model;
+                            $serial_no = $results[$num]->serial_no;
+                            $date_purchased = $results[$num]->date_purchased;
+                        } else {
+                            $asset_tag = "";
+                            $asset_desc = "";
+                            $brand = "";
+                            $model = "";
+                            $serial_no = "";
+                            $date_purchased = "";
+                        }
+                        echo '<div class="c x11 y4a w9 h15">
+                    <div class="t m0 x1d h13 y30 ff6 fs8 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="asset_tag[]"  value = "' . $asset_tag . '"></div>
                     </div>
                     <div class="c x1e y4a wa h15">
-                        <div class="t m0 x12 ha y46 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"></input>||<input type="input" class="input_text" id="brand" name="brand[]"></input>||<input type="input" class="input_text" id="model" name="model[]"></input></div>
+                    <div class="t m0 x12 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" id="asset_desc" name="asset_desc[]"  value = "' . $asset_desc . '"></input>||<input type="input" class="input_text" id="brand" name="brand[]"  value = "' . $brand . '"></input>||<input type="input" class="input_text" id="model" name="model[]"  value = "' . $model . '"></input></div>
                     </div>
                     <div class="c x1f y4a wb h15">
-                        <div class="t m0 x20 h14 y47 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]"></div>
+                        <div class="t m0 x20 h14 y32 ff8 fs7 fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="serial_no[]" value = "' . $serial_no . '"></div>
                     </div>
                     <div class="c x21 y4a wc h15">
-                        <div class="t m0 x20 ha y46 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]"></div>
-                    </div>
-                    <div class="c x22 y4b wd h17">
-                        <div class="t m0 x23 h18 y4c ff6 fsa fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="amico_prepared_by"></input>||<input type="date" class="input_text" name="amico_prepared_date"></div>
-                    </div>
-                    <div class="c x13 y4b we h17">
-                        <div class="t m0 x24 h18 y4c ff6 fsa fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="amico_noted_by"></input>||<input type="date" class="input_text" name="amico_noted_date"></input></div>
-                    </div>
-                    <div class="c x10 y4d wf h19">
-                        <div class="t m0 x25 h18 y4e ff6 fsa fc2 sc0 ls0 ws0"><span class="fc3 sc0"></span><input type="input" id="ea_ack_by" class="input_text" name="ea_ack_by"></input>||<input type="date" class="input_text" name="ea_ack_date"><span class="fc3 sc0"></span></div>
-                        <style type="text/css">
-                            #ea_ack_by {
-                                margin-left: 40%
-                            }
-                        </style>
-                    </div>
-                    <div class="c x13 y4f we h17">
-                        <div class="t m0 x20 h18 y4c ff6 fsa fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="ea_noted_by"></input>||<input type="date" class="input_text" name="ea_noted_date"></div>
-                    </div>
+                    <div class="t m0 x20 ha y31 ff6 fs7 fc2 sc0 ls0 ws0"><input type="date" class="input_text" name="date_purchased[]" value = "' . $date_purchased . '"></div>
+                    </div>'
+                        ?>
 
 
-                    <div class="c x22 y50 wd h17">
-                        <div class="t m0 x23 h18 y4c ff6 fsa fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="amico_checked_by"></input>||<input type="date" class="input_text" name="amico_checked_date"></input></div>
+
+
+                        <div class="c x22 y4b wd h17">
+                        <?php
+                        echo '<div class="t m0 x23 h18 y4c ff6 fsa fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "amico_prepared_by" name = "amico_prepared_by" value = "' . $results[0]->amico_prepared_by . '" ></input>||<input type="date" class="input_text" name="amico_prepared_date" value = "' . $results[0]->amico_prepared_date . '"></div>';
+ 
+                        ?>
+                        </div>
+                        <div class="c x13 y4b we h17">
+                        <?php
+                        echo '<div class="t m0 x24 h18 y4c ff6 fsa fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "amico_noted_by" name = "amico_noted_by" value = "' . $results[0]->amico_noted_by . '" ></input>||<input type="date" class="input_text" name="amico_noted_date" value = "' . $results[0]->amico_noted_date . '"></div>';
+                    
+                        ?>
+                        </div>
+                        <div class="c x10 y4d wf h19">
+                        <?php
+                        echo '<div class="t m0 x25 h18 y4e ff6 fsa fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "ea_ack_by" name = "ea_ack_by" value = "' . $results[0]->ea_ack_by . '" ></input>||<input type="date" class="input_text" name="ea_ack_date" value = "' . $results[0]->ea_ack_date . '"></div>';
+           
+                        ?>
+                            <style type="text/css">
+                                #ea_ack_by {
+                                    margin-left: 40%
+                                }
+                            </style>
+                        </div>
+                        <div class="c x13 y4f we h17">
+                        <?php
+                        echo '<div class="t m0 x20 h18 y4c ff6 fsa fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "ea_noted_by" name = "ea_noted_by" value = "' . $results[0]->ea_noted_by . '" ></input>||<input type="date" class="input_text" name="ea_noted_date" value = "' . $results[0]->ea_noted_date . '"></div>';
+           
+                        ?>
+                        </div>
+
+
+                        <div class="c x22 y50 wd h17">
+                        <?php
+                        echo '<div class="t m0 x23 h18 y4c ff6 fsa fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "amico_checked_by" name = "amico_checked_by" value = "' . $results[0]->amico_checked_by . '" ></input>||<input type="date" class="input_text" name="amico_checked_date" value = "' . $results[0]->amico_checked_date . '"></div>';
+                  
+                        ?>
+                        </div>
+                        <div class="c x13 y50 we h17">
+                        <?php
+                        echo '<div class="t m0 x23 h18 y4c ff6 fsa fc2 sc0 ls0 ws0">';
+                        echo '<input type = "text" class = "input_text" id = "amico_noted_by" name = "amico_noted_by" value = "' . $results[0]->amico_noted_by . '" ></input>||<input type="date" class="input_text" name="amico_noted_date" value = "' . $results[0]->amico_noted_date . '"></div>';
+              
+                        ?>
+                        </div>
+                        <div class="c x17 y51 w10 hd">
+                            <div class="t m0 x16 ha y52 ff7 fs7 fc2 sc0 ls0 ws0"><input type="text" class="input_text" name="ar_copy" id="ar_copy" readonly></div>
+                        </div>
                     </div>
-                    <div class="c x13 y50 we h17">
-                        <div class="t m0 x23 h18 y4c ff6 fsa fc2 sc0 ls0 ws0"><input type="input" class="input_text" name="amico_noted_by"></input>||<input type="date" class="input_text" name="amico_noted_date"></input></div>
-                    </div>
-                    <div class="c x17 y51 w10 hd">
-                        <div class="t m0 x16 ha y52 ff7 fs7 fc2 sc0 ls0 ws0"><input type="text" class="input_text" name="ar_copy" id="ar_copy" readonly></div>
-                    </div>
+                    <div class="pi" data-data='{"ctm":[1.200000,0.000000,0.000000,1.200000,0.000000,0.000000]}'></div>
                 </div>
-                <div class="pi" data-data='{"ctm":[1.200000,0.000000,0.000000,1.200000,0.000000,0.000000]}'></div>
             </div>
-        </div>
-        <div class="loading-indicator">
-            <img alt="" src="data:image/png;base64,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" />
-        </div>
+            <div class="loading-indicator">
+                <img alt="" src="data:image/png;base64,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" />
+            </div>
 
 
-        <input type="hidden" id="cb_record" name="cb_record">
-        <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
+            <?php
+            echo '<input type = "hidden" id = "cb_record" name = "cb_record" value = "' . $results[0]->cb_record . '" >';
+            ?>
+
+            <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
+            <div id="unitsData" data-results="{{ json_encode($units) }}"></div>
     </form>
 </body>
 
-<script src="../res/js/ack_form.js"></script>
+<script src="../res/js/ack_form_edit.js"></script>
 
 </html>

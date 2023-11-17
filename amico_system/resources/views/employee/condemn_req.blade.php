@@ -30,11 +30,10 @@
         <div class="main">
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
-                    <a href="#" class="item">Dashboard</a>
+                <a href="#" class="item">Dashboard</a>
                     <a href="#" class="item">Users</a>
-                    <a href="{{ route ('employee/asset_info')}}"  id = "active_tab"class="item1">Asset Management</a>
-                    <!-- <a href="{{ route ('employee/pending')}}" class="item1">Pending Requests</a> item -->
-                    <a href="#" class="item">Forms</a>
+                    <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('employee/receiving_repo')}}" id="active_tab" class="item1">Forms</a>
                     <a href="#" class="item">Logout</a>
                 </div>
             </div>
@@ -71,13 +70,11 @@
         </div>
 
 
-        <!-- <div class="table-title">
-
+        <div class="table-title">
             <div class="row">
-                <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add Entry</button>
+                <a href="{{ route ('employee/condemn_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
             </div>
         </div>
-    </div> -->
 
 
     <div class="wrapper">
@@ -89,24 +86,48 @@
                     <table class="table table-bordered" id="5table7">
                         <thead>
                             <tr>
-                                <th>CR No.</th>
-                                <th>CR Date</th>
-                                <th>Serial No.</th>
-                                <th>Asset Description</th>
-                                <th>Remarks</th>
+                            <th>Asset</th>
+                                    <th>Borrowed On</th>
+                                    <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!empty($csvData))
-                            <tr>
-                                <td>{{ $csvData[0][1] }}</td>
-                                <td>{{ $csvData[0][2] }}</td>
-                                <td>{{ $csvData[0][3] }}</td>
-                                <td>{{ $csvData[0][4] }}</td>
-                                <td>{{ $csvData[0][5] }}</td>
-                            </tr>
-                            @endif
+                        <?php
+                            if (!empty($results)) {
+                                for ($num = 0; $num < sizeof($results); $num++) {
+                                    $data = $results[$num];
+                                    $crNo = $data->cr_no;
+                                    $reqStatus = $data->status;
+                                    echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
+                                    echo '<tr>';
+                                    echo '<td>' . 'cr_no: ' . $crNo . '</td>';
+                                    echo '<td>'  . $data->cr_date . '</t   d>';  
+                                    echo '<td>';
 
+                                    echo '<div style="display: inline-block;">'; // Container for inline display
+                                    
+                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                    echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                    echo '<input type="text" class="status" id = "reqStatus" value = "'.$reqStatus.'"readonly>';
+                                    echo '<style>#reqStatus{border: none;}</style>';
+                                   
+                                    echo '</div>';
+
+                                    echo '<div style="display: inline-block;">'; // Container for inline display
+                                    echo '<form action="/see_condemn" method="post">'; // decline form
+                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                    echo '<input type="hidden" class="id" name="id" value = "employee">';
+                                    echo '<button type="submit" class="decline">see form</button>';
+                                    echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                    echo '</form>';
+                                    echo '</div>';
+
+                                    echo '</td>';
+
+                                    echo '</tr>';
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -116,11 +137,11 @@
 
     <nav>
     <a href="{{ route ('employee/receiving_repo')}}" class="two">Receiving Report</a>
-            <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
         <a href="{{ route ('employee/ack_repo')}}" class="three">Acknowledgement Report</a>
         <a href="{{ route ('employee/prop_borr')}}" class="four">Property Borrowing</a>
         <a href="{{ route ('employee/main_req')}}" class="five">Maintenance Request</a>
         <a href="{{ route ('employee/condemn_req')}}" class="six"   id = "active_page" >Condemnation Request</a>
+        <a href="{{ route ('employee/calib_req')}}" class="six">Calibration Request</a>
     </nav>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
