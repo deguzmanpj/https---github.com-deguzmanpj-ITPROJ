@@ -124,13 +124,12 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="7table2">
+                        <table class="table table-bordered" id="6table2">
                             <thead>
                                 <tr>
                                     <th>Cost</th>
                                     <th>Warranty</th>
                                     <th>Building Loc</th>
-                                    <th>Asset Pic</th>
                                     <th>Floor</th>
                                     <th>Specific Area</th>
                                     <th>Note</th>
@@ -145,7 +144,6 @@
                                     <td>{{ $csvData[0][4] }}</td>
                                     <td>{{ $csvData[0][5] }}</td>
                                     <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
                                 </tr>
                                 @endif
 
@@ -159,15 +157,13 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="8table3">
+                        <table class="table table-bordered" id="6table3">
                             <thead>
                                 <tr>
                                     <th>RR Number</th>
                                     <th>RR Date</th>
                                     <th>PO No.</th>
                                     <th>PO Date </th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
                                     <th>Funded By</th>
                                     <th>RS No. - Transferred</th>
                                 </tr>
@@ -182,8 +178,6 @@
                                     <td>{{ $csvData[0][4] }}</td>
                                     <td>{{ $csvData[0][5] }}</td>
                                     <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
-                                    <td>{{ $csvData[0][8] }}</td>
                                 </tr>
                                 @endif
 
@@ -197,7 +191,7 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="7table4">
+                        <table class="table table-bordered" id="6table4">
                             <thead>
                                 <tr>
                                     <th>RS Date</th>
@@ -205,7 +199,6 @@
                                     <th>Doc No. - Donation/Grant</th>
                                     <th>Date</th>
                                     <th>From - Donator/Grantor</th>
-                                    <th>Date Acquired</th>
                                     <th>Received By</th>
                                 </tr>
                             </thead>
@@ -218,7 +211,6 @@
                                     <td>{{ $csvData[0][4] }}</td>
                                     <td>{{ $csvData[0][5] }}</td>
                                     <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
                                 </tr>
                                 @endif
 
@@ -232,15 +224,12 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="7table5">
+                        <table class="table table-bordered" id="4table5">
                             <thead>
                                 <tr>
                                     <th>PB No.</th>
                                     <th>PB Date</th>
                                     <th>ID No.</th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
-                                    <th>Quantity</th>
                                     <th>Person Acountable</th>
                                 </tr>
                             </thead>
@@ -251,7 +240,6 @@
                                     <td>{{ $csvData[0][2] }}</td>
                                     <td>{{ $csvData[0][3] }}</td>
                                     <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
                                 </tr>
                                 @endif
 
@@ -265,13 +253,11 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="5table6">
+                        <table class="table table-bordered" id="3table6">
                             <thead>
                                 <tr>
                                     <th>MS No.</th>
                                     <th>MS Date</th>
-                                    <th>Serial No</th>
-                                    <th>Asset Description</th>
                                     <th>Monitoring Log</th>
                                 </tr>
                             </thead>
@@ -281,8 +267,6 @@
                                     <td>{{ $csvData[0][1] }}</td>
                                     <td>{{ $csvData[0][2] }}</td>
                                     <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
                                 </tr>
                                 @endif
 
@@ -296,13 +280,11 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="5table7">
+                        <table class="table table-bordered" id="3table7">
                             <thead>
                                 <tr>
                                     <th>CR No.</th>
                                     <th>CR Date</th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
                                     <th>Remarks</th>
                                 </tr>
                             </thead>
@@ -312,8 +294,63 @@
                                     <td>{{ $csvData[0][1] }}</td>
                                     <td>{{ $csvData[0][2] }}</td>
                                     <td>{{ $csvData[0][3] }}</td>
+                                </tr>
+                                @endif
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section class="section section--large eight" id="part8">
+                <div class="container">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                        </div>
+                        <table class="table table-bordered" id="3table8">
+                            <thead>
+                                <tr>
+                                    <th>AR No.</th>
+                                    <th>AR Date</th>
+                                    <th>ID No.</th>
+                                    <th>Employee Accountable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($csvData))
+                                <tr>
+                                    <td>{{ $csvData[0][1] }}</td>
+                                    <td>{{ $csvData[0][2] }}</td>
+                                    <td>{{ $csvData[0][3] }}</td>
                                     <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
+                                </tr>
+                                @endif
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            </section>
+            <section class="section section--large nine" id="part9">
+                <div class="container">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                        </div>
+                        <table class="table table-bordered" id="3table9">
+                            <thead>
+                                <tr>
+                                    <th>CS No.</th>
+                                    <th>CS Date</th>
+                                    <th>Monitoring</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($csvData))
+                                <tr>
+                                    <td>{{ $csvData[0][1] }}</td>
+                                    <td>{{ $csvData[0][2] }}</td>
+                                    <td>{{ $csvData[0][3] }}</td>
                                 </tr>
                                 @endif
 
