@@ -18,9 +18,10 @@ body {
   display: flex;
   flex-direction: column;
   height: calc(100% - 40px);
-  position: absolute;
+  position:relative;
   place-content: center;
   width: calc(100% - 40px);
+  
 }
 @media (max-width: 767px) {
   .page {
@@ -29,7 +30,7 @@ body {
     padding-bottom: 20px;
   }
 }
-.container {
+.maincontainer {
   display: flex;
   height: 800px;
   margin: 0 auto;
@@ -131,3 +132,163 @@ input::-moz-focus-inner {
   max-width: 100%;
   max-height: 100%;
 }
+.container{
+  scroll-snap-type: y mandatory;
+  height: 94vh;
+}
+
+section{
+  scroll-snap-align: start;
+  height: 94vh;
+}
+/*About us CSS*/
+.heading{
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 20px auto;
+}
+.heading h1{
+  font-size: 40px;
+  color: #000;
+  margin-bottom: 25px;
+  position: relative;
+  text-align: center;
+}
+.heading h1::after{
+  content:"";
+  position: absolute;
+  width:100%;
+  height: 4px;
+  display: block;
+  margin-top: 10px;
+  background-color: #3f3cf3;
+}
+.heading p{
+  font: size 18px;
+  color: #666;
+  margin-bottom: 35px;
+}
+.about-container{
+  width:90%;
+  margin:0 auto;
+  padding: 10px 20px;
+}
+.about {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.about-image{
+  flex:1;
+  margin-right: 40px;
+  overflow: hidden;
+}
+.about-image img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: 0.5s ease;
+}
+.about-image:hover img{
+  transform:scale(1.2);
+}
+.about-content{
+  flex:1;
+}
+.about-content h2{
+  font-size: 23px;
+  margin-bottom: 15px;
+  color: #333;
+}
+.about-contentp{
+  font-size: 18px;
+  line-height: 1.5;
+  color:#666;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: .3em .3em;
+    text-align: center;
+    
+}
+.row {
+    flex-direction: row;
+    justify-content: center;
+
+}
+  .column {
+    width: 100%;
+    padding: 0.5em 0;
+  }
+  h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    color: #300755;
+  }
+  .card {
+    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+    padding: 1em 1em;
+    border-radius: 0.4em;
+    color: #1f003b;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #ffffff;
+  }
+  .card .img-container {
+    width: 8em;
+    height: 8em;
+    background-color: #000000;
+    padding: 0.5em;
+    border-radius: 50%;
+    margin: 0 auto .5em auto;
+  }
+  .card img {
+    width: 100%;
+    border-radius: 50%;
+  }
+  .card h3 {
+    font-weight: 500;
+  }
+  .card p {
+    font-weight: 300;
+    text-transform: uppercase;
+    margin: 0.5em 0 1em 0;
+    letter-spacing: 2px;
+  }
+  .card a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.4em;
+  }
+  .card:hover {
+    background: linear-gradient(rgb(47, 11, 230), #67f2f7);
+    color: #ffffff;
+  }
+  .card:hover .img-container {
+    transform: scale(1.15);
+  }
+  @media screen and (min-width: 768px) {
+    section {
+      padding: 1em 7em;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    section {
+      padding: 1em;
+    }
+    .card {
+      padding: 5em 1em;
+    }
+    .column {
+      flex: 0 0 21.21%;
+      max-width: 19.19%;
+      padding: 0 1em;
+    }
+  }

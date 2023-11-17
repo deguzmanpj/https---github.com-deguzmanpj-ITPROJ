@@ -50,3 +50,16 @@ document.querySelector("#submit").addEventListener("focus", function (e) {
   $( "form" ).submit();
   
 });
+document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener("scroll", function() {
+      var aboutUs = document.getElementById("aboutUs");
+      var aboutUsPosition = aboutUs.getBoundingClientRect().top;
+
+      var windowHeight = window.innerHeight;
+
+      if (aboutUsPosition < windowHeight / 1.5) {
+          aboutUs.style.display = "block";
+          // You can add animations or other effects here
+      }
+  });
+});
