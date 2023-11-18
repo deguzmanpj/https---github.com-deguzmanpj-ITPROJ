@@ -1373,28 +1373,19 @@ class InvController extends Controller
 
 
         return redirect("admin/asset_info");
-    }
+    } 
     public function deleteAsset(Request $request)
 {
-    try{ 
-    $serialNo = $request->input('serial_no');
-    \Log::info('Serial no to be deleted: ' . $serialNo);
-    // dd($request->serial_no);
+    $pressedButton = $request['button_pressed'];
 
-    
+    $serial_no = "serial_no$pressedButton";
 
-    // Perform validation or additional checks if necessary
+    // Assuming you pass the serial number through the request
+    $serialNumber = $request->input($serial_no);
 
-    DB::table('asset')->where('serial_no', $serialNo)->delete();
+    // Perform the deletion in the database
+    DB::table('asset')->where('serial_no', $serialNumber)->delete();
 
-    
-    return response()->json(['message' => 'Asset deleted successfully']);
-
-} catch (\Exception $e) {
-    \Log::error('Error deleting asset: ' . $e->getMessage());
-    \Log::error($e->getTraceAsString());
-
-    return response()->json(['error' => 'An error occurred during asset deletion'], 500);
-    }
+    return redirect("admin/asset_info");
 }
 }

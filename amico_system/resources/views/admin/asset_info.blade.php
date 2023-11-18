@@ -16,8 +16,6 @@
         <link rel="stylesheet" href="../res/css/asset_information.css">
         <link rel="stylesheet" href="../res/css/navbar.css">
 
-        
-
     </head>
 
 <body>
@@ -74,7 +72,7 @@
                     <a href="{{ route ('admin/asset_info')}}" id="active_tab" class="one">Asset Information</a>
                     <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
                     <a href="{{ route('admin/users') }}" class="item1">Users</a>
-                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
+                    <a href="#" class="item">Logout</a>
                 </div>
             </div>
 
@@ -148,7 +146,6 @@
                                  $int = 0; 
                                 foreach($results as $result){ 
                                     echo ' <tr>
-
                                     <td><input type = "text"name="unit_code'.$int.'"value = "'.$result->unit_code.'" readonly> </td>
                                     <td><input type = "text"name="asset_tag'.$int.'"value = "'.$result->asset_tag.'"readonly> </td>
                                     <td><input type = "text"name="asset_desc'.$int.'"value = "'.$result->asset_desc.'" readonly> </td>
@@ -162,7 +159,7 @@
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  name ="button_pressed" value= "'.$int.'" class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
 
@@ -214,7 +211,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -260,7 +257,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -306,7 +303,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -347,7 +344,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -386,7 +383,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -425,7 +422,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -467,7 +464,7 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
@@ -510,12 +507,12 @@ $int = 0;                                  foreach($results as $result){
                                    <td class="toggleBtns">
                                     <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
                                     <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-serial_no="{{ $result->serial_no }}" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
                                   </td>
                                   </tr>';
                                   $int++;
                                   }
-                                
+                                   
                               ?>
 
 
@@ -535,46 +532,32 @@ $int = 0;                                  foreach($results as $result){
             <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
             <a href="{{ route ('admin/calib_req')}}" class="item1" >Calibration Request</a>
         </nav>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-    $(document).ready(function() {
-        console.log('Document ready');
 
-        @foreach($results as $result)
-            var serialNo_{{ $result->serial_no }} = @json($result->serial_no);
-        @endforeach
+    <script>
+        window.csrf_token = "{{ csrf_token() }}";
+    </script>
 
-        $(document.body).on('click', '.delete', function() {
-            console.log('Delete button clicked');
-
-            // Extract the serial number from the data attribute
-            var serialNo = $(this).data('serial_no');
-            console.log('Serial no to be deleted:', serialNo);
-
-            // Confirm deletion if necessary
-            if (confirm('Are you sure you want to delete this asset?')) {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("delete.asset") }}',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        'serial_no': serialNo
-                    },
-                    success: function(response) {
-                        // Handle success, e.g., show a success message or refresh the page
-                        console.log(response);
-                        // window.location.reload();
-                    },
-                    error: function(error) {
-                        // Handle errors
-                        console.log(error);
-                    }
-                });
-            }
-        });
-    });
-</script>
-
+    <!-- Modal for delete confirmation -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this asset with an asset description of: <span id="assetDesc" style="font-weight: bold;"></span> 
+                and serial number of: <span id="serialNumber" style="font-weight: bold;"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

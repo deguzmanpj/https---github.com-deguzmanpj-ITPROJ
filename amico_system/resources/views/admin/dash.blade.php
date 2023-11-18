@@ -144,7 +144,7 @@ dash.admin
             <option value="School of Engineering and Architecture"@if($unitFilter == "School of Engineering and Architecture") selected @endif>School of Engineering and Architecture</option>
             <option value="School of Law"@if($unitFilter == "School of Law") selected @endif>School of Law</option>
             <option value="School of Medicine"@if($unitFilter == "School of Medicine") selected @endif>School of Medicine</option>
-            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>Asset Management and Inventory Control Office</option>
+            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>School of Nursing, Allied Health and Biological Sciences</option>
             <option value="School of Teacher Education and Liberal Arts"@if($unitFilter == "School of Teacher Education and Liberal Arts") selected @endif>School of Teacher Education and Liberal Arts</option>
             <option value="SFW - Halfway Home for Boys"@if($unitFilter == "SFW - Halfway Home for Boys") selected @endif>SFW - Halfway Home for Boys</option>
             <option value="SFW - Pedagogical and Developmental Center"@if($unitFilter == "SFW - Pedagogical and Developmental Center") selected @endif>SFW - Pedagogical and Developmental Center</option>
