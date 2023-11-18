@@ -18,10 +18,40 @@ dash.admin
         <link rel="stylesheet" href="../res/css/navbar.css">
 
     <style>
-        #assetStatusChart {
-            width: 22%; 
-            margin: auto;
+            
+        .selected-unit {
+            font-weight: bold;
+            font-size: 23px;
+            font-style: italic;
+            margin-top: 10px;
         }
+        #chartAndMonitoringContainer {
+        display: flex;
+        justify-content: space-between;
+        }
+        #chartContainer {
+            width: 50%; 
+            box-sizing: border-box;
+            border: 5px solid #ccc;
+        }
+        .real-time-monitoring {
+            width: 45%; 
+            margin-left: 52%; 
+            margin-top: -19%;
+            float: left; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border: 5px solid #ccc; 
+        }
+        .real-time-monitoring table {
+            width: 100%; 
+        }
+        .chart-moni-container{
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+    
     </style>
 
 </head>
