@@ -33,7 +33,6 @@
                     <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
                     <a href="{{ route('admin/users') }}" class="item1">Users</a>
                     <a href="#" class="item" id = "active_tab">Asset Management</a>
-                    <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>
                     <a href="#" class="item">Logout</a>
                 </div>
@@ -53,8 +52,10 @@
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input class="upload" type="file" name="csvFile" accept=".csv">
-                <button class="uploadbtn" type="submit">Upload File</button>
+                <div class="feature-container">
+                    <input class="upload" type="file" name="csvFile" accept=".csv">
+                    <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
             </form>
 
 
@@ -81,48 +82,85 @@
     </div> -->
 
 
-        <div class="wrapper">
-            <section class="section section--large seven" id="part7">
-                <div class="container">
-                    <div class="table-wrapper">
-                        <div class="table-title">
-                        </div>
-                        <table class="table table-bordered" id="5table7">
-                            <thead>
-                                <tr>
-                                    <th>CR No.</th>
-                                    <th>CR Date</th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                </tr>
-                                @endif
-
-                            </tbody>
-                        </table>
+    <div class="wrapper">
+        <section class="section section--large" id="part1">
+            <div class="container">
+                <div class="table-wrapper">
+                    <div class="table-title">
                     </div>
+                    <table class="table table" id="8table3">
+                        <thead>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Received On</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <?php
+                        if (!empty($results)) {
+                            for ($num = 0; $num < sizeof($results); $num++) {
+                                $data = $results[$num];
+                                $crNo = $data->cr_no;
+                                $reqStatus = $data->status;
+                                echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
+                                echo '<tr>';
+                                echo '<td>' . 'cr_no: ' . $crNo . '</td>';
+                                echo '<td>'  . $data->cr_date . '</td>';
+                                echo '<td>';
+
+
+                                echo '<div style="display: inline-block;">'; // Container for inline display
+                                echo '<form action="/see_condemn" method="POST">'; // see form
+                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                echo '<input type="hidden" class="id" name="id" value = "admin">';
+                                echo '<button type="submit">SEE FORM</button>';
+                                echo '</form>';
+                                echo '</div>';
+
+
+                                echo '<div style="display: inline-block;">'; // Container for inline display
+                                echo '<form action="/add_to_condemn" method="POST">'; // accept form
+                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                echo '<input type="hidden" class="id" name="id" value = "admin">';
+                                echo '<button type="submit" class="accept">ACCEPT</button>';
+                                echo '</form>';
+                                echo '</div>';
+
+
+                                echo '<div style="display: inline-block;">'; // Container for inline display
+                                echo '<form action="/decline_request" method="POST">'; // decline form
+                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                echo '<button type="submit" class="decline">DECLINE</button>';
+                                echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                echo '</form>';
+                                echo '</div>';
+
+                                echo '</td>';
+
+                                
+                                echo '</tr>';
+                            }
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
 
         <nav>
-        <a href="{{ route ('admin/receiving_repo')}}" class="item1">Receiving Report</a>
-        <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
-            <a href="{{ route ('admin/ack_repo')}}" class="item1">Acknowledgement Report</a>
-            <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
-            <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
-            <a href="{{ route ('admin/condemn_req')}}" class="item1"   id = "active_page" >Condemnation Request</a>
-        </nav>
+        <a href="{{ route ('admin/receiving_repo')}}" class="two" >Receiving Report</a>
+                <a href="{{ route ('admin/ack_repo')}}" class="item1">Acknowledgement Report</a>
+                <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
+                <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
+                <a href="{{ route ('admin/condemn_req')}}"id="active_page" class="item1">Condemnation Request</a>
+                <a href="{{ route ('admin/calib_req')}}" class="six">Calibration Request</a>
+            </nav>
+
+    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

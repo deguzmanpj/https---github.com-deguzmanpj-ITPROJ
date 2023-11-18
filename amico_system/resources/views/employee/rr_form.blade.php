@@ -5156,11 +5156,12 @@ input[type="radio"]{
                     <style type = "text/css">#au_noted_by{margin-left: -5%}</style>
                 </div>
                 <div class="c x3d yca w1b h28">
-                    <div class="t m0 x3e h29 y96 ff6 fsa fc1 sc0 ls0 ws0"><input type="input" class="input_text"  name="ua_ack_by"></input></div>
+                    <div class="t m0 x3e h29 y96 ff6 fsa fc1 sc0 ls0 ws0"><input type="input" class="input_text"  id = "ua_ack_by" name="ua_ack_by" readonly></input></div>
+                     <style type = "text/css">#ua_ack_by{width:1000px}</style>
                 </div>
                 <div class="c x3d ycb w1b h28">
-                    <div class="t m0 x3f h3 yb8 ff6 fs1 fc1 sc0 ls0 ws0"><input type="input" class="input_text"  id = "ua_ack_by_position" name="ua_ack_by_position"></input></div>
-                    <style type = "text/css">#ua_ack_by_position{margin-left: -16%}</style>
+                    <div class="t m0 x3f h3 yb8 ff6 fs1 fc1 sc0 ls0 ws0"><input type="input" class="input_text"  id = "ua_ack_by_position" name="ua_ack_by_position" readonly></input></div>
+                    <style type = "text/css">#ua_ack_by_position{margin-left: -16%; width:1000px}</style>
                 </div>
                 <div class="c x40 yca w1c h28">
                     <div class="t m0 x41 hc y93 ff6 fs7 fc1 sc0 ls0 ws0"><input type="date" class="input_text"  id= "ua_ack_by_date" name="ua_ack_by_date"></input></div>

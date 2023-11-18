@@ -1,7 +1,10 @@
 var selectUnit = document.querySelector('#unit_dropdown');
 var selectedUnitValue = selectUnit.value;
 var unitCode = document.querySelector("#unit_code");
-console.log(selectedUnitValue);
+var position = document.querySelector("#ua_ack_by_position");
+var person = document.querySelector("#ua_ack_by");
+
+
 
 var resultsDataElement = document.getElementById('resultsData');
 var resultsData = JSON.parse(resultsDataElement.getAttribute('data-results'));
@@ -22,6 +25,8 @@ for (var i = 0; i < resultsData.length; i++) {
         option.text = unit.office;
         officeDropdown.appendChild(option);
         unitCode.value = unit.unit_code;
+        position.value = unit.position;
+        person.value = unit.head_name;
     }
 }
 
@@ -50,6 +55,8 @@ function updateOfficeOptions() {
             option.text = unit.office;
             officeDropdown.appendChild(option);
             unitCode.value = unit.unit_code;
+            position.value = unit.position;
+            person.value = unit.head_name;
         }
     }
     office_copy.value = officeDropdown.value;
@@ -94,10 +101,32 @@ function specifyOther() {
 }
 
 function setDCbValue() {
+    var au_noted_by = document.querySelector("#au_noted_by")
     var selectedOption = document.querySelector('input[name="d_cb"]:checked');
     var textOtherInputAu = document.getElementById('text_other');
 
     if (selectedOption) {
+       
+        if (selectedOption.value === "CPMSD"){
+            for (var i = 0; i < resultsData.length; i++) {
+                // Access individual objects in the array
+                var unit = resultsData[i];
+                // Check if the unitName matches the selected value
+                if (unit.unit_code === "CMS") {
+                    au_noted_by.value = unit.head_name;
+                }
+            }
+        }
+        if (selectedOption.value === "TMDD"){
+            for (var i = 0; i < resultsData.length; i++) {
+                // Access individual objects in the array
+                var unit = resultsData[i];
+                // Check if the unitName matches the selected value
+                if (unit.unit_code === "TMD") {
+                    au_noted_by.value = unit.head_name;
+                }
+            }
+        }
         // If an option is selected, get its value
         var selectedValue = selectedOption.value;
         cb_d.value = selectedValue;
@@ -111,7 +140,7 @@ function setDCbValue() {
 function specifyOtherAu() {
     var selectedOption = document.querySelector('input[name="d_cb"]:checked');
     var textOtherInputAu = document.getElementById('text_other');
-
+    var au_noted_by = document.querySelector("#au_noted_by")
 
     textOtherInputAu.addEventListener('input', function () {
         // get value of input
@@ -124,6 +153,7 @@ function specifyOtherAu() {
         textOtherInputAu.value = "INPUT REQUIRED";
         cb_d.value = "INPUT REQUIRED";
     }
+    au_noted_by.value = "";
 }
 
 // Get references to the input fields
@@ -168,6 +198,8 @@ received_from.addEventListener('input', function () {
     // Update the value of "rr_copy_one" with the value of "rr_no"
     received_from_copy.value = received_from.value;
 });
+
+
 
 
 

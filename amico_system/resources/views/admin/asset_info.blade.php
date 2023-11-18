@@ -20,6 +20,38 @@
 
 <body>
 
+
+<style>
+  table {
+  table-layout: fixed;
+  width: 400px;
+  font: larger monospace;
+  border-collapse: collapse;
+}
+
+#td {
+  position: relative;
+  border: solid 2px blue;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: all 0.3s;
+}
+
+#td:hover {
+  white-space: normal;
+  width: 1000px;
+  z-index: 1;
+  position: absolute;
+  left: 5;
+}
+
+
+
+
+</style>
+
     <div class="navigation">
     <div class="nav-bar">
     <button class="notification-button">
@@ -36,11 +68,10 @@
         <div class="main">
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
-                    <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/dash')}}" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/asset_info')}}" id="active_tab" class="one">Asset Information</a>
+                    <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
                     <a href="{{ route('admin/users') }}" class="item1">Users</a>
-                    <a href="#" class="item" id = "active_tab">Asset Management</a>
-                    <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
-                    <a href="#" class="item">Forms</a>
                     <a href="#" class="item">Logout</a>
                 </div>
             </div>
@@ -60,8 +91,10 @@
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input class="upload" type="file" name="csvFile" accept=".csv">
-                <button class="uploadbtn" type="submit">Upload File</button>
+                <div class="feature-container">
+                    <input class="upload" type="file" name="csvFile" accept=".csv">
+                    <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
             </form>
 
 
@@ -88,7 +121,9 @@
     </div> -->
 
 
-        <div class="wrapper">
+    <form action = "/edit_asset" method = "post">
+        @csrf
+    <div class="wrapper">
             <section class="section section--large" id="part1">
                 <div class="container">
                     <div class="table-wrapper">
@@ -100,7 +135,6 @@
                                     <th>Unit</th>
                                     <th>Tag Number</th>
                                     <th>Asset Description</th>
-                                    <th>Asset Pic</th>
                                     <th>Brand</th>
                                     <th>Model</th>
                                     <th>Serial No</th>
@@ -109,20 +143,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                    <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
-                                    <td>{{ $csvData[0][8] }}</td>
-                                    <td>{{ $csvData[0][9] }}</td>
+                                <?php
+                                use Illuminate\Support\Facades\Log;
+                                 $int = 0; 
+                                foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="unit_code'.$int.'"value = "'.$result->unit_code.'" readonly> </td>
+                                    <td><input type = "text"name="asset_tag'.$int.'"value = "'.$result->asset_tag.'"readonly> </td>
+                                    <td><input type = "text"name="asset_desc'.$int.'"value = "'.$result->asset_desc.'" readonly> </td>
+                                    <td><input type = "text"name="brand'.$int.'"value = "'.$result->brand.'" readonly> </td>
+                                    <td><input type = "text"name="model'.$int.'"value = "'.$result->model.'" readonly> </td>
+                                    <td><input type = "text"name="serial_no'.$int.'"value = "'.$result->serial_no.'" readonly> </td>
+                                    <td><input type = "text"name="asset_class'.$int.'"value = "'.$result->asset_class.'" readonly> </td>
+                                    <td><input type = "text"name="status'.$int.'"value = "'.$result->status.'" readonly> </td>
                                     </td>
-                                </tr>
-                                @endif
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  name ="button_pressed" value= "'.$int.'" class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+
+
+                        
+
+                                    
+                               
+
+                                  $int++;
+                                  }
+                                   
+                              ?>
 
                             </tbody>
                         </table>
@@ -134,30 +186,40 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="7table2">
+                        <table class="table table-bordered" id="6table2">
                             <thead>
                                 <tr>
                                     <th>Cost</th>
                                     <th>Warranty</th>
                                     <th>Building Loc</th>
-                                    <th>Asset Pic</th>
                                     <th>Floor</th>
                                     <th>Specific Area</th>
                                     <th>Note</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                    <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
-                                </tr>
-                                @endif
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="cost'.$int.'"value = "'.$result->cost.'" readonly> </td>
+                                    <td><input type = "text"name="warranty'.$int.'"value = "'.$result->warranty.'" readonly> </td>
+                                    <td><input type = "text"name="build_loc'.$int.'"value = "'.$result->build_loc.'" readonly> </td>
+                                    <td><input type = "text"name="floor'.$int.'"value = "'.$result->floor.'" readonly> </td>
+                                    <td><input type = "text"name="spec_area'.$int.'"value = "'.$result->spec_area.'" readonly> </td>
+                                    <td><input type = "text"name="note'.$int.'"value = "'.$result->note.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
 
                             </tbody>
                         </table>
@@ -169,33 +231,41 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="8table3">
+                        <table class="table table-bordered" id="6table3">
                             <thead>
                                 <tr>
                                     <th>RR Number</th>
                                     <th>RR Date</th>
                                     <th>PO No.</th>
                                     <th>PO Date </th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
                                     <th>Funded By</th>
                                     <th>RS No. - Transferred</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                    <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
-                                    <td>{{ $csvData[0][8] }}</td>
-                                </tr>
-                                @endif
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="rr_no'.$int.'"value = "'.$result->rr_no.'" readonly> </td>
+                                    <td><input type = "text"name="date_acq'.$int.'"value = "'.$result->date_acq.'" readonly> </td>
+                                    <td><input type = "text"name="reference'.$int.'"value = "'.$result->reference.'" readonly> </td>
+                                    <td><input type = "text"name="reference_date'.$int.'"value = "'.$result->reference_date.'" readonly> </td>
+                                    <td><input type = "text"name="funded_by'.$int.'"value = "'.$result->funded_by.'" readonly> </td>
+                                    <td><input type = "text"name="rs_no_transferred'.$int.'"value = "'.$result->rs_no_transferred.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
 
                             </tbody>
                         </table>
@@ -207,7 +277,7 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="7table4">
+                        <table class="table table-bordered" id="6table4">
                             <thead>
                                 <tr>
                                     <th>RS Date</th>
@@ -215,23 +285,33 @@
                                     <th>Doc No. - Donation/Grant</th>
                                     <th>Date</th>
                                     <th>From - Donator/Grantor</th>
-                                    <th>Date Acquired</th>
                                     <th>Received By</th>
-                                </tr>
+                                    <td class="toggleBtns">
+             </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                    <td>{{ $csvData[0][6] }}</td>
-                                    <td>{{ $csvData[0][7] }}</td>
-                                </tr>
-                                @endif
-
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="rs_date'.$int.'"value = "'.$result->rs_date.'" readonly> </td>
+                                    <td><input type = "text"name="from_loc'.$int.'"value = "'.$result->from_loc.'" readonly> </td>
+                                    <td><input type = "text"name="doc_no'.$int.'"value = "'.$result->doc_no.'" readonly> </td>
+                                    <td><input type = "text"name="doc_no_date'.$int.'"value = "'.$result->doc_no_date.'" readonly> </td>
+                                    <td><input type = "text"name="received_from'.$int.'"value = "'.$result->received_from.'" readonly> </td>
+                                    <td><input type = "text"name="received_by'.$int.'"value = "'.$result->received_by.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
                             </tbody>
                         </table>
                     </div>
@@ -242,28 +322,37 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="7table5">
+                        <table class="table table-bordered" id="4table5">
                             <thead>
                                 <tr>
                                     <th>PB No.</th>
                                     <th>PB Date</th>
                                     <th>ID No.</th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
-                                    <th>Quantity</th>
                                     <th>Person Acountable</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                </tr>
-                                @endif
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="pb_no'.$int.'"value = "'.$result->pb_no.'" readonly> </td>
+                                    <td><input type = "text"name="pb_date'.$int.'"value = "'.$result->pb_date.'" readonly> </td>
+                                    <td><input type = "text"name="id_no'.$int.'"value = "'.$result->id_no.'" readonly> </td>
+                                    <td><input type = "text"name="person_accountable'.$int.'"value = "'.$result->person_accountable.'" readonly> </td>
+                            
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
 
                             </tbody>
                         </table>
@@ -275,26 +364,34 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="5table6">
+                        <table class="table table-bordered" id="3table6">
                             <thead>
                                 <tr>
                                     <th>MS No.</th>
                                     <th>MS Date</th>
-                                    <th>Serial No</th>
-                                    <th>Asset Description</th>
                                     <th>Monitoring Log</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($csvData))
-                                <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
-                                </tr>
-                                @endif
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="ms_no'.$int.'"value = "'.$result->ms_no.'" readonly> </td>
+                                    <td><input type = "text"name="ms_date'.$int.'"value = "'.$result->ms_date.'" readonly> </td>
+                                    <td><input type = "text"name="moni_log'.$int.'"value = "'.$result->moni_log.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
 
                             </tbody>
                         </table>
@@ -306,26 +403,120 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                         </div>
-                        <table class="table table-bordered" id="5table7">
+                        <table class="table table-bordered" id="3table7">
                             <thead>
                                 <tr>
                                     <th>CR No.</th>
                                     <th>CR Date</th>
-                                    <th>Serial No.</th>
-                                    <th>Asset Description</th>
                                     <th>Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($csvData))
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="cr_no'.$int.'"value = "'.$result->cr_no.'" readonly> </td>
+                                    <td><input type = "text"name="cr_date'.$int.'"value = "'.$result->cr_date.'" readonly> </td>
+                                    <td><input type = "text"name="remarks'.$int.'"value = "'.$result->remarks.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section class="section section--large eight" id="part8">
+                <div class="container">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                        </div>
+                        <table class="table table-bordered" id="3table8">
+                            <thead>
                                 <tr>
-                                    <td>{{ $csvData[0][1] }}</td>
-                                    <td>{{ $csvData[0][2] }}</td>
-                                    <td>{{ $csvData[0][3] }}</td>
-                                    <td>{{ $csvData[0][4] }}</td>
-                                    <td>{{ $csvData[0][5] }}</td>
+                                    <th>AR No.</th>
+                                    <th>AR Date</th>
+                                    <th>ID No.</th>
+                                    <th>Employee Accountable</th>
                                 </tr>
-                                @endif
+                            </thead>
+                            <tbody>
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+                                    <td><input type = "text"name="ar_no'.$int.'"value = "'.$result->ar_no.'" readonly> </td>
+                                    <td><input type = "text"name="ar_date'.$int.'"value = "'.$result->ar_date.'" readonly> </td>
+                                    <td><input type = "text"name="id_number'.$int.'"value = "'.$result->id_number.'" readonly> </td>
+                                    <td><input type = "text"name="name_employee'.$int.'"value = "'.$result->name_employee.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            </section>
+            <section class="section section--large nine" id="part9">
+                <div class="container">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                        </div>
+                        <table class="table table-bordered" id="3table9">
+                            <thead>
+                                <tr>
+                                    <th>CS No.</th>
+                                    <th>CS Date</th>
+                                    <th>Monitoring</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                  
+$int = 0;                                  foreach($results as $result){ 
+                                    echo ' <tr>
+
+                                    <td><input type = "text"name="cs_no'.$int.'"value = "'.$result->cs_no.'" readonly> </td>
+                                    <td><input type = "text"name="cs_date'.$int.'"value = "'.$result->cs_date.'" readonly> </td>
+                                    <td><input type = "text"name="moni_log_calibration'.$int.'"value = "'.$result->moni_log_calibration.'" readonly> </td>
+                                    </td>
+                                    
+                                   <td class="toggleBtns">
+                                    <button type = "submit" name ="button_pressed" value= "'.$int.'"  class="add" title="Add" data-toggle="tooltip" id="addbtn"><i class="material-icons">&#xE03B;</i></button>
+                                    <a class = "edit" title="Edit" data-toggle="tooltip" id="editbtn"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip" id="deletebtn"><i class="material-icons">&#xE872;</i></a>
+                                  </td>
+                                  </tr>';
+                                  $int++;
+                                  }
+                                   
+                              ?>
+
 
                             </tbody>
                         </table>
@@ -334,14 +525,16 @@
             </section>
         </div>
 
+    </form>
         <nav>
         <a href="{{ route ('admin/receiving_repo')}}" class="item1">Receiving Report</a>
-        <a href="{{ route ('admin/asset_info')}}" class="one"   id = "active_page" >Asset Information</a>
             <a href="{{ route ('admin/ack_repo')}}" class="item1">Acknowledgement Report</a>
             <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
             <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
             <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
+            <a href="{{ route ('admin/calib_req')}}" class="item1" >Calibration Request</a>
         </nav>
+
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
