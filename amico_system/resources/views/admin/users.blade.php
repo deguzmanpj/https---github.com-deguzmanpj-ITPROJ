@@ -34,8 +34,7 @@
                     <div class="menu-items">
                     <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
                     <a href="{{ route('admin/users') }}" id="active_tab" class="item1">Users</a>
-                    <a href="#" class="item" id="active_tab">Asset Management</a>
-                    <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
+                    <a href="#" class="item">Asset Management</a>
                     <a href="#" class="item">Forms</a>
                     <a href="#" class="item">Logout</a>
                     </div>
@@ -175,15 +174,7 @@
                 </div>
             </section>
 
-                <nav>
-                    <!-- Your navigation links here -->
-                    <a href="{{ route('admin/receiving_repo') }}" class="item1">Receiving Report</a>
-                    <a href="{{ route('admin/asset_info') }}" class="one" id="active_page">Asset Information</a>
-                    <a href="{{ route('admin/ack_repo') }}" class="item1">Acknowledgement Report</a>
-                    <a href="{{ route('admin/prop_borr') }}" class="item1">Property Borrowing</a>
-                    <a href="{{ route('admin/main_req') }}" class="item1">Maintenance Request</a>
-                    <a href="{{ route('admin/condemn_req') }}" class="item1">Condemnation Request</a>
-                </nav>
+             
                 </div>
 
                 @foreach($userData as $user)

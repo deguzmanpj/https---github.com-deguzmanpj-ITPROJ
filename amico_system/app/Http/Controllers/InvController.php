@@ -175,7 +175,7 @@ class InvController extends Controller
                     $request->input('unit'),
                     $request->input('unit_code'),
                     $request->input('office'),
-                    preg_replace('/^RR/', '', $request->input('rr_no')),
+                    $request->input('rr_no'),
                     $request->input('cb_a'),
                     $request->input('reference'),
                     \DateTime::createFromFormat('Y-m-d', $request->input('reference_date')) // Convert the string to a DateTime object
@@ -257,15 +257,17 @@ class InvController extends Controller
             }
         }
 
-        for ($int = 0; $int < count($assetTags); $int++) {
+
+        // Retrieve all rows matching the condition
+        $matchingRows = DB::table('receiving_report')->where('rr_no', $request->input('rr_no'))->get();
+        for ($int = 0; $int < count($matchingRows); $int++) {
             DB::table('receiving_report')
-                ->where('rr_no', preg_replace('/^RR/', '', $request->input('rr_no')))
-                // ->where('asset_tag', $assetTags[$int]) // Add condition for updating the correct row
+                ->where('rr_id', $matchingRows[$int]->rr_id)
                 ->update([
                     'unit' => $request->input('unit'),
                     'unit_code' => $request->input('unit_code'),
                     'office' => $request->input('office'),
-                    'rr_no' => preg_replace('/^RR/', '', $request->input('rr_no')),
+                    'rr_no' => $request->input('rr_no'),
                     'cb_a' => $request->input('cb_a'),
                     'reference' => $request->input('reference'),
                     'reference_date' => \DateTime::createFromFormat('Y-m-d', $request->input('reference_date'))->format('Y-m-d'),
@@ -322,6 +324,7 @@ class InvController extends Controller
 
         $units = DB::select('select * from units');
         $units = (array)$units;
+
 
         if ($request->input("id") === "employee") {
             return view('employee/rr_form_edit', compact('results'), compact('units'));
@@ -400,9 +403,12 @@ class InvController extends Controller
         $brand = $request->input('brand');
         $model = $request->input('model');
 
+
+        // Retrieve all rows matching the condition
+        $matchingRows = DB::table('acknowledgement_report')->where('ar_no', $request->input('ar_no'))->get();
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::table('acknowledgement_report')
-                ->where('ar_no',  $request->input('ar_no'))
+                ->where('ar_id', $matchingRows[$int]->ar_id)
                 ->update([
                     'unit' => $request->input('unit'),
                     'office' => $request->input('office'),
@@ -557,6 +563,8 @@ class InvController extends Controller
         $qty = $request->input('qty');
         $uom = $request->input('uom');
 
+        // Retrieve all rows matching the condition
+        $matchingRows = DB::table('receiving_report')->where('pb_no', $request->input('pb_no'))->get();
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::update(
                 'UPDATE property_borrowing 
@@ -567,7 +575,7 @@ class InvController extends Controller
                     borrow_noted_by = ?, borrow_noted_by_date = ?, i_borrow = ?, borrower_return_date = ?, borrower_noted_by = ?, 
                     borrower_noted_date = ?, ii_borrow = ?, provider_received_by = ?, provider_received_date = ?, provider_noted_date_2 = ?, 
                     iii_borrow = ?, amico_prepared_by_2 = ?, amico_prepared_date_2 = ?, amico_noted_date_2 = ?, notes = ?, status = ?
-                WHERE pb_no = ?',
+                WHERE pb_id = ?',
                 [
                     $request->input('person_accountable'),
                     $request->input('id_no'),
@@ -613,7 +621,7 @@ class InvController extends Controller
                     \DateTime::createFromFormat('Y-m-d', $request->input('amico_noted_date_2'))->format('Y-m-d'),
                     $request->input('notes'),
                     "pending",
-                    $request->input('pb_no')
+                    $matchingRows[$int]->pb_id
                 ]
             );
         }
@@ -751,11 +759,13 @@ class InvController extends Controller
             }
         }
 
-        Log::info("ito" . $request->input('rs_date') . $request->input('unit'));
 
+
+        // Retrieve all rows matching the condition
+        $matchingRows = DB::table('maintenance_report')->where('ms_no', $request->input('ms_no'))->get();
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::table('maintenance_report')
-                ->where('ms_no', $request->input('ms_no'))
+                ->where('ms_id', $matchingRows[$int]->ms_id)
                 ->update([
                     'unit' => $request->input('unit'),
                     'office' => $request->input('office'),
@@ -897,9 +907,12 @@ class InvController extends Controller
 
         Log::info($request->input('cr_date'));
 
+
+        // Retrieve all rows matching the condition
+        $matchingRows = DB::table('condemnation')->where('cr_no', $request->input('cr_no'))->get();
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::table('condemnation')
-                ->where('cr_no', $request->input('cr_no'))
+                ->where('cr_id', $matchingRows[$int]->cr_id)
                 ->where('asset_tag', $assetTags[$int]) // Add condition for updating the correct row
                 ->update([
                     'unit' => $request->input('unit'),
@@ -916,7 +929,7 @@ class InvController extends Controller
                     'model' => $model[$int],
                     'serial_no' => $serialNum[$int],
                     'date_acq' =>   \DateTime::createFromFormat('Y-m-d',  $dateAcq[$int]) // Convert the string to a DateTime object
-                    ->format('Y-m-d'), // Format the DateTime object
+                        ->format('Y-m-d'), // Format the DateTime object
                     'amico_prepared_by' => $request->input('amico_prepared_by'),
                     'amico_prepared_date' => \DateTime::createFromFormat('Y-m-d', $request->input('amico_prepared_date'))->format('Y-m-d'),
                     'amico_noted_by' => $request->input('amico_noted_by'),
@@ -1037,7 +1050,7 @@ class InvController extends Controller
         $brand = $request->input('brand');
         $model = $request->input('model');
         $lastMaintenance = $request->input('last_maintenance');
-        
+
         $notes = $request->input('notes');
         $allNotes = " ";
         foreach ($notes as $note) {
@@ -1045,10 +1058,12 @@ class InvController extends Controller
                 $allNotes = $allNotes . $note . "|||";
             }
         }
-        
+
+        // Retrieve all rows matching the condition
+        $matchingRows = DB::table('calibration')->where('cs_no', $request->input('cs_no'))->get();
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::table('calibration')
-                ->where('cs_no', $request->input('cs_no'))
+                ->where('cs_id', $matchingRows[$int]->cs_id)
                 ->where('asset_tag', $assetTags[$int]) // Add condition for updating the correct row
                 ->update([
                     'unit' => $request->input('unit'),
@@ -1061,7 +1076,7 @@ class InvController extends Controller
                     'cb_calibration' => $request->input('cb_maintenance'),
                     'warranty_po_no' => $request->input('cb_warranty_po_no'),
                     'warranty_po_date' => \DateTime::createFromFormat('Y-m-d', $request->input('cb_warranty_po_date'))->format('Y-m-d'),
-        
+
                     'supplier' => $request->input('supplier'),
                     'asset_tag' => $assetTags[$int],
                     'asset_desc' => $assetDesc[$int],
@@ -1083,117 +1098,190 @@ class InvController extends Controller
                     'status' => 'pending'
                 ]);
         }
-        
+
         if ($request->input('user') === 'admin') {
             return redirect("admin/calib_req");
         } else {
             return redirect("employee/calib_req");
         }
-        
     }
 
     public function addToAssetInfo(Request $request)
     {
-        $assetTags = $request->input('asset_tag');
-        $assetDesc = $request->input('asset_desc');
-        $serialNum = $request->input('serial_no');
-        $assetClass = $request->input('asset_class');
-        $brand = $request->input('brand');
-        $model = $request->input('model');
-        $qty = $request->input('qty');
-        $uom = $request->input('uom');
 
-        $remarks = $request->input('remarks');
-        $allRemarks = "";
-        foreach ($remarks as $remark) {
-            $allRemarks += $remark + ",";
-        }
-
-        $notes = $request->input('notes');
-        $allNotes = "";
-        foreach ($notes as $note) {
-            $allNotes += $note + ",";
-        }
-
-
-        Log::info($request->input('fo_rec_date'));
-
-        for ($int = 0; $assetTags[$int] != null; $int++) {
+        $matchingRows = DB::table('receiving_report')->where('rr_no', $request->input('rr_no'))->get();
+        foreach ($matchingRows as $row) {
             DB::insert(
-                'INSERT INTO receiving_report 
-                (unit, unit_code, office, rr_no, cb_purchase_goods_services, cb_transfer_property_equipment, cb_donation, 
-                cb_grant, cb_other, reference, reference_date, received_from, ref_received_from, date_acq, asset_tag, asset_desc, 
-                brand, model, serial_no, asset_class, qty, uom, funded_by, received_by,
-                checked_by, amico_prepared_by, amico_prepared_by_date, amico_noted_by, amico_noted_by_date,
-                req_status, au_cpmsd, au_tmdd, au_other, au_received_by, au_received_date,
-                au_condition, au_remarks, au_checked_by, au_checked_by_date, au_noted_by, au_noted_by_date, ua_ack_by,
-                ua_ack_by_position, ua_ack_by_date, fo_rec_copy_by, fo_rec_date, notes)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                'INSERT INTO asset 
+                (unit_code, asset_tag, asset_desc, brand, model, serial_no, asset_class, status, rr_no, 
+                date_acq, reference, reference_date,funded_by,
+                received_from, received_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
-                    $request->input('unit'),
-                    $request->input('unit_code'),
-                    $request->input('office'),
-                    $request->input('rr_no'),
-                    $request->input('cb_purchase_goods_services'),
-                    $request->input('cb_transfer_property_equipment'),
-                    $request->input('cb_donation'),
-                    $request->input('cb_grant'),
-                    $request->input('cb_other'),
-                    $request->input('reference'),
-                    \DateTime::createFromFormat('Y-m-d', $request->input('reference_date')) // Convert the string to a DateTime object
-                        ->format('Y-m-d'), // Format the DateTime object
-                    $request->input('received_from'),
-                    $request->input('ref_received_from'),
-                    \DateTime::createFromFormat('Y-m-d', $request->input('date_acq')) // Convert the string to a DateTime object
-                        ->format('Y-m-d'), // Format the DateTime object
-                    $assetTags[$int],
-                    $assetDesc[$int],
-                    $brand[$int],
-                    $model[$int],
-                    $serialNum[$int],
-                    $assetClass[$int],
-                    $qty[$int],
-                    $uom[$int],
-                    $request->input('funded_by'),
-                    $request->input('received_by'),
-                    $request->input('checked_by'),
-                    $request->input('amico_prepared_by'),
-                    $request->input('amico_prepared_by_date'),
-                    $request->input('amico_noted_by'),
-                    $request->input('amico_noted_by_date'),
-                    "pending",
-                    $request->input('au_cpmsd'),
-                    $request->input('au_tmdd'),
-                    $request->input('au_other'),
-                    $request->input('au_received_by'),
-                    $request->input('au_received_date'),
-                    $request->input('au_condition'),
-                    $allRemarks,
-                    $request->input('au_checked_by'),
-                    $request->input('au_checked_by_date'),
-                    $request->input('au_noted_by'),
-                    $request->input('au_noted_by_date'),
-                    $request->input('ua_ack_by'),
-                    $request->input('ua_ack_by_position'),
-                    \DateTime::createFromFormat('Y-m-d', $request->input('ua_ack_by_date')) // Convert the string to a DateTime object
-                        ->format('Y-m-d'), // Format the DateTime object
-                    $request->input('fo_rec_copy_by'),
-                    \DateTime::createFromFormat('Y-m-d', $request->input('fo_rec_date')) // Convert the string to a DateTime object
-                        ->format('Y-m-d'), // Format the DateTime object
-                    $allNotes,
+                    $row->unit_code,
+                    $row->asset_tag,
+                    $row->asset_desc,
+                    $row->brand,
+                    $row->model,
+                    $row->serial_no,
+                    $row->asset_class,
+                    "accepted",
+                    $row->rr_no,
+                    \DateTime::createFromFormat('Y-m-d', $row->date_acq)->format('Y-m-d'),
+                    $row->reference,
+                    \DateTime::createFromFormat('Y-m-d', $row->reference_date)->format('Y-m-d'),
+                    $row->funded_by,
+                    $row->received_from,
+                    $row->received_by
                 ]
-
             );
+
+            DB::table('receiving_report')
+                ->where('rr_id', $row->rr_id)
+                ->update([
+                    'req_status' => "accepted",
+                ]);
         }
-
-
-        if ($request->input('user') === 'admin') {
+       
             return redirect("admin/receiving_repo");
-        } else {
-            return redirect("employee/receiving_repo");
-        }
+      
     }
+
+    public function addToAck(Request $request)
+    {
+
+        $matchingRows = DB::table('acknowledgement_report')->where('ar_no', $request->input('ar_no'))->get();
+        foreach ($matchingRows as $row) {
+            DB::table('asset')
+                ->where('serial_no', $row->serial_no)
+                ->update([
+                    "ar_no" => $row->ar_no,
+                    "ar_date" => \DateTime::createFromFormat('Y-m-d', $row->ar_date)->format('Y-m-d'),
+                    "id_number" =>  $row->id_number,
+                    "name_employee" =>  $row->name_employee,
+                    "status" => "acknowledged"
+
+                ]);
+
+            DB::table('acknowledgement_report')
+                ->where('ar_id', $row->ar_id)
+                ->update([
+                    'status' => "accepted",
+                ]);
+        }
+     
+            return redirect("admin/ack_repo");
+      
+    }
+
+
+    public function addToProp(Request $request)
+    {
+
+        $matchingRows = DB::table('property_borrowing')->where('pb_no', $request->input('pb_no'))->get();
+        foreach ($matchingRows as $row) {
+            DB::table('asset')
+                ->where('serial_no', $row->serial_no)
+                ->update([
+                    "pb_no" => $row->pb_no,
+                    "pb_date" => \DateTime::createFromFormat('Y-m-d', $row->pb_date)->format('Y-m-d'),
+                    "id_no" =>  $row->id_no,
+                    "person_accountable" =>  $row->person_accountable,
+                    "status" => "borrowed"
+
+                ]);
+            DB::table('property_borrowing')
+                ->where('pb_id', $row->pb_id)
+                ->update([
+                    'status' => "accepted",
+                ]);
+        }
+            return redirect("admin/receiving_repo");
+      
+    }
+
+
+    public function addToMain(Request $request)
+    {
+
+        $matchingRows = DB::table('maintenance_report')->where('ms_no', $request->input('ms_no'))->get();
+        foreach ($matchingRows as $row) {
+
+            DB::table('asset')
+                ->where('serial_no', $row->serial_no)
+                ->update([
+                    "ms_no" => $row->ms_no,
+                    "ms_date" => \DateTime::createFromFormat('Y-m-d', $row->ms_date)->format('Y-m-d'),
+                    "moni_log" =>  $row->moni_log,
+                    "status" => "maintenance"
+
+                ]);
+
+
+            DB::table('maintenance_report')
+                ->where('ms_id', $row->ms_id)
+                ->update([
+                    'status' => "accepted",
+                ]);
+        }
+            return redirect("admin/main_req");
+       
+    }
+
+
+    public function addToCondemn(Request $request)
+    {
+
+        $matchingRows = DB::table('condemnation')->where('cr_no', $request->input('cr_no'))->get();
+        foreach ($matchingRows as $row) {
+            DB::table('asset')
+                ->where('serial_no', $row->serial_no)
+                ->update([
+                    "cr_no" => $row->cr_no,
+                    "cr_date" => \DateTime::createFromFormat('Y-m-d', $row->cr_date)->format('Y-m-d'),
+                    "remarks" =>  $row->notes,
+                    "status" => "condemned"
+
+                ]);
+
+
+            DB::table('condemnation')
+                ->where('cr_id', $row->cr_id)
+                ->update([
+                    'status' => "accepted",
+                ]);
+        }
+      
+            return redirect("admin/condemn_req");
+        
+    }
+
+
+    public function addToCalib(Request $request)
+    {
+
+        $matchingRows = DB::table('calibration')->where('cs_no', $request->input('cs_no'))->get();
+        foreach ($matchingRows as $row) {
+            DB::table('asset')
+                ->where('serial_no', $row->serial_no)
+                ->update([
+                    "cs_no" => $row->cs_no,
+                    "cs_date" => \DateTime::createFromFormat('Y-m-d', $row->cs_date)->format('Y-m-d'),
+                    "status" => "calibrated"
+
+                ]);
+
+            DB::table('calibration')
+                ->where('cs_id', $row->cs_id)
+                ->update([
+                    'status' => "accepted",
+                ]);
+        }
+      
+            return redirect("admin/calib_req");
+      
+    }
+
 
     public function declineRequest(Request $request)
     {
@@ -1208,45 +1296,68 @@ class InvController extends Controller
 
     public function editAsset(Request $request)
     {
-        $number = $request->input('serial_no');
-
-        if ($request->input('user_id') != null) {
-            DB::table('receiving_report')
-                ->where('serial_no', $number)
-                ->update([
-                    'rr_no' => $request->input('rr_no'),
-                    'rs_date' => $request->input('rs_date'),
-                    'doc_no' => $request->input('doc_no'),
-                    'date_rec' => $request->input('date_rec'),
-                    'from_loc' => $request->input('from_loc'),
-                    'from_don' => $request->input('from_don'),
-                    'date_acq' => $request->input('date_acq'),
-                    'user_id' => $request->input('user_id')
-                ]);
-        } else {
-            DB::table('receiving_report')
-                ->where('serial_no', $number)
-                ->update([
-                    'rr_no' => $request->input('rr_no'),
-                    'rr_date' => $request->input('rr_date'),
-                    'po_no' => $request->input('po_no'),
-                    'po_date' => $request->input('po_date'),
-                    'serial_no' => $request->input('serial_no'),
-                    'asset_desc' => $request->input('asset_desc'),
-                    'funded_by' => $request->input('funded_by'),
-                    'rs_no' => $request->input('rs_no')
-                ]);
-        }
 
 
-        if ($request->input('user') === 'admin') {
-            return redirect("admin/receiving_repo");
-        } else {
-            if ($request->input('req_status') === 'pending') {
-                return redirect("employee/pending");
-            } else {
-                return redirect("employee/receiving_repo");
-            }
-        }
+
+        $pressedButton = $request['button_pressed'];
+
+
+        $serial_name = "serial_no$pressedButton";
+        $number = $request->input($serial_name);
+
+
+        DB::table('asset')
+            ->where('serial_no', $number)
+            ->update([
+                'unit_code' => $request->input("unit_code$pressedButton"),
+                'asset_tag' => $request->input("asset_tag$pressedButton"),
+                'asset_desc' => $request->input("asset_desc$pressedButton"),
+                'brand' => $request->input("brand$pressedButton"),
+                'model' => $request->input("model$pressedButton"),
+                'serial_no' => $request->input("serial_no$pressedButton"),
+                'asset_class' => $request->input("asset_class$pressedButton"),
+                'status' => $request->input("status$pressedButton"),
+                'cost' => $request->input("cost$pressedButton"),
+                'warranty' => $request->input("warranty$pressedButton"),
+                'build_loc' => $request->input("build_loc$pressedButton"),
+                'floor' => $request->input("floor$pressedButton"),
+                'spec_area' => $request->input("spec_area$pressedButton"),
+                'note' => $request->input("note$pressedButton"),
+                'rr_no' => $request->input("rr_no$pressedButton"),
+                'date_acq' => $request->input("date_acq$pressedButton"),
+                'reference' => $request->input("reference$pressedButton"),
+                'reference_date' => $request->input("reference_date$pressedButton"),
+                'funded_by' => $request->input("funded_by$pressedButton"),
+                'rs_no_transferred' => $request->input("rs_no_transferred$pressedButton"),
+                'rs_date' => $request->input("rs_date$pressedButton"),
+                'from_loc' => $request->input("from_loc$pressedButton"),
+                'doc_no' => $request->input("doc_no$pressedButton"),
+                'doc_no_date' => $request->input("doc_no_date$pressedButton"),
+                'received_from' => $request->input("received_from$pressedButton"),
+                'received_by' => $request->input("received_by$pressedButton"),
+                'pb_no' => $request->input("pb_no$pressedButton"),
+                'pb_date' => $request->input("pb_date$pressedButton"),
+                'id_no' => $request->input("id_no$pressedButton"),
+                'person_accountable' => $request->input("person_accountable$pressedButton"),
+                'ms_no' => $request->input("ms_no$pressedButton"),
+                'ms_date' => $request->input("ms_date$pressedButton"),
+                'moni_log' => $request->input("moni_log$pressedButton"),
+                'cr_no' => $request->input("cr_no$pressedButton"),
+                'cr_date' => $request->input("cr_date$pressedButton"),
+                'remarks' => $request->input("remarks$pressedButton"),
+                'ar_no' => $request->input("ar_no$pressedButton"),
+                'ar_date' => $request->input("ar_date$pressedButton"),
+                'id_number' => $request->input("id_number$pressedButton"),
+                'name_employee' => $request->input("name_employee$pressedButton"),
+                'cs_no' => $request->input("cs_no$pressedButton"),
+                'cs_date' => $request->input("cs_date$pressedButton"),
+                'moni_log_calibration' => $request->input("moni_log_calibration$pressedButton"),
+
+
+            ]);
+
+
+
+        return redirect("admin/asset_info");
     }
 }
