@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashControlEmp;
+use App\Http\Controllers\AssetSearchController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -297,6 +298,8 @@ Route::get('employee/dashB', [DashControlEmp::class, 'index'])->name('employee/d
 Route::get('/logout', [InvController::class, 'logout'])->name('logout');
 
 Route::post('admin/asset_info/delete.asset', [InvController::class, 'deleteAsset'])->name('delete.asset');
+
+Route::get('/search', [AssetSearchController::class, 'search'])->name('asset_info.search');
 
 Route::get('pdf',[PdfExtractorController::class,'extractPdf']);
 
