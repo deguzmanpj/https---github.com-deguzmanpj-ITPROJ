@@ -129,7 +129,6 @@ p {
     transition: all .1s ease-in-out;
     z-index: 1;
     overflow: hidden;
-    margin-top: 10px;
 }
 .table-title .leave-note:active {
     transform: translateY(3px) translateX(3px);

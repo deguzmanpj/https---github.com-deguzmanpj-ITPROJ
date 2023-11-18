@@ -942,4 +942,8 @@ active page */
 
 .feature-container{
     display: flex;
+    margin-bottom: 13px;
+}
+h4{
+    font-weight: bold;
 }
