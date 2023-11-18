@@ -146,7 +146,13 @@
                                 <tr>
                                     <td>{{ $user->userId }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->pass }}</td>
+                                    <td>
+                                        <span class="password-hidden" data-password="{{ $user->pass }}">
+                                            @for ($i = 0; $i < strlen($user->pass); $i++)
+                                                •
+                                            @endfor
+                                        </span>
+                                    </td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->contact_no }}</td>
                                     <td>{{ $user->role }}</td>

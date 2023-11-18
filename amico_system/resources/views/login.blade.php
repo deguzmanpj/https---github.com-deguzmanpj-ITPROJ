@@ -44,10 +44,16 @@
                             @csrf
                             <label for="number">Number</label>
                             <input class = "log" type="text" id="number" name = "number">
+
                             <label for="password">Password</label>
-                            <input class = "log" type="password" id="password">
+                            <input class = "log" type="password" id="password" name="password">
+
                             <input class = "log" type="submit" id="submit" value="Submit">
                             </form>
+
+                            @if(session('error'))
+                                <p class="error">{{ session('error') }}</p>
+                            @endif
                         </div>
                     </div>
                     <div class="right">
@@ -143,7 +149,7 @@
                             <img src="images/paj.png" />
                         </div>
                         <h3>Prince Jefferson De Guzman</h3>
-                        <p>Muntik na Developer</p>
+                        <p>Developer na ngayon</p>
                     </div>
                 </div>
 
@@ -154,7 +160,7 @@
                             <img src="images/roms.png" />
                         </div>
                         <h3>Romuel Lacuesta</h3>
-                        <p>Muntik na Developer</p>
+                        <p>Developer na ngayon</p>
                     </div>
                 </div>
 
@@ -176,7 +182,7 @@
                             <img src="images/adrian.png" />
                         </div>
                         <h3>Adrian Salinas</h3>
-                        <p>Database</p>
+                        <p>System Analyst</p>
                     </div>
                 </div>
             </div>

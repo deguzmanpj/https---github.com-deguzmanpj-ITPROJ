@@ -292,3 +292,8 @@ section{
       padding: 0 1em;
     }
   }
+.error{
+  font-weight: bold;
+  font-style: italic;
+  color: rgb(151, 1, 1);
+}
