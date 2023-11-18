@@ -248,10 +248,7 @@ body {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: scroll;
-    /* Enable horizontal scrolling */
     scroll-snap-type: x mandatory;
-    /* Enable snapping to sections */
-
 }
 
 .section {
