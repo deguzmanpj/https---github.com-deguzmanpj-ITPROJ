@@ -524,7 +524,7 @@ $int = 0;                                  foreach($results as $result){
         </div>
 
     </form>
-        <nav>
+        <!--<nav>
         <a href="{{ route ('admin/receiving_repo')}}" class="item1">Receiving Report</a>
             <a href="{{ route ('admin/ack_repo')}}" class="item1">Acknowledgement Report</a>
             <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>

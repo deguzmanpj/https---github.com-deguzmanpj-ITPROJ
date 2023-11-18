@@ -17,42 +17,6 @@ dash.admin
         <link rel="stylesheet" href="../res/css/asset_information.css"> 
         <link rel="stylesheet" href="../res/css/navbar.css">
 
-    <style>
-            
-        .selected-unit {
-            font-weight: bold;
-            font-size: 23px;
-            font-style: italic;
-            margin-top: 10px;
-        }
-        #chartAndMonitoringContainer {
-        display: flex;
-        justify-content: space-between;
-        }
-        #chartContainer {
-            width: 50%; 
-            box-sizing: border-box;
-            border: 5px solid #ccc;
-        }
-        .real-time-monitoring {
-            width: 45%; 
-            margin-left: 52%; 
-            margin-top: -19%;
-            float: left; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            border: 5px solid #ccc; 
-        }
-        .real-time-monitoring table {
-            width: 100%; 
-        }
-        .chart-moni-container{
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-    
-    </style>
 
 </head>
 <body>
@@ -82,6 +46,7 @@ dash.admin
     </div>
 </div>
 
+
 <div class="container">
     <div class="header">
         <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
@@ -89,15 +54,17 @@ dash.admin
     </div>
 </div>
 
+
 <div class="container">
-    <div id="selectedUnit" class="selected-unit">
-    @if($unitFilter)
-        Selected Unit: {{ $unitFilter }}
-    @else
-        All Units
-    @endif
+    <div class="container">
+        <div id="selectedUnit" class="selected-unit">
+        @if($unitFilter)
+            Selected Unit: {{ $unitFilter }}
+        @else
+            All Units
+        @endif
+        </div>
     </div>
-</div>
 
 <!-- Filter -->
 <div class="container">
@@ -168,45 +135,48 @@ dash.admin
 </div>
 
 <!-- Add a canvas element where the chart will be rendered -->
-<div id="chartContainer">
-    <canvas id="assetStatusChart"></canvas>
-</div>
-
 <div class="container">
-    <div class="real-time-monitoring">
-        <h2>Real-Time Monitoring</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Condemned</td>
-                    <td id="condemnedCount"></td>
-                </tr>
-                <tr>
-                    <td>Maintenance</td>
-                    <td id="maintenanceCount"></td>
-                </tr>
-                <tr>
-                    <td>Borrowed</td>
-                    <td id="borrowedCount"></td>
-                </tr>
-                <tr>
-                    <td>Calibration</td>
-                    <td id="calibrationCount"></td>
-                </tr>
-                <tr>
-                    <td>Acknowledged</td>
-                    <td id="acknowledgedCount"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="chart-container">
+        <canvas id="assetStatusChart"></canvas>
+    </div>
+
+    <div class="rtm-container">
+        <div class="real-time-monitoring">
+            <h2>Real-Time Monitoring</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Condemned</td>
+                        <td id="condemnedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Maintenance</td>
+                        <td id="maintenanceCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Borrowed</td>
+                        <td id="borrowedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Calibration</td>
+                        <td id="calibrationCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Acknowledged</td>
+                        <td id="acknowledgedCount"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
