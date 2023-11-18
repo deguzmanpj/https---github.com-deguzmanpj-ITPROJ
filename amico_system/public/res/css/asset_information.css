@@ -252,6 +252,8 @@ body {
 .wrapper {
     display: flex;
     flex-wrap: nowrap;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
 }
 
 .section {
