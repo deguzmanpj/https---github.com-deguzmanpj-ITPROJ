@@ -1319,55 +1319,75 @@ class InvController extends Controller
         $serial_name = "serial_no$pressedButton";
         $number = $request->input($serial_name);
 
-        if ($request->input('user_id') != null) {
-            DB::table('receiving_report')
-                ->where('serial_no', $number)
-                ->update([
-                    'rr_no' => $request->input('rr_no'),
-                    'rs_date' => $request->input('rs_date'),
-                    'doc_no' => $request->input('doc_no'),
-                    'date_rec' => $request->input('date_rec'),
-                    'from_loc' => $request->input('from_loc'),
-                    'from_don' => $request->input('from_don'),
-                    'date_acq' => $request->input('date_acq'),
-                    'user_id' => $request->input('user_id')
-                ]);
-        } else {
-            DB::table('receiving_report')
-                ->where('serial_no', $number)
-                ->update([
-                    'rr_no' => $request->input('rr_no'),
-                    'rr_date' => $request->input('rr_date'),
-                    'po_no' => $request->input('po_no'),
-                    'po_date' => $request->input('po_date'),
-                    'serial_no' => $request->input('serial_no'),
-                    'asset_desc' => $request->input('asset_desc'),
-                    'funded_by' => $request->input('funded_by'),
-                    'rs_no' => $request->input('rs_no')
-                ]);
-        }
+
+        DB::table('asset')
+            ->where('serial_no', $number)
+            ->update([
+                'unit_code' => $request->input("unit_code$pressedButton"),
+                'asset_tag' => $request->input("asset_tag$pressedButton"),
+                'asset_desc' => $request->input("asset_desc$pressedButton"),
+                'brand' => $request->input("brand$pressedButton"),
+                'model' => $request->input("model$pressedButton"),
+                'serial_no' => $request->input("serial_no$pressedButton"),
+                'asset_class' => $request->input("asset_class$pressedButton"),
+                'status' => $request->input("status$pressedButton"),
+                'cost' => $request->input("cost$pressedButton"),
+                'warranty' => $request->input("warranty$pressedButton"),
+                'build_loc' => $request->input("build_loc$pressedButton"),
+                'floor' => $request->input("floor$pressedButton"),
+                'spec_area' => $request->input("spec_area$pressedButton"),
+                'note' => $request->input("note$pressedButton"),
+                'rr_no' => $request->input("rr_no$pressedButton"),
+                'date_acq' => $request->input("date_acq$pressedButton"),
+                'reference' => $request->input("reference$pressedButton"),
+                'reference_date' => $request->input("reference_date$pressedButton"),
+                'funded_by' => $request->input("funded_by$pressedButton"),
+                'rs_no_transferred' => $request->input("rs_no_transferred$pressedButton"),
+                'rs_date' => $request->input("rs_date$pressedButton"),
+                'from_loc' => $request->input("from_loc$pressedButton"),
+                'doc_no' => $request->input("doc_no$pressedButton"),
+                'doc_no_date' => $request->input("doc_no_date$pressedButton"),
+                'received_from' => $request->input("received_from$pressedButton"),
+                'received_by' => $request->input("received_by$pressedButton"),
+                'pb_no' => $request->input("pb_no$pressedButton"),
+                'pb_date' => $request->input("pb_date$pressedButton"),
+                'id_no' => $request->input("id_no$pressedButton"),
+                'person_accountable' => $request->input("person_accountable$pressedButton"),
+                'ms_no' => $request->input("ms_no$pressedButton"),
+                'ms_date' => $request->input("ms_date$pressedButton"),
+                'moni_log' => $request->input("moni_log$pressedButton"),
+                'cr_no' => $request->input("cr_no$pressedButton"),
+                'cr_date' => $request->input("cr_date$pressedButton"),
+                'remarks' => $request->input("remarks$pressedButton"),
+                'ar_no' => $request->input("ar_no$pressedButton"),
+                'ar_date' => $request->input("ar_date$pressedButton"),
+                'id_number' => $request->input("id_number$pressedButton"),
+                'name_employee' => $request->input("name_employee$pressedButton"),
+                'cs_no' => $request->input("cs_no$pressedButton"),
+                'cs_date' => $request->input("cs_date$pressedButton"),
+                'moni_log_calibration' => $request->input("moni_log_calibration$pressedButton"),
 
 
-        if ($request->input('user') === 'admin') {
-            return redirect("admin/receiving_repo");
-        } else {
-            if ($request->input('req_status') === 'pending') {
-                return redirect("employee/pending");
-            } else {
-                return redirect("employee/receiving_repo");
-            }
-        }
+            ]);
+
+
+
+        return redirect("admin/asset_info");
     }
-
-public function deleteAsset(Request $request)
+    public function deleteAsset(Request $request)
 {
     try{ 
     $serialNo = $request->input('serial_no');
     \Log::info('Serial no to be deleted: ' . $serialNo);
     // dd($request->serial_no);
 
+    
+
+    // Perform validation or additional checks if necessary
+
     DB::table('asset')->where('serial_no', $serialNo)->delete();
 
+    
     return response()->json(['message' => 'Asset deleted successfully']);
 
 } catch (\Exception $e) {
