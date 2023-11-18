@@ -532,7 +532,7 @@ $int = 0;                                  foreach($results as $result){
             <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
             <a href="{{ route ('admin/calib_req')}}" class="item1" >Calibration Request</a>
         </nav>
-
+                                -->                       
     <script>
         window.csrf_token = "{{ csrf_token() }}";
     </script>
