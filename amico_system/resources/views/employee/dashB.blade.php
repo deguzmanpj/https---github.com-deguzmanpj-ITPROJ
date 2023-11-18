@@ -1,4 +1,4 @@
-dashB.blade.php
+dash.admin
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,42 +17,6 @@ dashB.blade.php
         <link rel="stylesheet" href="../res/css/asset_information.css"> 
         <link rel="stylesheet" href="../res/css/navbar.css">
 
-    <style>
-            <style>
-        .selected-unit {
-            font-weight: bold;
-            font-size: 23px;
-            font-style: italic;
-            margin-top: 10px;
-        }
-        #chartAndMonitoringContainer {
-        display: flex;
-        justify-content: space-between;
-        }
-        #chartContainer {
-            width: 50%; 
-            box-sizing: border-box;
-            border: 5px solid #ccc;
-        }
-        .real-time-monitoring {
-            width: 45%; 
-            margin-left: 52%; 
-            margin-top: -19%;
-            float: left; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            border: 5px solid #ccc; 
-        }
-        .real-time-monitoring table {
-            width: 100%; 
-        }
-        /* .chart-moni-container{
-            display: flex;
-            flex-wrap: wrap;
-        } */
-
-    </style>
-    </style>
 
 </head>
 <body>
@@ -72,14 +36,15 @@ dashB.blade.php
     <div class="main">
         <div id="sideMenu" class="side-menu">
             <div class="menu-items">
-                <a href="{{ route('employee/dashB') }}"id= "active_tab" class="item1">Dashboard</a>
-                <a href="{{ route('employee/asset_info') }}" class="item1">Asset Management</a>
-                <a href="{{ route ('employee/receiving_repo')}}" class="item1">Forms</a>
-                <a href="{{ route('logout') }}" class="item1">Logout</a>>
+                    <a href="{{ route ('employee/dashB')}}" id="active_tab" class="item1">Dashboard</a>
+                    <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('employee/receiving_repo')}}"  class="item1">Forms</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="container">
     <div class="header">
@@ -88,19 +53,21 @@ dashB.blade.php
     </div>
 </div>
 
+
 <div class="container">
-    <div id="selectedUnit" class="selected-unit">
-    @if($unitFilter)
-        Selected Unit: {{ $unitFilter }}
-    @else
-        All Units
-    @endif
+    <div class="container">
+        <div id="selectedUnit" class="selected-unit">
+        @if($unitFilter)
+            Selected Unit: {{ $unitFilter }}
+        @else
+            All Units
+        @endif
+        </div>
     </div>
-</div>
 
 <!-- Filter -->
 <div class="container">
-    <form action="{{ route('employee/dashB') }}" method="GET">
+    <form action="{{ route('admin/dash') }}" method="GET">
         <label for="unit">Select Unit:</label>
         <select name="unit" id="unit">
             <!-- Add options for each unit -->
@@ -143,7 +110,7 @@ dashB.blade.php
             <option value="School of Engineering and Architecture"@if($unitFilter == "School of Engineering and Architecture") selected @endif>School of Engineering and Architecture</option>
             <option value="School of Law"@if($unitFilter == "School of Law") selected @endif>School of Law</option>
             <option value="School of Medicine"@if($unitFilter == "School of Medicine") selected @endif>School of Medicine</option>
-            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>Asset Management and Inventory Control Office</option>
+            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>School of Nursing, Allied Health and Biological Sciences</option>
             <option value="School of Teacher Education and Liberal Arts"@if($unitFilter == "School of Teacher Education and Liberal Arts") selected @endif>School of Teacher Education and Liberal Arts</option>
             <option value="SFW - Halfway Home for Boys"@if($unitFilter == "SFW - Halfway Home for Boys") selected @endif>SFW - Halfway Home for Boys</option>
             <option value="SFW - Pedagogical and Developmental Center"@if($unitFilter == "SFW - Pedagogical and Developmental Center") selected @endif>SFW - Pedagogical and Developmental Center</option>
@@ -167,45 +134,48 @@ dashB.blade.php
 </div>
 
 <!-- Add a canvas element where the chart will be rendered -->
-<div id="chartContainer">
-    <canvas id="assetStatusChart"></canvas>
-</div>
-
 <div class="container">
-    <div class="real-time-monitoring">
-        <h2>Real-Time Monitoring</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Condemned</td>
-                    <td id="condemnedCount"></td>
-                </tr>
-                <tr>
-                    <td>Maintenance</td>
-                    <td id="maintenanceCount"></td>
-                </tr>
-                <tr>
-                    <td>Borrowed</td>
-                    <td id="borrowedCount"></td>
-                </tr>
-                <tr>
-                    <td>Calibration</td>
-                    <td id="calibrationCount"></td>
-                </tr>
-                <tr>
-                    <td>Acknowledged</td>
-                    <td id="acknowledgedCount"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="chart-container">
+        <canvas id="assetStatusChart"></canvas>
+    </div>
+
+    <div class="rtm-container">
+        <div class="real-time-monitoring">
+            <h2>Real-Time Monitoring</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Condemned</td>
+                        <td id="condemnedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Maintenance</td>
+                        <td id="maintenanceCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Borrowed</td>
+                        <td id="borrowedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Calibration</td>
+                        <td id="calibrationCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Acknowledged</td>
+                        <td id="acknowledgedCount"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -214,9 +184,17 @@ dashB.blade.php
 <script src="../res/js/navbar.js"></script>
 <script src="../res/js/users.js"></script>
 
-<!-- SCRIPT FOR DASHBOARD -->
+        <!-- <nav>
+            <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
+            <a href="{{ route ('admin/receiving_repo')}}" class="item1" >Receiving Report</a>
+            <a href="{{ route ('admin/ack_repo')}}" class="item1"  id = "active_page" >Acknowledgement Report</a>
+            <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
+            <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
+            <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
+        </nav> -->
+
 <script>
-     $(document).ready(function () {
+    $(document).ready(function () {
     // Mock data for testing
     var data = {!! json_encode($assetStatusCounts) !!};
 

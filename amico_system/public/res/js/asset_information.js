@@ -205,10 +205,42 @@ $('#overlay').removeClass('blur-in');
 
 
 
+  $(document).ready(function () {
+    $(document).on("click", ".delete", function () {
+        var row = $(this).closest("tr");
 
-  $(document).on("click", ".delete", function () {
+        // Retrieve the asset description and serial number from the row
+        var assetDesc = row.find('input[name^="asset_desc"]').val();
+        var serialNumber = row.find('input[name^="serial_no"]').val();
 
-  });
+        // Set the values in the modal
+        $('#assetDesc').text(assetDesc);
+        $('#serialNumber').text(serialNumber);
+
+        // Show the modal
+        $('#deleteConfirmationModal').modal('show');
+
+        // Handle delete confirmation
+        $('#confirmDeleteBtn').click(function () {
+            // Include the CSRF token in the AJAX request
+            $.ajax({
+                type: "POST",
+                url: '/admin/asset_info/delete.asset',
+                data: { _token: window.csrf_token, serial_no: serialNumber },
+                success: function (data) {
+                    // Handle success if needed
+                    row.remove(); // Remove the entire row from the table after successful deletion
+                },
+                error: function (error) {
+                    // Handle error if needed
+                }
+            });
+
+            // Hide the modal
+            $('#deleteConfirmationModal').modal('hide');
+        });
+    });
+});
 
 
 // });
