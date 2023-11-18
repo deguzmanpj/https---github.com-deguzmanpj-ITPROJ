@@ -56,8 +56,10 @@
             <div class="form">
                 <form action="/upload" method="POST" enctype="multipart/form-data">
                     @csrf
+                <div class="feature-container">
                     <input class="upload" type="file" name="csvFile" accept=".csv">
                     <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
                 </form>
 
 

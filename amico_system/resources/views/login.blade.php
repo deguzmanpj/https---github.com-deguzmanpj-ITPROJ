@@ -99,7 +99,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="images/rovin.jpg" />
+                            <img src="images/rovin.png" />
                         </div>
                         <h3>Rovin Matthew Navarro</h3>
                         <p>Team Leader</p>
@@ -121,7 +121,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="rovin.png" />
+                            <img src="images/olsen.png" />
                         </div>
                         <h3>Olsen Daim Valente</h3>
                         <p>Database</p>
@@ -133,7 +133,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="profile-img-2.png" />
+                            <img src="images/marc.png" />
                         </div>
                         <h3>Marc Justin Ramos</h3>
                         <p>Database</p>
@@ -146,7 +146,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="images/paj.jpg" />
+                            <img src="images/paj.png" />
                         </div>
                         <h3>Prince Jefferson De Guzman</h3>
                         <p>Developer na ngayon</p>
@@ -168,7 +168,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="profile-img-3.png" />
+                            <img src="images/cyver.png" />
                         </div>
                         <h3>Cyver Grant Rafael</h3>
                         <p>System Analyst</p>
@@ -179,7 +179,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="rovin.png" />
+                            <img src="images/adrian.png" />
                         </div>
                         <h3>Adrian Salinas</h3>
                         <p>System Analyst</p>

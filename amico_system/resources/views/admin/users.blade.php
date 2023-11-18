@@ -48,7 +48,7 @@
     </div>
         
         <div class="table-title">
-            <div class="row">
+            <div class="users-row">
                 <div class="search-container">
                     <label for="search">Search:</label>
                     <input type="text" id="search" placeholder="Enter a keyword">

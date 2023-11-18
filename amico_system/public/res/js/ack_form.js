@@ -1,9 +1,17 @@
 var selectUnit = document.querySelector('#unit_dropdown');
 var selectedUnitValue = selectUnit.value;
-console.log(selectedUnitValue);
+var person = document.querySelector("#name_employee");
+var ea_ackby= document.querySelector("#ea_ack_by");
 
 var resultsDataElement = document.getElementById('resultsData');
 var resultsData = JSON.parse(resultsDataElement.getAttribute('data-results'));
+
+
+person.addEventListener('input', function () {
+    // Update the value of "rr_copy_one" with the value of "rr_no"
+    ea_ackby.value = person.value
+});
+
 
 
 var officeDropdown = document.querySelector('#office_dropdown');

@@ -1,6 +1,14 @@
 var selectUnit = document.querySelector('#unit_dropdown');
 var selectedUnitValue = selectUnit.value;
-console.log(selectedUnitValue);
+
+var person = document.querySelector("#person_accountable")
+var borrow_received_by = document.querySelector("#borrow_received_by")
+var borrower_return_by = document.querySelector("#borrower_return_by")
+
+person.addEventListener('input', function(){
+    borrow_received_by.value = person.value;
+    borrower_return_by.value = person.value;
+})
 
 var resultsDataElement = document.getElementById('resultsData');
 var resultsData = JSON.parse(resultsDataElement.getAttribute('data-results'));
