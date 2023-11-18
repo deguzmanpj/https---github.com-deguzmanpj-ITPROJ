@@ -1,3 +1,4 @@
+
 ::selection {
   background: #2D2F36;
 }
@@ -152,7 +153,7 @@ section{
   margin: 20px auto;
 }
 .heading h1{
-  font-size: 40px;
+  font-size: 50px;
   color: #000;
   margin-bottom: 25px;
   position: relative;
@@ -168,7 +169,7 @@ section{
   background-color: #3f3cf3;
 }
 .heading p{
-  font: size 18px;
+  font-size: 20px;
   color: #666;
   margin-bottom: 35px;
 }
@@ -205,8 +206,8 @@ section{
   margin-bottom: 15px;
   color: #333;
 }
-.about-contentp{
-  font-size: 18px;
+.about-content p{
+  font-size: 20px;
   line-height: 1.5;
   color:#666;
 }
