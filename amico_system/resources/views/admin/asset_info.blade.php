@@ -527,14 +527,15 @@ $int = 0;                                  foreach($results as $result){
         </div>
 
     </form>
-        <nav>
+        <!--<nav>
         <a href="{{ route ('admin/receiving_repo')}}" class="item1">Receiving Report</a>
             <a href="{{ route ('admin/ack_repo')}}" class="item1">Acknowledgement Report</a>
             <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
             <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
             <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
             <a href="{{ route ('admin/calib_req')}}" class="item1" >Calibration Request</a>
-        </nav>
+        </nav>-->
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
     $(document).ready(function() {
