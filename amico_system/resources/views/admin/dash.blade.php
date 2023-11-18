@@ -17,42 +17,6 @@ dash.admin
         <link rel="stylesheet" href="../res/css/asset_information.css"> 
         <link rel="stylesheet" href="../res/css/navbar.css">
 
-    <style>
-            
-        .selected-unit {
-            font-weight: bold;
-            font-size: 23px;
-            font-style: italic;
-            margin-top: 10px;
-        }
-        #chartAndMonitoringContainer {
-        display: flex;
-        justify-content: space-between;
-        }
-        #chartContainer {
-            width: 50%; 
-            box-sizing: border-box;
-            border: 5px solid #ccc;
-        }
-        .real-time-monitoring {
-            width: 45%; 
-            margin-left: 52%; 
-            margin-top: -19%;
-            float: left; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            border: 5px solid #ccc; 
-        }
-        .real-time-monitoring table {
-            width: 100%; 
-        }
-        .chart-moni-container{
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-    
-    </style>
 
 </head>
 <body>
@@ -82,6 +46,7 @@ dash.admin
     </div>
 </div>
 
+
 <div class="container">
     <div class="header">
         <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
@@ -89,124 +54,132 @@ dash.admin
     </div>
 </div>
 
+
 <div class="container">
-    <div id="selectedUnit" class="selected-unit">
-    @if($unitFilter)
-        Selected Unit: {{ $unitFilter }}
-    @else
-        All Units
-    @endif
+    <div class="container">
+        <div id="selectedUnit" class="selected-unit">
+        @if($unitFilter)
+            Selected Unit: {{ $unitFilter }}
+        @else
+            All Units
+        @endif
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="container">
+        <form action="{{ route('admin/dash') }}" method="GET">
+            <label for="unit">Select Unit:</label>
+            <select name="unit" id="unit">
+                <!-- Add options for each unit -->
+                <option value="" @if(!$unitFilter) selected @endif>All Units</option>
+                <option value="Asset Management and Inventory Control Office" @if($unitFilter == "Asset Management and Inventory Control Office") selected @endif>Asset Management and Inventory Control Office</option>
+                <option value="Basic Education School - Laboratory Elementary School"@if($unitFilter == "Basic Education School - Laboratory Elementary School") selected @endif>Basic Education School - Laboratory Elementary School</option>
+                <option value="Basic Education School - Laboratory Junior High School"@if($unitFilter == "Basic Education School - Laboratory Junior High School") selected @endif>Basic Education School - Laboratory Junior High School</option>
+                <option value="Basic Education School - Laboratory Senior High School"@if($unitFilter == "Basic Education School - Laboratory Senior High School") selected @endif>Basic Education School - Laboratory Senior High School</option>
+                <option value="Campus Planning, Maintenance, and Security Department"@if($unitFilter == "Campus Planning, Maintenance, and Security Department") selected @endif>Campus Planning, Maintenance, and Security Department</option>
+                <option value="Center for Campus Ministry"@if($unitFilter == "Center for Campus Ministry") selected @endif>Center for Campus Ministry</option>
+                <option value="Center for Counseling and Wellness"@if($unitFilter == "Center for Counseling and Wellness") selected @endif>Center for Counseling and Wellness</option>
+                <option value="Center for Culture and the Arts"@if($unitFilter == "Center for Culture and the Arts") selected @endif>Center for Culture and the Arts</option>
+                <option value="Center for Sports Development"@if($unitFilter == "Center for Sports Development") selected @endif>Center for Sports Development</option>
+                <option value="CICM Residence"@if($unitFilter == "CICM Residence") selected @endif>CICM Residence</option>
+                <option value="Community Extension and Outreach Programs Office"@if($unitFilter == "Community Extension and Outreach Programs Office") selected @endif>Community Extension and Outreach Programs Office</option>
+                <option value="Data Protection Office"@if($unitFilter == "Data Protection Office") selected @endif>Data Protection Office</option>
+                <option value="Finance Office - Accounting Section"@if($unitFilter == "Finance Office - Accounting Section") selected @endif>Finance Office - Accounting Section</option>
+                <option value="Finance Office - Bookstore"@if($unitFilter == "Finance Office - Bookstore") selected @endif>Finance Office - Bookstore</option>
+                <option value="Finance Office - Payroll Section"@if($unitFilter == "Finance Office - Payroll Section") selected @endif>Finance Office - Payroll Section</option>
+                <option value="Finance Office - Purchasing Department"@if($unitFilter == "Finance Office - Purchasing Department") selected @endif>Finance Office - Purchasing Department</option>
+                <option value="Finance Office - Student Account Support Services"@if($unitFilter == "Finance Office - Student Account Support Services") selected @endif>Finance Office - Student Account Support Services</option>
+                <option value="Finance Office - Transportation Department"@if($unitFilter == "Finance Office - Transportation Department") selected @endif>Finance Office - Transportation Department</option>
+                <option value="Health Services Unit - Dental Clinic"@if($unitFilter == "Health Services Unit - Dental Clinic") selected @endif>Health Services Unit - Dental Clinic</option>
+                <option value="Health Services Unit - Medical Clinic"@if($unitFilter == "Health Services Unit - Medical Clinic") selected @endif>Health Services Unit - Medical Clinic</option>
+                <option value="Human Resource Department"@if($unitFilter == "Human Resource Department") selected @endif>Human Resource Department</option>
+                <option value="Museum of Igorot Cultures and Arts - Center for Indigenous Studies"@if($unitFilter == "Museum of Igorot Cultures and Arts - Center for Indigenous Studies") selected @endif>Museum of Igorot Cultures and Arts - Center for Indigenous Studies</option>
+                <option value="Office for Legal Affairs"@if($unitFilter == "Office for Legal Affairs") selected @endif>Office for Legal Affairs</option>
+                <option value="Office of Global Relations and Alumni Affairs"@if($unitFilter == "Office of Global Relations and Alumni Affairs") selected @endif>Office of Global Relations and Alumni Affairs</option>
+                <option value="Office of Institutional Development and Quality Assurance"@if($unitFilter == "Office of Institutional Development and Quality Assurance") selected @endif>Office of Institutional Development and Quality Assurance</option>
+                <option value="Office of Student Affairs and Services"@if($unitFilter == "Office of Student Affairs and Services") selected @endif>Office of Student Affairs and Services</option>
+                <option value="Office of the Internal Auditor"@if($unitFilter == "Office of the Internal Auditor") selected @endif>Office of the Internal Auditor</option>
+                <option value="Office of the President"@if($unitFilter == "Office of the President") selected @endif>Office of the President</option>
+                <option value="Office of the Vice President for Academic Affairs"@if($unitFilter == "Office of the Vice President for Academic Affairs") selected @endif>Office of the Vice President for Academic Affairs</option>
+                <option value="Office of the Vice President for Administration"@if($unitFilter == "Office of the Vice President for Administration") selected @endif>Office of the Vice President for Administration</option>
+                <option value="Office of the Vice President for Finance"@if($unitFilter == "Office of the Vice President for Finance") selected @endif>Office of the Vice President for Finance</option>
+                <option value="Office of the Vice President for Mission and Identity"@if($unitFilter == "Office of the Vice President for Mission and Identity") selected @endif>Office of the Vice President for Mission and Identity</option>
+                <option value="Printing Operations Office"@if($unitFilter == "Printing Operations Office") selected @endif>Printing Operations Office</option>
+                <option value="School of Accountancy, Management, Computing and Information Studies"@if($unitFilter == "School of Accountancy, Management, Computing and Information Studies") selected @endif>School of Accountancy, Management, Computing and Information Studies</option>
+                <option value="School of Advanced Studies"@if($unitFilter == "School of Advanced Studies") selected @endif>School of Advanced Studies</option>
+                <option value="School of Engineering and Architecture"@if($unitFilter == "School of Engineering and Architecture") selected @endif>School of Engineering and Architecture</option>
+                <option value="School of Law"@if($unitFilter == "School of Law") selected @endif>School of Law</option>
+                <option value="School of Medicine"@if($unitFilter == "School of Medicine") selected @endif>School of Medicine</option>
+                <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>Asset Management and Inventory Control Office</option>
+                <option value="School of Teacher Education and Liberal Arts"@if($unitFilter == "School of Teacher Education and Liberal Arts") selected @endif>School of Teacher Education and Liberal Arts</option>
+                <option value="SFW - Halfway Home for Boys"@if($unitFilter == "SFW - Halfway Home for Boys") selected @endif>SFW - Halfway Home for Boys</option>
+                <option value="SFW - Pedagogical and Developmental Center"@if($unitFilter == "SFW - Pedagogical and Developmental Center") selected @endif>SFW - Pedagogical and Developmental Center</option>
+                <option value="SFW - Sunflower Child and Youth Wellness Center"@if($unitFilter == "SFW - Sunflower Child and Youth Wellness Center") selected @endif>SFW - Sunflower Child and Youth Wellness Center</option>
+                <option value="SLU Parish"@if($unitFilter == "SLU Parish") selected @endif>SLU Parish</option>
+                <option value="SLU Residence Halls - Guest House"@if($unitFilter == "SLU Residence Halls - Guest House") selected @endif>SLU Residence Halls - Guest House</option>
+                <option value="SLU Residence Halls - Ladies' Residence Halls"@if($unitFilter == "SLU Residence Halls - Ladies' Residence Halls") selected @endif>SLU Residence Halls - Ladies' Residence Halls</option>
+                <option value="SLU Residence Halls - Maryheights Students' Residence Halls"@if($unitFilter == "SLU Residence Halls - Maryheights Students' Residence Halls") selected @endif>SLU Residence Halls - Maryheights Students' Residence Halls</option>
+                <option value="SLU Residence Halls - Men's Residence Hall"@if($unitFilter == "SLU Residence Halls - Men's Residence Hall") selected @endif>SLU Residence Halls - Men's Residence Hall</option>
+                <option value="SLU Sacred Heart Medical Center"@if($unitFilter == "SLU Sacred Heart Medical Center") selected @endif>SLU Sacred Heart Medical Center</option>
+                <option value="Technology Management and Development Department"@if($unitFilter == "Technology Management and Development Department") selected @endif>Technology Management and Development Department</option>
+                <option value="Theophile Verbist Resource and Documentation Center"@if($unitFilter == "Theophile Verbist Resource and Documentation Center") selected @endif>Theophile Verbist Resource and Documentation Center</option>
+                <option value="University Information Office"@if($unitFilter == "University Information Office") selected @endif>University Information Office</option>
+                <option value="University Libraries"@if($unitFilter == "University Libraries") selected @endif>University Libraries</option>
+                <option value="University Registrar's Office"@if($unitFilter == "University Registrar's Office") selected @endif>University Registrar's Office</option>
+                <option value="University Research and Innovation Center"@if($unitFilter == "University Research and Innovation Center") selected @endif>University Research and Innovation Center</option>
+                <!-- Add other options for the remaining units -->
+            </select>
+            <button type="submit">Apply Filter</button>
+        </form>
     </div>
 </div>
 
-<!-- Filter -->
-<div class="container">
-    <form action="{{ route('admin/dash') }}" method="GET">
-        <label for="unit">Select Unit:</label>
-        <select name="unit" id="unit">
-            <!-- Add options for each unit -->
-            <option value="" @if(!$unitFilter) selected @endif>All Units</option>
-            <option value="Asset Management and Inventory Control Office" @if($unitFilter == "Asset Management and Inventory Control Office") selected @endif>Asset Management and Inventory Control Office</option>
-            <option value="Basic Education School - Laboratory Elementary School"@if($unitFilter == "Basic Education School - Laboratory Elementary School") selected @endif>Basic Education School - Laboratory Elementary School</option>
-            <option value="Basic Education School - Laboratory Junior High School"@if($unitFilter == "Basic Education School - Laboratory Junior High School") selected @endif>Basic Education School - Laboratory Junior High School</option>
-            <option value="Basic Education School - Laboratory Senior High School"@if($unitFilter == "Basic Education School - Laboratory Senior High School") selected @endif>Basic Education School - Laboratory Senior High School</option>
-            <option value="Campus Planning, Maintenance, and Security Department"@if($unitFilter == "Campus Planning, Maintenance, and Security Department") selected @endif>Campus Planning, Maintenance, and Security Department</option>
-            <option value="Center for Campus Ministry"@if($unitFilter == "Center for Campus Ministry") selected @endif>Center for Campus Ministry</option>
-            <option value="Center for Counseling and Wellness"@if($unitFilter == "Center for Counseling and Wellness") selected @endif>Center for Counseling and Wellness</option>
-            <option value="Center for Culture and the Arts"@if($unitFilter == "Center for Culture and the Arts") selected @endif>Center for Culture and the Arts</option>
-            <option value="Center for Sports Development"@if($unitFilter == "Center for Sports Development") selected @endif>Center for Sports Development</option>
-            <option value="CICM Residence"@if($unitFilter == "CICM Residence") selected @endif>CICM Residence</option>
-            <option value="Community Extension and Outreach Programs Office"@if($unitFilter == "Community Extension and Outreach Programs Office") selected @endif>Community Extension and Outreach Programs Office</option>
-            <option value="Data Protection Office"@if($unitFilter == "Data Protection Office") selected @endif>Data Protection Office</option>
-            <option value="Finance Office - Accounting Section"@if($unitFilter == "Finance Office - Accounting Section") selected @endif>Finance Office - Accounting Section</option>
-            <option value="Finance Office - Bookstore"@if($unitFilter == "Finance Office - Bookstore") selected @endif>Finance Office - Bookstore</option>
-            <option value="Finance Office - Payroll Section"@if($unitFilter == "Finance Office - Payroll Section") selected @endif>Finance Office - Payroll Section</option>
-            <option value="Finance Office - Purchasing Department"@if($unitFilter == "Finance Office - Purchasing Department") selected @endif>Finance Office - Purchasing Department</option>
-            <option value="Finance Office - Student Account Support Services"@if($unitFilter == "Finance Office - Student Account Support Services") selected @endif>Finance Office - Student Account Support Services</option>
-            <option value="Finance Office - Transportation Department"@if($unitFilter == "Finance Office - Transportation Department") selected @endif>Finance Office - Transportation Department</option>
-            <option value="Health Services Unit - Dental Clinic"@if($unitFilter == "Health Services Unit - Dental Clinic") selected @endif>Health Services Unit - Dental Clinic</option>
-            <option value="Health Services Unit - Medical Clinic"@if($unitFilter == "Health Services Unit - Medical Clinic") selected @endif>Health Services Unit - Medical Clinic</option>
-            <option value="Human Resource Department"@if($unitFilter == "Human Resource Department") selected @endif>Human Resource Department</option>
-            <option value="Museum of Igorot Cultures and Arts - Center for Indigenous Studies"@if($unitFilter == "Museum of Igorot Cultures and Arts - Center for Indigenous Studies") selected @endif>Museum of Igorot Cultures and Arts - Center for Indigenous Studies</option>
-            <option value="Office for Legal Affairs"@if($unitFilter == "Office for Legal Affairs") selected @endif>Office for Legal Affairs</option>
-            <option value="Office of Global Relations and Alumni Affairs"@if($unitFilter == "Office of Global Relations and Alumni Affairs") selected @endif>Office of Global Relations and Alumni Affairs</option>
-            <option value="Office of Institutional Development and Quality Assurance"@if($unitFilter == "Office of Institutional Development and Quality Assurance") selected @endif>Office of Institutional Development and Quality Assurance</option>
-            <option value="Office of Student Affairs and Services"@if($unitFilter == "Office of Student Affairs and Services") selected @endif>Office of Student Affairs and Services</option>
-            <option value="Office of the Internal Auditor"@if($unitFilter == "Office of the Internal Auditor") selected @endif>Office of the Internal Auditor</option>
-            <option value="Office of the President"@if($unitFilter == "Office of the President") selected @endif>Office of the President</option>
-            <option value="Office of the Vice President for Academic Affairs"@if($unitFilter == "Office of the Vice President for Academic Affairs") selected @endif>Office of the Vice President for Academic Affairs</option>
-            <option value="Office of the Vice President for Administration"@if($unitFilter == "Office of the Vice President for Administration") selected @endif>Office of the Vice President for Administration</option>
-            <option value="Office of the Vice President for Finance"@if($unitFilter == "Office of the Vice President for Finance") selected @endif>Office of the Vice President for Finance</option>
-            <option value="Office of the Vice President for Mission and Identity"@if($unitFilter == "Office of the Vice President for Mission and Identity") selected @endif>Office of the Vice President for Mission and Identity</option>
-            <option value="Printing Operations Office"@if($unitFilter == "Printing Operations Office") selected @endif>Printing Operations Office</option>
-            <option value="School of Accountancy, Management, Computing and Information Studies"@if($unitFilter == "School of Accountancy, Management, Computing and Information Studies") selected @endif>School of Accountancy, Management, Computing and Information Studies</option>
-            <option value="School of Advanced Studies"@if($unitFilter == "School of Advanced Studies") selected @endif>School of Advanced Studies</option>
-            <option value="School of Engineering and Architecture"@if($unitFilter == "School of Engineering and Architecture") selected @endif>School of Engineering and Architecture</option>
-            <option value="School of Law"@if($unitFilter == "School of Law") selected @endif>School of Law</option>
-            <option value="School of Medicine"@if($unitFilter == "School of Medicine") selected @endif>School of Medicine</option>
-            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>Asset Management and Inventory Control Office</option>
-            <option value="School of Teacher Education and Liberal Arts"@if($unitFilter == "School of Teacher Education and Liberal Arts") selected @endif>School of Teacher Education and Liberal Arts</option>
-            <option value="SFW - Halfway Home for Boys"@if($unitFilter == "SFW - Halfway Home for Boys") selected @endif>SFW - Halfway Home for Boys</option>
-            <option value="SFW - Pedagogical and Developmental Center"@if($unitFilter == "SFW - Pedagogical and Developmental Center") selected @endif>SFW - Pedagogical and Developmental Center</option>
-            <option value="SFW - Sunflower Child and Youth Wellness Center"@if($unitFilter == "SFW - Sunflower Child and Youth Wellness Center") selected @endif>SFW - Sunflower Child and Youth Wellness Center</option>
-            <option value="SLU Parish"@if($unitFilter == "SLU Parish") selected @endif>SLU Parish</option>
-            <option value="SLU Residence Halls - Guest House"@if($unitFilter == "SLU Residence Halls - Guest House") selected @endif>SLU Residence Halls - Guest House</option>
-            <option value="SLU Residence Halls - Ladies' Residence Halls"@if($unitFilter == "SLU Residence Halls - Ladies' Residence Halls") selected @endif>SLU Residence Halls - Ladies' Residence Halls</option>
-            <option value="SLU Residence Halls - Maryheights Students' Residence Halls"@if($unitFilter == "SLU Residence Halls - Maryheights Students' Residence Halls") selected @endif>SLU Residence Halls - Maryheights Students' Residence Halls</option>
-            <option value="SLU Residence Halls - Men's Residence Hall"@if($unitFilter == "SLU Residence Halls - Men's Residence Hall") selected @endif>SLU Residence Halls - Men's Residence Hall</option>
-            <option value="SLU Sacred Heart Medical Center"@if($unitFilter == "SLU Sacred Heart Medical Center") selected @endif>SLU Sacred Heart Medical Center</option>
-            <option value="Technology Management and Development Department"@if($unitFilter == "Technology Management and Development Department") selected @endif>Technology Management and Development Department</option>
-            <option value="Theophile Verbist Resource and Documentation Center"@if($unitFilter == "Theophile Verbist Resource and Documentation Center") selected @endif>Theophile Verbist Resource and Documentation Center</option>
-            <option value="University Information Office"@if($unitFilter == "University Information Office") selected @endif>University Information Office</option>
-            <option value="University Libraries"@if($unitFilter == "University Libraries") selected @endif>University Libraries</option>
-            <option value="University Registrar's Office"@if($unitFilter == "University Registrar's Office") selected @endif>University Registrar's Office</option>
-            <option value="University Research and Innovation Center"@if($unitFilter == "University Research and Innovation Center") selected @endif>University Research and Innovation Center</option>
-            <!-- Add other options for the remaining units -->
-        </select>
-        <button type="submit">Apply Filter</button>
-    </form>
-</div>
+
 
 <!-- Add a canvas element where the chart will be rendered -->
-<div id="chartContainer">
-    <canvas id="assetStatusChart"></canvas>
-</div>
-
 <div class="container">
-    <div class="real-time-monitoring">
-        <h2>Real-Time Monitoring</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Condemned</td>
-                    <td id="condemnedCount"></td>
-                </tr>
-                <tr>
-                    <td>Maintenance</td>
-                    <td id="maintenanceCount"></td>
-                </tr>
-                <tr>
-                    <td>Borrowed</td>
-                    <td id="borrowedCount"></td>
-                </tr>
-                <tr>
-                    <td>Calibration</td>
-                    <td id="calibrationCount"></td>
-                </tr>
-                <tr>
-                    <td>Acknowledged</td>
-                    <td id="acknowledgedCount"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="chart-container">
+        <canvas id="assetStatusChart"></canvas>
+    </div>
+
+    <div class="rtm-container">
+        <div class="real-time-monitoring">
+            <h2>Real-Time Monitoring</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Condemned</td>
+                        <td id="condemnedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Maintenance</td>
+                        <td id="maintenanceCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Borrowed</td>
+                        <td id="borrowedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Calibration</td>
+                        <td id="calibrationCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Acknowledged</td>
+                        <td id="acknowledgedCount"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
