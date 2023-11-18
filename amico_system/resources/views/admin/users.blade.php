@@ -31,14 +31,11 @@
 
                 <div class="main">
                 <div id="sideMenu" class="side-menu">
-                    <div class="menu-items">
                     <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
                     <a href="{{ route('admin/users') }}" id="active_tab" class="item1">Users</a>
-                    <a href="#" class="item" id="active_tab">Asset Management</a>
-                    <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a> <!-- item -->
-                    <a href="#" class="item">Forms</a>
-                    <a href="#" class="item">Logout</a>
-                    </div>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>
                 </div>
             </div> 
         </div> 
@@ -147,13 +144,7 @@
                                 <tr>
                                     <td>{{ $user->userId }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>
-                                        <span class="password-hidden" data-password="{{ $user->pass }}">
-                                            @for ($i = 0; $i < strlen($user->pass); $i++)
-                                                •
-                                            @endfor
-                                        </span>
-                                    </td>
+                                    <td>{{ $user->pass }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->contact_no }}</td>
                                     <td>{{ $user->role }}</td>
@@ -181,15 +172,7 @@
                 </div>
             </section>
 
-                <nav>
-                    <!-- Your navigation links here -->
-                    <a href="{{ route('admin/receiving_repo') }}" class="item1">Receiving Report</a>
-                    <a href="{{ route('admin/asset_info') }}" class="one" id="active_page">Asset Information</a>
-                    <a href="{{ route('admin/ack_repo') }}" class="item1">Acknowledgement Report</a>
-                    <a href="{{ route('admin/prop_borr') }}" class="item1">Property Borrowing</a>
-                    <a href="{{ route('admin/main_req') }}" class="item1">Maintenance Request</a>
-                    <a href="{{ route('admin/condemn_req') }}" class="item1">Condemnation Request</a>
-                </nav>
+             
                 </div>
 
                 @foreach($userData as $user)

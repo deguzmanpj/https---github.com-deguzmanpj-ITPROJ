@@ -51,7 +51,7 @@ dashB.blade.php
                 <a href="{{ route('employee/dashB') }}"id= "active_tab" class="item1">Dashboard</a>
                 <a href="{{ route('employee/asset_info') }}" class="item1">Asset Management</a>
                 <a href="{{ route ('employee/receiving_repo')}}" class="item1">Forms</a>
-                <a href="#" class="item">Logout</a>
+                <a href="{{ route('logout') }}" class="item1">Logout</a>>
             </div>
         </div>
     </div>

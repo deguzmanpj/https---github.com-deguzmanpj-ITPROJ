@@ -42,12 +42,11 @@ dash.admin
     <div class="main">
         <div id="sideMenu" class="side-menu">
             <div class="menu-items">
-                <a href="{{ route('admin/dash') }}" id="active_tab" class="item1">Dashboard</a>
-                <a href="{{ route('admin/users') }}"  class="item1">Users</a>
-                <a href="{{ route('admin/asset_info') }}" class="item1">Asset Management</a>
-                <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a>
-                <a href="#" class="item">Forms</a>
-                <a href="#" class="item">Logout</a>
+                    <a href="{{ route ('admin/dash')}}" id="active_tab" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
+                    <a href="{{ route('admin/users') }}" class="item1">Users</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
             </div>
         </div>
     </div>

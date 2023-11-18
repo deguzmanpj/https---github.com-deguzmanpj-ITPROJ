@@ -54,6 +54,16 @@ Route::post('/update_calib', [InvController::class, 'updateCalib']);
 
 Route::post('/add_to_asset_info', [InvController::class, 'addToAssetInfo']);
 
+Route::post('/add_to_ack', [InvController::class, 'addToAck']);
+
+Route::post('/add_to_condemn', [InvController::class, 'addToCondemn']);
+
+Route::post('/add_to_prop', [InvController::class, 'addToProp']);
+
+Route::post('/add_to_calib', [InvController::class, 'addToCalib']);
+
+Route::post('/add_to_main', [InvController::class, 'addToMain']);
+
 Route::post('/see_form', [InvController::class, 'seeForm']);
 
 Route::post('/see_ack_form', [InvController::class, 'seeAckForm']);
@@ -74,40 +84,77 @@ Route::get('/admin/asset_info', function () {
     return view('/admin/asset_info');
 });
 
-Route::get('employee/asset_info', function () {
-    return view('/employee/asset_info');
-});
+// Route::get('employee/asset_info', function () {
+//     $results = DB::select('select * from asset where status = "accepted"');
+//     Log::info(count((array)$results));
+//     $results = (array)$results;
+//     Log::info($results);
+//     return view('/employee/asset_info', compact('results')); 
+// });
 
 
 Route::post('/upload', [InvController::class, 'uploadCsvFile']);
 
 Route::get('admin/receiving_repo', function () {
-    $results = DB::select('select * from receiving_report where req_status = "accepted"');
+    $results = DB::select('select * from receiving_report');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
     return view('admin/receiving_repo', compact('results')); 
 })->name('admin/receiving_repo');
 
-Route::view('admin/ack_repo', 'admin/ack_repo')->name('admin/ack_repo');
-Route::view('admin/prop_borr', 'admin/prop_borr')->name('admin/prop_borr');
-Route::view('admin/main_req', 'admin/main_req')->name('admin/main_req');
-Route::view('admin/calib_req', 'admin/calib_req')->name('admin/calib_req');
-Route::view('admin/condemn_req', 'admin/condemn_req')->name('admin/condemn_req');
-Route::view('admin/asset_info', 'admin/asset_info')->name('admin/asset_info');
-
-Route::get('admin/pending', function () {
-    $results = DB::select('select * from receiving_report where req_status = "pending" or req_status = "declined"');
+Route::get('admin/ack_repo', function () {
+    $results = DB::select('select * from acknowledgement_report');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
-    return view('admin/pending', compact('results')); 
-})->name('admin/pending');
+    return view('admin/ack_repo', compact('results')); 
+})->name('admin/ack_repo');
 
+Route::get('admin/prop_borr', function () {
+    $results = DB::select('select * from property_borrowing');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('admin/prop_borr', compact('results')); 
+})->name('admin/prop_borr');
+
+Route::get('admin/main_req', function () {
+    $results = DB::select('select * from maintenance_report');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('admin/main_req', compact('results')); 
+})->name('admin/main_req');
+
+Route::get('admin/calib_req', function () {
+    $results = DB::select('select * from calibration');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('admin/calib_req', compact('results')); 
+})->name('admin/calib_req');
+
+Route::get('admin/condemn_req', function () {
+    $results = DB::select('select * from condemnation');
+    Log::info(count((array)$results));
+    $results = (array)$results;
+    Log::info($results);
+    return view('admin/condemn_req', compact('results')); 
+})->name('admin/condemn_req');
+
+
+Route::get('admin/asset_info', function(){
+    $results = DB::select('select * from asset');
+        Log::info(count((array)$results));
+        $results = (array)$results;
+        Log::info($results);
+        return view('admin/asset_info', compact('results')); 
+})->name('admin/asset_info');
 
 
 Route::get('employee/receiving_repo', function () {
-    $results = DB::select('select * from receiving_report where req_status = "pending" or req_status = "declined"');
+    $results = DB::select('select * from receiving_report');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
@@ -115,7 +162,7 @@ Route::get('employee/receiving_repo', function () {
 })->name('employee/receiving_repo');
 
 Route::get('employee/ack_repo', function () {
-    $results = DB::select('select * from acknowledgement_report where status = "pending" or status = "declined"');
+    $results = DB::select('select * from acknowledgement_report');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
@@ -123,7 +170,7 @@ Route::get('employee/ack_repo', function () {
 })->name('employee/ack_repo');
 
 Route::get('employee/prop_borr', function () {
-    $results = DB::select('select * from property_borrowing where status = "pending" or status = "declined"');
+    $results = DB::select('select * from property_borrowing');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
@@ -139,7 +186,7 @@ Route::get('employee/prop_borr', function () {
 // })->name('employee/receiving_repo');
 
 Route::get('employee/main_req', function () {
-    $results = DB::select('select * from maintenance_report where status = "pending" or status = "declined"');
+    $results = DB::select('select * from maintenance_report');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
@@ -147,7 +194,7 @@ Route::get('employee/main_req', function () {
 })->name('employee/main_req');
 
 Route::get('employee/condemn_req', function () {
-    $results = DB::select('select * from condemnation where status = "pending" or status = "declined"');
+    $results = DB::select('select * from condemnation');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
@@ -155,14 +202,20 @@ Route::get('employee/condemn_req', function () {
 })->name('employee/condemn_req');
 
 Route::get('employee/calib_req', function () {
-    $results = DB::select('select * from calibration where status = "pending" or status = "declined"');
+    $results = DB::select('select * from calibration');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
     return view('employee/calib_req', compact('results')); 
 })->name('employee/calib_req');
 
-Route::view('employee/asset_info', 'employee/asset_info')->name('employee/asset_info');
+Route::get('employee/asset_info', function(){
+    $results = DB::select('select * from asset');
+        Log::info(count((array)$results));
+        $results = (array)$results;
+        Log::info($results);
+        return view('employee/asset_info', compact('results')); 
+})->name('employee/asset_info');
 
 
 
@@ -239,6 +292,11 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin/dash');
 
 Route::get('employee/dashB', [DashControlEmp::class, 'index'])->name('employee/dashB');
+
+//Logout
+Route::get('/logout', [InvController::class, 'logout'])->name('logout');
+
+Route::post('admin/asset_info/delete.asset', [InvController::class, 'deleteAsset'])->name('delete.asset');
 
 Route::get('pdf',[PdfExtractorController::class,'extractPdf']);
 

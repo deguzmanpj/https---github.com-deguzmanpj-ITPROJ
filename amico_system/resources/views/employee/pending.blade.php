@@ -36,7 +36,7 @@
                     <a href="{{ route ('employee/receiving_repo')}}" class="item1">Asset Information</a>
                     <a href="{{ route ('employee/pending')}}"  id = "active_tab" class="item1">Pending Requests</a> <!-- item -->
                     <a href="#" class="item">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
                 </div>
             </div>
         </div>
