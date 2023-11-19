@@ -3623,6 +3623,9 @@
     </div>
     <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
         <div id="unitsData" data-results="{{ json_encode($units) }}"></div>
+
+
+        <input type = "hidden" id = "user" name = "user" value = "employee" >
     </form>
 </body>
 

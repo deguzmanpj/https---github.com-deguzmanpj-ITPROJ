@@ -20,6 +20,13 @@
 
     <div class="navigation">
         <div class="nav-bar">
+            <?php
+
+            use Illuminate\Support\Facades\DB;
+
+            $name = DB::select('select * from users where contact_no = "' . $_COOKIE['name'] . '"');
+            echo  '<a class="user">' . $name[0]->name . ' - ' . $name[0]->role . '</a>';
+            ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -33,16 +40,20 @@
                     <a href="{{ route ('employee/dashB')}}" class="item1">Dashboard</a>
                     <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
                     <a href="{{ route ('employee/receiving_repo')}}" id="active_tab" class="item1">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class ="container">
+
+    <div class="container">
         <div class="header">
-            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
-            <div><p class="pageTitle">PROPERTY BORROWING</p></div>
+            <div>
+                <p class="amicoLogo">AMICO ASSET MANAGEMENT</p>
+            </div>
+            <div>
+                <p class="pageTitle">PROPERTY BORROWING</p>
+            </div>
         </div>
     </div>
 
@@ -78,7 +89,7 @@
 
 
     <div class="wrapper">
-    <section class="section section--large five" id="part5">
+        <section class="section section--large five" id="part5">
             <div class="container">
                 <div class="table-wrapper">
                     <div class="table-title">
@@ -86,48 +97,66 @@
                     <table class="table table-bordered" id="7table5">
                         <thead>
                             <tr>
-                            <th>Asset</th>
-                                    <th>Borrowed On</th>
-                                    <th></th>
+                                <th>Asset</th>
+                                <th>Borrowed On</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
+                            <?php
+                            $processedPBNOs = []; // Array to store processed PB_NO values
+
+                            $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+
                             if (!empty($results)) {
                                 for ($num = 0; $num < sizeof($results); $num++) {
                                     $data = $results[$num];
                                     $pbNo = $data->pb_no;
+
+                                    if($data->submitted_by === $name[0]->name ){
+                                    // Check if PB_NO has been processed, if yes, skip the iteration
+                                    if (in_array($pbNo, $processedPBNOs)) {
+                                        continue;
+                                    }
+
+                                    // Add the PB_NO to the processed array
+                                    $processedPBNOs[] = $pbNo;
+
                                     $reqStatus = $data->status;
                                     echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
                                     echo '<tr>';
                                     echo '<td>' . 'pb_no: ' . $pbNo . '</td>';
-                                    echo '<td>'  . $data->pb_date . '</t   d>';  
+                                    echo '<td>'  . $data->pb_date . '</td>';
                                     echo '<td>';
 
                                     echo '<div style="display: inline-block;">'; // Container for inline display
-                                    
+
                                     echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
                                     echo '<input type="hidden" class="pb_no" name="pb_no" value="' . $pbNo . '">';
-                                    echo '<input type="text" class="status" id = "reqStatus" value = "'.$reqStatus.'"readonly>';
+                                    echo '<input type="text" class="status" id="reqStatus" value="' . $reqStatus . '" readonly>';
                                     echo '<style>#reqStatus{border: none;}</style>';
-                                   
+
                                     echo '</div>';
 
-                                    echo '<div style="display: inline-block;">'; // Container for inline display
-                                    echo '<form action="/see_prop_borr" method="post">'; // decline form
-                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                    echo '<input type="hidden" class="id" name="id" value = "employee">';
-                                    echo '<button type="submit" class="decline">see form</button>';
-                                    echo '<input type="hidden" class="pb_no" name="pb_no" value="' . $pbNo . '">';
-                                    echo '</form>';
-                                    echo '</div>';
+                                    if ($reqStatus === "pending") {
+                                        echo '<div style="display: inline-block;">'; // Container for inline display
+                                        echo '<form action="/see_prop_borr" method="post">'; // decline form
+                                        echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                        echo '<input type="hidden" class="id" name="id" value="employee">';
+                                        echo '<button type="submit" class="decline">see form</button>';
+                                        echo '<input type="hidden" class="pb_no" name="pb_no" value="' . $pbNo . '">';
+                                        echo '</form>';
+                                        echo '</div>';
+                                    }
 
                                     echo '</td>';
 
                                     echo '</tr>';
                                 }
+                                }
                             }
                             ?>
+
 
                         </tbody>
                     </table>
@@ -139,9 +168,9 @@
     </div>
 
     <nav>
-    <a href="{{ route ('employee/receiving_repo')}}" class="two">Receiving Report</a>
+        <a href="{{ route ('employee/receiving_repo')}}" class="two">Receiving Report</a>
         <a href="{{ route ('employee/ack_repo')}}" class="three">Acknowledgement Report</a>
-        <a href="{{ route ('employee/prop_borr')}}" class="four"   id = "active_page" >Property Borrowing</a>
+        <a href="{{ route ('employee/prop_borr')}}" class="four" id="active_page">Property Borrowing</a>
         <a href="{{ route ('employee/main_req')}}" class="five">Maintenance Request</a>
         <a href="{{ route ('employee/condemn_req')}}" class="six">Condemnation Request</a>
         <a href="{{ route ('employee/calib_req')}}" class="six">Calibration Request</a>

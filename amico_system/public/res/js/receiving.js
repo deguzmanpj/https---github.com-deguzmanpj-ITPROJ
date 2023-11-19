@@ -1,6 +1,6 @@
 // var acceptButtons = document.querySelectorAll(".accept");
 // var declineButtons = document.querySelectorAll(".decline");
-// var reqStatuses = document.querySelectorAll(".status");
+// var reqStatuses = document.querySelectorAll("#status");
 
 // for (var i = 0; i < reqStatuses.length; i++) {
 //     if (reqStatuses[i].value === "declined") {

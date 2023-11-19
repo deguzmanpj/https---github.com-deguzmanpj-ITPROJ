@@ -20,6 +20,11 @@
     <body> 
         <div class="navigation"> 
             <div class="nav-bar"> 
+            <?php
+                use Illuminate\Support\Facades\DB;
+                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
+               ?>
                 <button class="notification-button"> 
                     <i class="fas fa-bell"></i> <!-- Bell icon --> 
                 </button> <div id="menuToggle" class="toggle-menu active"> 
@@ -31,13 +36,11 @@
 
                 <div class="main">
                 <div id="sideMenu" class="side-menu">
-                    <div class="menu-items">
                     <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
                     <a href="{{ route('admin/users') }}" id="active_tab" class="item1">Users</a>
-                    <a href="#" class="item">Asset Management</a>
-                    <a href="#" class="item">Forms</a>
-                    <a href="#" class="item">Logout</a>
-                    </div>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>
                 </div>
             </div> 
         </div> 
@@ -50,7 +53,7 @@
     </div>
         
         <div class="table-title">
-            <div class="row">
+            <div class="users-row">
                 <div class="search-container">
                     <label for="search">Search:</label>
                     <input type="text" id="search" placeholder="Enter a keyword">
@@ -146,13 +149,7 @@
                                 <tr>
                                     <td>{{ $user->userId }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>
-                                        <span class="password-hidden" data-password="{{ $user->pass }}">
-                                            @for ($i = 0; $i < strlen($user->pass); $i++)
-                                                •
-                                            @endfor
-                                        </span>
-                                    </td>
+                                    <td>{{ $user->pass }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->contact_no }}</td>
                                     <td>{{ $user->role }}</td>

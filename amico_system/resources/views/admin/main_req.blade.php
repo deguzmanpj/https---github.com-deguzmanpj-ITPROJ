@@ -20,6 +20,11 @@
 
     <div class="navigation">
         <div class="nav-bar">
+        <?php
+                use Illuminate\Support\Facades\DB;
+                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
+               ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -31,10 +36,10 @@
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
                     <a href="{{ route('admin/dash') }}" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
                     <a href="{{ route('admin/users') }}" class="item1">Users</a>
-                    <a href="#" class="item" id = "active_tab">Asset Management</a>
-                    <a href="#" class="item">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>
                 </div>
             </div>
         </div>
@@ -51,8 +56,10 @@
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input class="upload" type="file" name="csvFile" accept=".csv">
-                <button class="uploadbtn" type="submit">Upload File</button>
+                <div class="feature-container">
+                    <input class="upload" type="file" name="csvFile" accept=".csv">
+                    <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
             </form>
 
 
@@ -69,14 +76,14 @@
             @endif
         </div>
 
-        <!-- 
+        
         <div class="table-title">
 
             <div class="row">
-                <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add Entry</button>
+            <a href="{{ route ('admin/main_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
             </div>
         </div>
-    </div> -->
+    </div>
 
 
     <div class="wrapper">
@@ -90,57 +97,89 @@
                             <tr>
                                 <th>Asset</th>
                                 <th>Received On</th>
+                                <th>Submitted by</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <?php
-                        if (!empty($results)) {
-                            for ($num = 0; $num < sizeof($results); $num++) {
-                                $data = $results[$num];
-                                $msNo = $data->ms_no;
-                                $reqStatus = $data->status;
-                                echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
-                                echo '<tr>';
-                                echo '<td>' . 'ms_no: ' . $msNo . '</td>';
-                                echo '<td>'  . $data->ms_date . '</td>';
-                                echo '<td>';
+if (!empty($results)) {
+    $processedMsNos = []; // Array to store processed ms_no values
+    foreach ($results as $data) {
+        $msNo = $data->ms_no;
+
+        // Check if ms_no has already been processed
+        if (!in_array($msNo, $processedMsNos)) {
+            $reqStatus = $data->status;
+            echo '<input type="hidden" class="status" value="' . $reqStatus . '">';
+            echo '<tr>';
+            echo '<td>' . 'ms_no: ' . $msNo . '</td>';
+            echo '<td>' . $data->ms_date . '</td>';
+            echo '<td>' . $data->submitted_by . '</td>';
+            echo '<td>';
+
+            echo '<div style="display: inline-block;">'; // Container for inline display
+            echo '<form action="/see_main" method="POST">'; // see form
+            echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+            echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
+            echo '<input type="hidden" class="id" name="id" value="admin">';
+            echo '<button type="submit">SEE FORM</button>';
+            echo '</form>';
+            echo '</div>';
 
 
-                                echo '<div style="display: inline-block;">'; // Container for inline display
-                                echo '<form action="/see_main" method="POST">'; // see form
-                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
-                                echo '<input type="hidden" class="id" name="id" value = "admin">';
-                                echo '<button type="submit">SEE FORM</button>';
-                                echo '</form>';
-                                echo '</div>';
+            if($reqStatus === "accepted"){
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/add_to_main" method="POST">'; // accept form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
+                echo '<input type="hidden" class="id" name="id" value="admin">';
+                echo '<button type="submit" class="accept" disabled>ACCEPTED</button>';
+                echo '</form>';
+                echo '</div>';
+    
+    
+            }
 
+            if($reqStatus === "declined"){
+ 
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/decline_main" method="POST">'; // decline form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<button type="submit" class="decline" disabled>DECLINED</button>';
+                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
+                echo '</form>';
+                echo '</div>';
+    
+            }elseif($reqStatus === "pending"){
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/add_to_main" method="POST">'; // accept form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
+                echo '<input type="hidden" class="id" name="id" value="admin">';
+                echo '<button type="submit" class="accept">ACCEPT</button>';
+                echo '</form>';
+                echo '</div>';
+    
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/decline_main" method="POST">'; // decline form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<button type="submit" class="decline">DECLINE</button>';
+                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
+                echo '</form>';
+                echo '</div>';
+    
+            }
 
-                                echo '<div style="display: inline-block;">'; // Container for inline display
-                                echo '<form action="/add_to_main" method="POST">'; // accept form
-                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
-                                echo '<input type="hidden" class="id" name="id" value = "admin">';
-                                echo '<button type="submit" class="accept">ACCEPT</button>';
-                                echo '</form>';
-                                echo '</div>';
+            echo '</td>';
+            echo '</tr>';
 
+            // Update the processedMsNos array
+            $processedMsNos[] = $msNo;
+        }
+    }
+}
+?>
 
-                                echo '<div style="display: inline-block;">'; // Container for inline display
-                                echo '<form action="/decline_request" method="POST">'; // decline form
-                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                echo '<button type="submit" class="decline">DECLINE</button>';
-                                echo '<input type="hidden" class="ms_no" name="ms_no" value="' . $msNo . '">';
-                                echo '</form>';
-                                echo '</div>';
-
-                                echo '</td>';
-
-                                
-                                echo '</tr>';
-                            }
-                        }
-                        ?>
                         </tbody>
                     </table>
                 </div>

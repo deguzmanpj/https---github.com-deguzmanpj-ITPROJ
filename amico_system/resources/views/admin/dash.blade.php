@@ -1,4 +1,7 @@
-dash.admin
+<?php 
+session_start();
+echo 'welcome '.$_SESSION["name"];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,18 +20,17 @@ dash.admin
         <link rel="stylesheet" href="../res/css/asset_information.css"> 
         <link rel="stylesheet" href="../res/css/navbar.css">
 
-    <style>
-        #assetStatusChart {
-            width: 22%; 
-            margin: auto;
-        }
-    </style>
 
 </head>
 <body>
 
 <div class="navigation">
     <div class="nav-bar">
+    <?php
+                use Illuminate\Support\Facades\DB;
+                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
+               ?>
         <button class="notification-button">
             <i class="fas fa-bell"></i>
         </button>
@@ -42,16 +44,16 @@ dash.admin
     <div class="main">
         <div id="sideMenu" class="side-menu">
             <div class="menu-items">
-                <a href="{{ route('admin/dash') }}" id="active_tab" class="item1">Dashboard</a>
-                <a href="{{ route('admin/users') }}"  class="item1">Users</a>
-                <a href="{{ route('admin/asset_info') }}" class="item1">Asset Management</a>
-                <a href="{{ route ('admin/pending')}}" class="item1">Pending Requests</a>
-                <a href="#" class="item">Forms</a>
-                <a href="#" class="item">Logout</a>
+                    <a href="{{ route ('admin/dash')}}" id="active_tab" class="item1">Dashboard</a>
+                    <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
+                    <a href="{{ route ('admin/receiving_repo')}}"  class="item1">Forms</a>
+                    <a href="{{ route('admin/users') }}" class="item1">Users</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="container">
     <div class="header">
@@ -60,15 +62,17 @@ dash.admin
     </div>
 </div>
 
+
 <div class="container">
-    <div id="selectedUnit" class="selected-unit">
-    @if($unitFilter)
-        Selected Unit: {{ $unitFilter }}
-    @else
-        All Units
-    @endif
+    <div class="container">
+        <div id="selectedUnit" class="selected-unit">
+        @if($unitFilter)
+            Selected Unit: {{ $unitFilter }}
+        @else
+            All Units
+        @endif
+        </div>
     </div>
-</div>
 
 <!-- Filter -->
 <div class="container">
@@ -115,7 +119,7 @@ dash.admin
             <option value="School of Engineering and Architecture"@if($unitFilter == "School of Engineering and Architecture") selected @endif>School of Engineering and Architecture</option>
             <option value="School of Law"@if($unitFilter == "School of Law") selected @endif>School of Law</option>
             <option value="School of Medicine"@if($unitFilter == "School of Medicine") selected @endif>School of Medicine</option>
-            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>Asset Management and Inventory Control Office</option>
+            <option value="School of Nursing, Allied Health and Biological Sciences"@if($unitFilter == "School of Nursing, Allied Health and Biological Sciences") selected @endif>School of Nursing, Allied Health and Biological Sciences</option>
             <option value="School of Teacher Education and Liberal Arts"@if($unitFilter == "School of Teacher Education and Liberal Arts") selected @endif>School of Teacher Education and Liberal Arts</option>
             <option value="SFW - Halfway Home for Boys"@if($unitFilter == "SFW - Halfway Home for Boys") selected @endif>SFW - Halfway Home for Boys</option>
             <option value="SFW - Pedagogical and Developmental Center"@if($unitFilter == "SFW - Pedagogical and Developmental Center") selected @endif>SFW - Pedagogical and Developmental Center</option>
@@ -139,45 +143,48 @@ dash.admin
 </div>
 
 <!-- Add a canvas element where the chart will be rendered -->
-<div id="chartContainer">
-    <canvas id="assetStatusChart"></canvas>
-</div>
-
 <div class="container">
-    <div class="real-time-monitoring">
-        <h2>Real-Time Monitoring</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Condemned</td>
-                    <td id="condemnedCount"></td>
-                </tr>
-                <tr>
-                    <td>Maintenance</td>
-                    <td id="maintenanceCount"></td>
-                </tr>
-                <tr>
-                    <td>Borrowed</td>
-                    <td id="borrowedCount"></td>
-                </tr>
-                <tr>
-                    <td>Calibration</td>
-                    <td id="calibrationCount"></td>
-                </tr>
-                <tr>
-                    <td>Acknowledged</td>
-                    <td id="acknowledgedCount"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="chart-container">
+        <canvas id="assetStatusChart"></canvas>
+    </div>
+
+    <div class="rtm-container">
+        <div class="real-time-monitoring">
+            <h2>Real-Time Monitoring</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Condemned</td>
+                        <td id="condemnedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Maintenance</td>
+                        <td id="maintenanceCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Borrowed</td>
+                        <td id="borrowedCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Calibration</td>
+                        <td id="calibrationCount"></td>
+                    </tr>
+                    <tr>
+                        <td>Acknowledged</td>
+                        <td id="acknowledgedCount"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

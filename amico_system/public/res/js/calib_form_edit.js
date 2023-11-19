@@ -7,23 +7,45 @@ var resultsDataElement = document.getElementById('unitsData');
 var resultsData = JSON.parse(resultsDataElement.getAttribute('data-results'));
 
 
-var officeDropdown = document.querySelector('#office_dropdown');
-officeDropdown.innerHTML = ""; //// Clear existing options
+var unitsDataElement = document.getElementById('unitsData');
+var unitsData = JSON.parse(unitsDataElement.getAttribute('data-results'));
 
-for (var i = 0; i < resultsData.length; i++) {
+var resultsDataElement = document.getElementById('resultsData');
+var resultsData = JSON.parse(resultsDataElement.getAttribute('data-results'));
+
+
+var officeDropdown = document.querySelector('#office_dropdown');
+officeDropdown.innerHTML = ""; // Clear existing options
+
+for (var i = 0; i < unitsData.length; i++) {
     // Access individual objects in the array
-    var unit = resultsData[i];
+    var unit = unitsData[i];
 
     // Check if the unitName matches the selected value
     if (unit.unit === selectedUnitValue) {
+
         // Create an option element and add it to the dropdown
         var option = document.createElement("option");
+
+        // Use ternary operator to set the selected attribute
+        var selected = (unit.office === resultsData[0].office) ? 'selected' : '';
+
+        // Set the value and selected attribute of the option
         option.value = unit.office;
-        option.text = unit.office;
+        option.selected = selected;
+
+        // Set the text content of the option
+        option.textContent = unit.office;
+
+        // Output the option with the selected attribute as needed
         officeDropdown.appendChild(option);
+
+        // Assuming unitCode, position, and person are input elements
         unitCode.value = unit.unit_code;
-        console.log(unitCode)
+        position.value = unit.position;
+        person.value = unit.head_name;
     }
+
 }
 
 // var office_copy = document.querySelector("#office_copy");

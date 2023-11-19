@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+use Illuminate\Support\Facades\Log;?>
 <head>
 
     <head>
@@ -11,7 +13,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../res/css/asset_information.css">
+        
+        <link rel="stylesheet" href="../res/css/asset_information_employee.css">
         <link rel="stylesheet" href="../res/css/navbar.css">
 
     </head>
@@ -50,7 +53,12 @@
 </style>
 
     <div class="navigation">
-        <div class="nav-bar">
+    <div class="nav-bar">
+                <?php
+                use Illuminate\Support\Facades\DB;
+                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
+               ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -58,13 +66,17 @@
             </div>
         </div>
 
+        <style type = "text/css">.user{font-size: 100%; position: absolute;
+            right: 0;}</style>
+
+
         <div class="main">
             <div id="sideMenu" class="side-menu">
                 <div class="menu-items">
                     <a href="{{ route ('employee/dashB')}}" class="item1">Dashboard</a>
                     <a href="{{ route ('employee/asset_info')}}" id="active_tab" class="one">Asset Information</a>
                     <a href="{{ route ('employee/receiving_repo')}}"  class="item1">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
                 </div>
             </div>
         </div>
@@ -81,8 +93,10 @@
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input class="upload" type="file" name="csvFile" accept=".csv">
-                <button class="uploadbtn" type="submit">Upload File</button>
+                <div class="file-input-container">
+                    <input class="upload" type="file" name="csvFile" accept=".csv">
+                    <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
             </form>
 
 
@@ -99,15 +113,81 @@
             @endif
         </div>
 
+        <div>
+            <h4>TABLE FILTER</h4>
+            <select id="unitFilter" onchange="filterTable()">
+                <option value="all">All Units</option>
+                <option value="AMC">AMC - Asset Management and Inventory Control Office</option>
+                <option value="BES">BES - Basic Education School - Laboratory Elementary School</option>
+                <option value="BES">BES - Basic Education School - Laboratory Junior High School</option>
+                <option value="BES">BES - Basic Education School - Laboratory Senior High School</option>
+                <option value="CMS">CMS - Campus Planning, Maintenance, and Security Department</option>
+                <option value="CCM">CCM - Center for Campus Ministry</option>
+                <option value="CCW">CCW - Center for Counseling and Wellness</option>
+                <option value="CCA">CCA - Center for Culture and the Arts</option>
+                <option value="CSD">CSD - Center for Sports Development</option>
+                <option value="CIR">CIR - CICM Residence</option>
+                <option value="CEO">CEO - Community Extension and Outreach Programs Office</option>
+                <option value="DPO">DPO - Data Protection Office</option>
+                <option value="FIN">FIN - Finance Office - Accounting Section</option>
+                <option value="FIN">FIN - Finance Office - Bookstore</option>
+                <option value="FIN">FIN - Finance Office - Payroll Section</option>
+                <option value="FIN">FIN - Finance Office - Purchasing Department</option>
+                <option value="FIN">FIN - Finance Office - Student Account Support Services</option>
+                <option value="FIN">FIN - Finance Office - Transportation Department</option>
+                <option value="DEC">DEC - Health Services Unit - Dental Clinic</option>
+                <option value="MEC">MEC - Health Services Unit - Medical Clinic</option>
+                <option value="HRD">HRD - Human Resource Department</option>
+                <option value="MIC">MIC - Museum of Igorot Cultures and Arts - Center for Indigenous Studies</option>
+                <option value="OLA">OLA - Office for Legal Affairs</option>
+                <option value="GRA">GRA - Office of Global Relations and Alumni Affairs</option>
+                <option value="QMO">QMO - Office of Institutional Development and Quality Assurance</option>
+                <option value="OSA">OSA - Office of Student Affairs and Services</option>
+                <option value="OIA">OIA - Office of the Internal Auditor</option>
+                <option value="OUP">OUP - Office of the President</option>
+                <option value="VAA">VAA - Office of the Vice President for Academic Affairs</option>
+                <option value="VAD">VAD - Office of the Vice President for Administration</option>
+                <option value="VFI">VFI - Office of the Vice President for Finance</option>
+                <option value="VMI">VMI - Office of the Vice President for Mission and Identity</option>
+                <option value="POO">POO - Printing Operations Office</option>
+                <option value="SMI">SMI - School of Accountancy, Management, Computing and Information Studies</option>
+                <option value="SAS">SAS - School of Advanced Studies</option>
+                <option value="SEA">SEA - School of Engineering and Architecture</option>
+                <option value="SOL">SOL - School of Law</option>
+                <option value="SOM">SOM - School of Medicine</option>
+                <option value="SNA">SNA - School of Nursing, Allied Health and Biological Sciences</option>
+                <option value="STL">STL - School of Teacher Education and Liberal Arts</option>
+                <option value="HHB">HHB - SFW - Halfway Home for Boys</option>
+                <option value="PDC">PDC - SFW - Pedagogical and Developmental Center</option>
+                <option value="SFW">SFW - SFW - Sunflower Child and Youth Wellness Center</option>
+                <option value="SLP">SLP - SLU Parish</option>
+                <option value="GUH">GUH - SLU Residence Halls - Guest House</option>
+                <option value="LRH">LRH - SLU Residence Halls - Ladies' Residence Halls</option>
+                <option value="MSRH">MSRH - SLU Residence Halls - Maryheights Students' Residence Halls</option>
+                <option value="MRH">MRH - SLU Residence Halls - Men's Residence Hall</option>
+                <option value="SHMC">SHMC - SLU Sacred Heart Medical Center</option>
+                <option value="TMD">TMD - Technology Management and Development Department</option>
+                <option value="TRD">TRD - Theophile Verbist Resource and Documentation Center</option>
+                <option value="UIO">UIO - University Information Office</option>
+                <option value="UNL">UNL - University Libraries</option>
+                <option value="URO">URO - University Registrar's Office</option>
+                <option value="URI">URI - University Research and Innovation Center</option>
+            </select>
+            <button onclick="filterTableByUnit()">Filter by Unit</button>   
 
-        <div class="table-title">
-
-            <div class="row">
-                <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Leave Note</button>
-            </div>
+            <select id="statusFilter" onchange="filterTable()">
+                <option value="all">All Status</option>
+                <option value="condemned">Condemned</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="borrowed">Borrowed</option>
+                <option value="calibration">Calibration</option>
+                <option value="acknowledged">Acknowledged</option>
+            </select>
+            <button onclick="filterTableByUnitAndStatus()">Filter by Unit and Status</button>
         </div>
-    </div>
 
+
+    </div>
 
         <div class="wrapper">
             <section class="section section--large" id="part1">
@@ -130,7 +210,6 @@
                             </thead>
                             <tbody>
                                 <?php
-                                use Illuminate\Support\Facades\Log;
                                   foreach($results as $result){
                                     echo ' <tr>
                                     <td><input type = "text"name = "'.$result->unit_code.'" value = "'.$result->unit_code.'" readonly> </td>
@@ -501,5 +580,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../res/js/asset_information.js"></script>
 <script src="../res/js/navbar.js"></script>
+<script src="../res/js/filterTableScript.js"></script>
 
 </html>

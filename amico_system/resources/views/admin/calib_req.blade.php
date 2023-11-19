@@ -20,6 +20,11 @@
 
     <div class="navigation">
         <div class="nav-bar">
+        <?php
+                use Illuminate\Support\Facades\DB;
+                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
+               ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -70,7 +75,7 @@
 
         <div class="table-title">
             <div class="row">
-                <a href="{{ route ('employee/calib_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
+            <a href="{{ route ('admin/calib_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
             </div>
         </div>
 
@@ -86,57 +91,92 @@
                             <tr>
                                 <th>Asset</th>
                                 <th>Received On</th>
+                                <th>Submitted by</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <?php
-                        if (!empty($results)) {
-                            for ($num = 0; $num < sizeof($results); $num++) {
-                                $data = $results[$num];
-                                $csNo = $data->cs_no;
-                                $reqStatus = $data->status;
-                                echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
-                                echo '<tr>';
-                                echo '<td>' . 'cs_no: ' . $csNo . '</td>';
-                                echo '<td>'  . $data->cs_date . '</td>';
-                                echo '<td>';
+if (!empty($results)) {
+    $processedCsNos = []; // Array to store processed cs_no values
+    foreach ($results as $data) {
+        $csNo = $data->cs_no;
+
+        // Check if cs_no has already been processed
+        if (!in_array($csNo, $processedCsNos)) {
+            $reqStatus = $data->status;
+            echo '<input type="hidden" class="status" value="' . $reqStatus . '">';
+            echo '<tr>';
+            echo '<td>' . 'cs_no: ' . $csNo . '</td>';
+            echo '<td>' . $data->cs_date . '</td>';
+            echo '<td>' . $data->submitted_by . '</td>';
+            echo '<td>';
+
+            echo '<div style="display: inline-block;">'; // Container for inline display
+            echo '<form action="/see_calib" method="POST">'; // see form
+            echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+            echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
+            echo '<input type="hidden" class="id" name="id" value="admin">';
+            echo '<button type="submit">SEE FORM</button>';
+            echo '</form>';
+            echo '</div>';
+
+         
+            if($reqStatus === "accepted"){
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/add_to_calib" method="POST">'; // accept form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
+                echo '<input type="hidden" class="id" name="id" value="admin">';
+                echo '<button type="submit" class="accept" disabled>ACCEPTED</button>';
+                echo '</form>';
+                echo '</div>';
+    
+            }
+
+            if($reqStatus === "declined"){
+
+    
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/decline_calib" method="POST">'; // decline form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<button type="submit" class="decline" disabled>DECLINED</button>';
+                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
+                echo '</form>';
+                echo '</div>';
+    
+
+            }elseif($reqStatus === "pending"){
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/add_to_calib" method="POST">'; // accept form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
+                echo '<input type="hidden" class="id" name="id" value="admin">';
+                echo '<button type="submit" class="accept">ACCEPT</button>';
+                echo '</form>';
+                echo '</div>';
+    
+                echo '<div style="display: inline-block;">'; // Container for inline display
+                echo '<form action="/decline_calib" method="POST">'; // decline form
+                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                echo '<button type="submit" class="decline">DECLINE</button>';
+                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
+                echo '</form>';
+                echo '</div>';
+    
+    
+            }
 
 
-                                echo '<div style="display: inline-block;">'; // Container for inline display
-                                echo '<form action="/see_calib" method="POST">'; // see form
-                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
-                                echo '<input type="hidden" class="id" name="id" value = "admin">';
-                                echo '<button type="submit">SEE FORM</button>';
-                                echo '</form>';
-                                echo '</div>';
+            echo '</td>';
+            echo '</tr>';
 
+            // Update the processedCsNos array
+            $processedCsNos[] = $csNo;
+        }
+    }
+}
+?>
 
-                                echo '<div style="display: inline-block;">'; // Container for inline display
-                                echo '<form action="/add_to_calib" method="POST">'; // accept form
-                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
-                                echo '<input type="hidden" class="id" name="id" value = "admin">';
-                                echo '<button type="submit" class="accept">ACCEPT</button>';
-                                echo '</form>';
-                                echo '</div>';
-
-
-                                echo '<div style="display: inline-block;">'; // Container for inline display
-                                echo '<form action="/decline_request" method="POST">'; // decline form
-                                echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                echo '<button type="submit" class="decline">DECLINE</button>';
-                                echo '<input type="hidden" class="cs_no" name="cs_no" value="' . $csNo . '">';
-                                echo '</form>';
-                                echo '</div>';
-
-                                echo '</td>';
-
-                                
-                                echo '</tr>';
-                            }
-                        }
-                        ?>
                         </tbody>
                     </table>
                 </div>

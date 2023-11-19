@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,13 +83,22 @@
                     </div>
                     <div class="about-content">
                         <h2> Vision and Mission </h2>
-                    </p>In partnership with our stakeholders, the Asset Management and Inventory Control 
+                    <p>In partnership with our stakeholders, the Asset Management and Inventory Control 
                     Office envisions safeguarding all assets of Saint Louis University
                     and encouraging them to be good stewards of the things entrusted to us.
                     The Asset Management and Inventory Control Office are committed to continuously 
                     developing and improving the effectiveness in managing all assets of
                     Saint Louis University aligned with the direction of Saint Louis University 
                     that are creative, competent, socially involved, and imbued with a Christian spirit.</p>
+                    <h2> Objective of AMICO </h2>
+                <p>The Asset Management Inventory Control Office (AMICO) at Saint Louis University is 
+                    dedicated to enhancing the efficacy of asset management through a multifaceted approach. 
+                    This includes fortifying policies and procedures for meticulous asset oversight, 
+                    promoting a culture of responsible stewardship, establishing and verifying the integrity 
+                    of asset records, validating and accounting for all assets, and systematically assessing 
+                    the conditions and functionality of property and equipment. This comprehensive strategy 
+                    underscores AMICO's commitment to ensuring the proper and transparent management of Saint Louis University's diverse assets.
+</p>
                     </div>
                 </div>
             </div>
@@ -99,7 +113,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="images/rovin.jpg" />
+                            <img src="images/rovin.png" />
                         </div>
                         <h3>Rovin Matthew Navarro</h3>
                         <p>Team Leader</p>
@@ -121,7 +135,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="rovin.png" />
+                            <img src="images/olsen.png" />
                         </div>
                         <h3>Olsen Daim Valente</h3>
                         <p>Database</p>
@@ -133,7 +147,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="profile-img-2.png" />
+                            <img src="images/marc.png" />
                         </div>
                         <h3>Marc Justin Ramos</h3>
                         <p>Database</p>
@@ -146,7 +160,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="images/paj.jpg" />
+                            <img src="images/paj.png" />
                         </div>
                         <h3>Prince Jefferson De Guzman</h3>
                         <p>Developer na ngayon</p>
@@ -168,7 +182,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="profile-img-3.png" />
+                            <img src="images/cyver.png" />
                         </div>
                         <h3>Cyver Grant Rafael</h3>
                         <p>System Analyst</p>
@@ -179,7 +193,7 @@
                 <div class="column">
                     <div class="card">
                         <div class="img-container">
-                            <img src="rovin.png" />
+                            <img src="images/adrian.png" />
                         </div>
                         <h3>Adrian Salinas</h3>
                         <p>System Analyst</p>
@@ -196,4 +210,3 @@
 <script src = "res/js/loginpage.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </html>
-

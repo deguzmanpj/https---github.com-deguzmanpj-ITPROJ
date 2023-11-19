@@ -5370,7 +5370,7 @@
                 <input type="hidden" id="ii_borrow" name="ii_borrow" value = "' . $results[0]->ii_borrow . '">
                 <input type="hidden" id="iii_borrow" name="iii_borrow" value = "' . $results[0]->iii_borrow . '">'
         ?>
-
+          <input type = "hidden" id = "user" name = "user" value = "employee" >
     </form>
 </body>
 <script src="../res/js/prop_form_edit.js"></script>

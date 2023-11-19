@@ -1,4 +1,14 @@
+$(document).ready(function(){
+    // Show the popup when the "Add User" button is clicked
+    $(".add-new").click(function(){
+        $(".pop-up").show();
+    });
 
+    // Hide the popup when the close button is clicked
+    $(".close-button").click(function(){
+        $(".pop-up").hide();
+    });
+});
 
 // Wait for the document to be ready
 $(document).ready(function () {

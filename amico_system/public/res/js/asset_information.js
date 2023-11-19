@@ -205,10 +205,42 @@ $('#overlay').removeClass('blur-in');
 
 
 
+  $(document).ready(function () {
+    $(document).on("click", ".delete", function () {
+        var row = $(this).closest("tr");
 
-  $(document).on("click", ".delete", function () {
+        // Retrieve the asset description and serial number from the row
+        var assetDesc = row.find('input[name^="asset_desc"]').val();
+        var serialNumber = row.find('input[name^="serial_no"]').val();
 
-  });
+        // Set the values in the modal
+        $('#assetDesc').text(assetDesc);
+        $('#serialNumber').text(serialNumber);
+
+        // Show the modal
+        $('#deleteConfirmationModal').modal('show');
+
+        // Handle delete confirmation
+        $('#confirmDeleteBtn').click(function () {
+            // Include the CSRF token in the AJAX request
+            $.ajax({
+                type: "POST",
+                url: '/admin/asset_info/delete.asset',
+                data: { _token: window.csrf_token, serial_no: serialNumber },
+                success: function (data) {
+                    // Handle success if needed
+                    row.remove(); // Remove the entire row from the table after successful deletion
+                },
+                error: function (error) {
+                    // Handle error if needed
+                }
+            });
+
+            // Hide the modal
+            $('#deleteConfirmationModal').modal('hide');
+        });
+    });
+});
 
 
 // });
@@ -377,3 +409,69 @@ navA.forEach(function (item) {
   });
 });
 
+//SEARCH
+function displaySearchResults(results) {
+  var tableBody = document.getElementById("searchResultsTableBody");
+  tableBody.innerHTML = ""; // Clear existing content
+
+  results.forEach(function (result) {
+      var row = document.createElement("tr");
+
+      // Add other cells as needed
+      var fields = [
+        'unit_code',
+        'asset_tag',
+        'asset_desc',
+        'brand',
+        'model',
+        'serial_no',
+        'asset_class',
+        'status',
+        'cost',
+        'warranty',
+        'build_loc',
+        'floor',
+        'spec_area',
+        'note',
+        'rr_no',
+        'date_acq',
+        'reference',
+        'reference_date',
+        'funded_by',
+        'rs_no_transferred',
+        'rs_date',
+        'from_loc',
+        'doc_no',
+        'doc_no_date',
+        'received_from',
+        'received_by',
+        'pb_no',
+        'pb_date',
+        'id_no',
+        'person_accountable',
+        'ms_no',
+        'ms_date',
+        'moni_log',
+        'cr_no',
+        'cr_date',
+        'remarks',
+        'ar_no',
+        'ar_date',
+        'id_number',
+        'name_employee',
+        'cs_no',
+        'cs_date',
+        'moni_log_calibration'
+      ];
+      fields.forEach(function (field) {
+          var cell = document.createElement("td");
+          cell.textContent = result[field];
+          row.appendChild(cell);
+      });
+
+      tableBody.appendChild(row);
+  });
+
+  // Show the modal
+  $('#searchResultsModal').modal('show');
+}

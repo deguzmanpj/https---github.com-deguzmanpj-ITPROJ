@@ -4576,7 +4576,7 @@
                     <div class="c x17 y19 w4 hb">
                         <?php
                         echo '<div class="t m0 x15 hc y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" class = "input_text" id = "unit_code" name = "unit_code" value = "' . $results[0]->unit_code . '" ></input>';
+                        echo '<input type = "text" class = "input_text" id = "unit_code" name = "unit_code" value = "' . $results[0]->unit_code . '" readonly></input>';
                         echo '</div>';
                         ?>
                     </div>
@@ -5952,6 +5952,8 @@
     
     <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
     <div id="unitsData" data-results="{{ json_encode($units) }}"></div>
+
+    <input type = "hidden" id = "user" name = "user" value = "employee" >
     </form>
 </body>
 

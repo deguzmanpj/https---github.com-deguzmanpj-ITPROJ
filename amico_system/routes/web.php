@@ -3,8 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvController;
+use App\Models\User;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashControlEmp;
+use App\Http\Controllers\AssetSearchController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +27,10 @@ use Illuminate\Support\Facades\Log;
 Route::get('/', function () {
     return view('login');
 });
+
+Route::get('/', function () {
+    return view('login'); 
+})->name('/');
 
 Route::post('/loginpage', [InvController::class, 'showDashboard']);
 
@@ -77,6 +83,11 @@ Route::post('/see_condemn', [InvController::class, 'seeCondemn']);
 Route::post('/see_calib', [InvController::class, 'seeCalib']);
 
 Route::post('/decline_request', [InvController::class, 'declineRequest']);
+Route::post('/decline_ack', [InvController::class, 'declineAck']);
+Route::post('/decline_prop', [InvController::class, 'declineProp']);
+Route::post('/decline_main', [InvController::class, 'declineMain']);
+Route::post('/decline_condemn', [InvController::class, 'declineCondemn']);
+Route::post('/decline_calib', [InvController::class, 'declineCalib']);
 
 Route::post('/edit_asset', [InvController::class, 'editAsset']);
 
@@ -149,6 +160,7 @@ Route::get('admin/asset_info', function(){
         Log::info(count((array)$results));
         $results = (array)$results;
         Log::info($results);
+
         return view('admin/asset_info', compact('results')); 
 })->name('admin/asset_info');
 
@@ -177,19 +189,57 @@ Route::get('employee/prop_borr', function () {
     return view('employee/prop_borr', compact('results')); 
 })->name('employee/prop_borr');
 
-// Route::get('employee/receiving_repo', function () {
-//     $results = DB::select('select * from receiving_report where req_status = "accepted" ');
-//     Log::info(count((array)$results));
-//     $results = (array)$results;
-//     Log::info($results);
-//     return view('employee/receiving_repo', compact('results')); 
-// })->name('employee/receiving_repo');
+
+
+
+
+
+Route::get('admin/rr_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('admin/rr_form', compact('results')); 
+})->name('admin/rr_form');
+
+Route::get('admin/ack_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('admin/ack_form', compact('results')); 
+})->name('admin/ack_form');
+
+Route::get('admin/prop_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('admin/prop_form', compact('results')); 
+})->name('admin/prop_form');
+
+Route::get('admin/main_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('admin/main_form', compact('results')); 
+})->name('admin/main_form');
+
+
+Route::get('admin/condemn_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('admin/condemn_form', compact('results')); 
+})->name('admin/condemn_form');
+
+Route::get('admin/calib_form', function () {
+    $results = DB::select('select * from units');
+    $results = (array)$results;
+    return view('admin/calib_form', compact('results')); 
+})->name('admin/calib_form');
+
+
+
 
 Route::get('employee/main_req', function () {
     $results = DB::select('select * from maintenance_report');
     Log::info(count((array)$results));
     $results = (array)$results;
     Log::info($results);
+   
     return view('employee/main_req', compact('results')); 
 })->name('employee/main_req');
 
@@ -209,11 +259,10 @@ Route::get('employee/calib_req', function () {
     return view('employee/calib_req', compact('results')); 
 })->name('employee/calib_req');
 
-Route::get('employee/asset_info', function(){
+Route::get('employee/asset_info', function(User $contact){
+    // Log::info($user);
     $results = DB::select('select * from asset');
-        Log::info(count((array)$results));
         $results = (array)$results;
-        Log::info($results);
         return view('employee/asset_info', compact('results')); 
 })->name('employee/asset_info');
 
@@ -292,6 +341,13 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin/dash');
 
 Route::get('employee/dashB', [DashControlEmp::class, 'index'])->name('employee/dashB');
+
+//Logout
+Route::get('/logout', [InvController::class, 'logout'])->name('logout');
+
+Route::post('admin/asset_info/delete.asset', [InvController::class, 'deleteAsset'])->name('delete.asset');
+
+Route::get('/search', [AssetSearchController::class, 'search'])->name('asset_info.search');
 
 Route::get('pdf',[PdfExtractorController::class,'extractPdf']);
 

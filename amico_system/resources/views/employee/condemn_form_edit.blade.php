@@ -3270,7 +3270,7 @@
                     <div class="c x11 y19 w4 ha">
                         <?php
                         echo '<div class="t m0 x12 hb y1a ff6 fs7 fc1 sc0 ls0 ws0">';
-                        echo '<input type = "text" name="unit_code" class="input_text" id="unit_code"  value = "' . $results[0]->unit_code . '" ></input>';
+                        echo '<input type = "text" name="unit_code" class="input_text" id="unit_code"  value = "' . $results[0]->unit_code . '" readonly></input>';
                         echo '</div>';
                         ?>
                     </div>
@@ -4023,7 +4023,7 @@
             <?php
             echo '<input type="hidden" id="cb_condition" name="cb_condition" value = "' . $results[0]->cb_condition . '">'
             ?>
-
+          <input type = "hidden" id = "user" name = "user" value = "employee" >
     </form>
 </body>
 

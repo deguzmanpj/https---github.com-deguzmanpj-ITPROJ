@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use res\js\asset_information;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 
 class InvController extends Controller
 {
+
+
     public function showDashboard()
 {
     $number = request('number');
@@ -19,22 +23,40 @@ class InvController extends Controller
     $user = DB::table('users')
         ->where('contact_no', $number)
         ->where('pass', $password) // Add this line to check the password
-        ->select('role')
+        ->select('role', 'contact_no', 'name',
+        'pass',
+        'email',)
         ->first();
 
     if ($user) {
         $role = $user->role;
 
         if ($role == "admin") {
-            return redirect("admin/asset_info");
+            setcookie("name", $number);
+            return redirect("admin/dash")->with('number');
+
         } else if ($role == "employee") {
-            return redirect("employee/asset_info");
+            setcookie("name", $number);
+            return redirect("employee/dashB")->with('number');
+
         }
     }
 
-    // Handle incorrect login credentials
+    // Handle incorrect login cred
     return redirect()->back()->with('error', 'Invalid login credentials, please try again or contact your admin.');
 }
+    //Logout
+    public function logout()
+    {
+
+        Auth::logout(); // Log the user out
+
+        request()->session()->regenerateToken();
+
+        // You can add any other additional logic here
+
+        return view('login');
+    }
 
 
     public function uploadCsvFile(Request $request)
@@ -159,7 +181,8 @@ class InvController extends Controller
             }
         }
 
-
+        $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+       
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::insert(
                 'INSERT INTO receiving_report 
@@ -169,8 +192,8 @@ class InvController extends Controller
                 checked_by, amico_prepared_by, amico_prepared_by_date, amico_noted_by, amico_noted_by_date,
                 req_status, cb_d, au_received_by, au_received_date,
                 au_condition, au_remarks, au_checked_by, au_checked_by_date, au_noted_by, au_noted_by_date, ua_ack_by,
-                ua_ack_by_position, ua_ack_by_date, fo_rec_copy_by, fo_rec_date, notes)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+                ua_ack_by_position, ua_ack_by_date, fo_rec_copy_by, fo_rec_date, notes, submitted_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                 ?,?,?,?,?,?,?,?,?,?,?)',
                 [
                     $request->input('unit'),
@@ -218,6 +241,7 @@ class InvController extends Controller
                     \DateTime::createFromFormat('Y-m-d', $request->input('fo_rec_date')) // Convert the string to a DateTime object
                         ->format('Y-m-d'), // Format the DateTime object
                     $allNotes,
+                    $name[0]->name
                 ]
 
             );
@@ -344,6 +368,7 @@ class InvController extends Controller
         $brand = $request->input('brand');
         $model = $request->input('model');
 
+        $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
 
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::insert(
@@ -351,8 +376,8 @@ class InvController extends Controller
                 (name_employee, id_number, ar_no, ar_date, unit, office, cb_record, asset_tag, asset_desc, 
                 brand, model, serial_no, date_purchased, amico_prepared_by, amico_prepared_date, amico_noted_by, amico_noted_date,
                 ea_ack_by, ea_ack_date, ea_noted_by, ea_noted_date,
-                amico_checked_by, amico_checked_date, note, status)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                amico_checked_by, amico_checked_date, note, status, submitted_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
                     $request->input('name_employee'),
                     $request->input('id_number'),
@@ -382,7 +407,8 @@ class InvController extends Controller
                     $request->input('amico_checked_by'),
                     $request->input('amico_checked_date'),
                     $request->input('note'),
-                    "pending"
+                    "pending",
+                    $name[0]->name
                 ]
 
             );
@@ -467,6 +493,8 @@ class InvController extends Controller
         $qty = $request->input('qty');
         $uom = $request->input('uom');
 
+        $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::insert(
                 'INSERT INTO property_borrowing 
@@ -477,8 +505,8 @@ class InvController extends Controller
                 e_borrow, date_borrowed, borrow_noted_by, borrow_noted_by_date, i_borrow,
                 borrower_return_date, borrower_noted_by, borrower_noted_date, ii_borrow, provider_received_by,
                 provider_received_date, provider_noted_date_2, iii_borrow, amico_prepared_by_2,
-                amico_prepared_date_2, amico_noted_date_2, notes, status)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                amico_prepared_date_2, amico_noted_date_2, notes, status, submitted_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
                     $request->input('person_accountable'),
                     $request->input('id_no'),
@@ -540,7 +568,8 @@ class InvController extends Controller
                     \DateTime::createFromFormat('Y-m-d', $request->input('amico_noted_date_2')) // Convert the string to a DateTime object
                         ->format('Y-m-d'), // Format the DateTime object
                     $request->input('notes'),
-                    "pending"
+                    "pending",
+                    $name[0]->name
                 ]
 
             );
@@ -669,6 +698,9 @@ class InvController extends Controller
             }
         }
 
+        
+        $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+
 
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::insert(
@@ -677,8 +709,8 @@ class InvController extends Controller
                 rs_date,cb_maintenance,cb_warranty_po_no, cb_warranty_po_date, 
                 supplier, asset_tag, asset_desc, brand, model, serial_no, last_maintenance,amico_checked_by,
                 amico_checked_date, amico_noted_by, amico_noted_date, cb_covered_warranty, cb_tmdd, 
-                cb_lab_tech, cb_cpmsd, cb_service_center, cb_other, notes,status)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                cb_lab_tech, cb_cpmsd, cb_service_center, cb_other, notes,status, submitted_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
                     $request->input('unit'),
                     $request->input('office'),
@@ -714,7 +746,8 @@ class InvController extends Controller
                     $request->input('cb_service_center'),
                     $request->input('cb_other'),
                     $allNotes,
-                    "pending"
+                    "pending",
+                    $name[0]->name
                 ]
 
             );
@@ -824,14 +857,14 @@ class InvController extends Controller
             }
         }
         Log::info($request->input('cr_date'));
-
+        $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::insert(
                 'INSERT INTO condemnation
                 (unit, office, unit_code, cr_no, cr_date,rs_no, 
                 rs_date,cb_condition,asset_tag, asset_desc, brand, model, serial_no, date_acq,amico_prepared_by,
-                amico_prepared_date, amico_noted_by, amico_noted_date, fo_rec_copy_by, fo_rec_date, notes, status)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                amico_prepared_date, amico_noted_by, amico_noted_date, fo_rec_copy_by, fo_rec_date, notes, status, submitted_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
                     $request->input('unit'),
                     $request->input('office'),
@@ -860,7 +893,8 @@ class InvController extends Controller
                     \DateTime::createFromFormat('Y-m-d', $request->input('fo_rec_date')) // Convert the string to a DateTime object
                         ->format('Y-m-d'), // Format the DateTime object
                     $allNotes,
-                    "pending"
+                    "pending",
+                    $name[0]->name
                 ]
 
             );
@@ -969,6 +1003,7 @@ class InvController extends Controller
         }
 
 
+        $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
         for ($int = 0; $assetTags[$int] != null; $int++) {
             DB::insert(
                 'INSERT INTO calibration 
@@ -976,8 +1011,8 @@ class InvController extends Controller
                 rs_date,cb_calibration,warranty_po_no, warranty_po_date, 
                 supplier, asset_tag, asset_desc, brand, model, serial_no, date_last_calibration,amico_checked_by,
                 amico_checked_date, amico_noted_by, amico_noted_date, cb_covered_warranty, cb_tmdd, 
-                cb_lab_tech, cb_cpmsd, cb_service_center, cb_other, notes,status)   
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                cb_lab_tech, cb_cpmsd, cb_service_center, cb_other, notes,status, submitted_by)   
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
                     $request->input('unit'),
                     $request->input('office'),
@@ -1013,7 +1048,8 @@ class InvController extends Controller
                     $request->input('cb_service_center'),
                     $request->input('cb_other'),
                     $allNotes,
-                    "pending"
+                    "pending",
+                    $name[0]->name
                 ]
 
             );
@@ -1197,7 +1233,7 @@ class InvController extends Controller
                     'status' => "accepted",
                 ]);
         }
-            return redirect("admin/receiving_repo");
+            return redirect("admin/prop_borr");
       
     }
 
@@ -1286,15 +1322,65 @@ class InvController extends Controller
 
     public function declineRequest(Request $request)
     {
-        $number = $request->input('serial_no');
-
+        $number = $request->input('rr_no');
+        Log::info($number);
         DB::table('receiving_report')
-            ->where('serial_no', $number)
+            ->where('rr_no', $number)
             ->update(['req_status' => 'declined']);
 
-        return redirect("admin/pending");
+        return redirect("admin/receiving_repo");
     }
+    
+    public function declineAck(Request $request)
+    {
+        $number = $request->input('ar_no');
+        Log::info($number);
+        DB::table('acknowledgement_report')
+            ->where('ar_no', $number)
+            ->update(['status' => 'declined']);
 
+        return redirect("admin/ack_repo");
+    }
+    public function declineProp(Request $request)
+    {
+        $number = $request->input('pb_no');
+        Log::info($number);
+        DB::table('property_borrowing')
+            ->where('pb_no', $number)
+            ->update(['status' => 'declined']);
+
+        return redirect("admin/prop_borr");
+    }
+    public function declineMain(Request $request)
+    {
+        $number = $request->input('ms_no');
+        Log::info($number);
+        DB::table('maintenance_report')
+            ->where('ms_no', $number)
+            ->update(['status' => 'declined']);
+
+        return redirect("admin/main_req");
+    }
+    public function declineCond(Request $request)
+    {
+        $number = $request->input('cr_no');
+        Log::info($number);
+        DB::table('condemnation')
+            ->where('cr_no', $number)
+            ->update(['status' => 'declined']);
+
+        return redirect("admin/condemn_req");
+    }
+    public function declineCalib(Request $request)
+    {
+        $number = $request->input('cs_no');
+        Log::info($number);
+        DB::table('calibration')
+            ->where('cs_no', $number)
+            ->update(['req_status' => 'declined']);
+
+        return redirect("admin/calib_req");
+    }
     public function editAsset(Request $request)
     {
 
@@ -1360,5 +1446,19 @@ class InvController extends Controller
 
 
         return redirect("admin/asset_info");
-    }
+    } 
+    public function deleteAsset(Request $request)
+{
+    $pressedButton = $request['button_pressed'];
+
+    $serial_no = "serial_no$pressedButton";
+
+    // Assuming you pass the serial number through the request
+    $serialNumber = $request->input($serial_no);
+
+    // Perform the deletion in the database
+    DB::table('asset')->where('serial_no', $serialNumber)->delete();
+
+    return redirect("admin/asset_info");
+}
 }

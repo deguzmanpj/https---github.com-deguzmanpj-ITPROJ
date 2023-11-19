@@ -20,6 +20,13 @@
 
     <div class="navigation">
         <div class="nav-bar">
+            <?php
+
+            use Illuminate\Support\Facades\DB;
+
+            $name = DB::select('select * from users where contact_no = "' . $_COOKIE['name'] . '"');
+            echo  '<a class="user">' . $name[0]->name . ' - ' . $name[0]->role . '</a>';
+            ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -33,7 +40,7 @@
                     <a href="{{ route ('employee/dashB')}}" class="item1">Dashboard</a>
                     <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
                     <a href="{{ route ('employee/receiving_repo')}}" id="active_tab" class="item1">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
                 </div>
             </div>
         </div>
@@ -41,11 +48,15 @@
 
     <div class="container">
         <div class="header">
-            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
-            <div><p class="pageTitle">CONDEMNATION REQUEST</p></div>
+            <div>
+                <p class="amicoLogo">AMICO ASSET MANAGEMENT</p>
+            </div>
+            <div>
+                <p class="pageTitle">CONDEMNATION REQUEST</p>
+            </div>
         </div>
     </div>
-    
+
     <div class="container">
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -76,72 +87,89 @@
         </div>
 
 
-    <div class="wrapper">
-        <section class="section section--large seven" id="part7">
-            <div class="container">
-                <div class="table-wrapper">
-                    <div class="table-title">
-                    </div>
-                    <table class="table table-bordered" id="5table7">
-                        <thead>
-                            <tr>
-                            <th>Asset</th>
+        <div class="wrapper">
+            <section class="section section--large seven" id="part7">
+                <div class="container">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                        </div>
+                        <table class="table table-bordered" id="5table7">
+                            <thead>
+                                <tr>
+                                    <th>Asset</th>
                                     <th>Borrowed On</th>
                                     <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                            if (!empty($results)) {
-                                for ($num = 0; $num < sizeof($results); $num++) {
-                                    $data = $results[$num];
-                                    $crNo = $data->cr_no;
-                                    $reqStatus = $data->status;
-                                    echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
-                                    echo '<tr>';
-                                    echo '<td>' . 'cr_no: ' . $crNo . '</td>';
-                                    echo '<td>'  . $data->cr_date . '</t   d>';  
-                                    echo '<td>';
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $processedCRNOs = []; // Array to store processed CR_NO values
 
-                                    echo '<div style="display: inline-block;">'; // Container for inline display
-                                    
-                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                    echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
-                                    echo '<input type="text" class="status" id = "reqStatus" value = "'.$reqStatus.'"readonly>';
-                                    echo '<style>#reqStatus{border: none;}</style>';
-                                   
-                                    echo '</div>';
+                                $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
+                                if (!empty($results)) {
+                                    for ($num = 0; $num < sizeof($results); $num++) {
+                                        $data = $results[$num];
+                                        $crNo = $data->cr_no;
+                                        if($data->submitted_by === $name[0]->name ){
 
-                                    echo '<div style="display: inline-block;">'; // Container for inline display
-                                    echo '<form action="/see_condemn" method="post">'; // decline form
-                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                    echo '<input type="hidden" class="id" name="id" value = "employee">';
-                                    echo '<button type="submit" class="decline">see form</button>';
-                                    echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
-                                    echo '</form>';
-                                    echo '</div>';
+                                        // Check if CR_NO has been processed, if yes, skip the iteration
+                                        if (in_array($crNo, $processedCRNOs)) {
+                                            continue;
+                                        }
 
-                                    echo '</td>';
+                                        // Add the CR_NO to the processed array
+                                        $processedCRNOs[] = $crNo;
 
-                                    echo '</tr>';
+                                        $reqStatus = $data->status;
+                                        echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
+                                        echo '<tr>';
+                                        echo '<td>' . 'cr_no: ' . $crNo . '</td>';
+                                        echo '<td>'  . $data->cr_date . '</td>';
+                                        echo '<td>';
+
+                                        echo '<div style="display: inline-block;">'; // Container for inline display
+
+                                        echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                        echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                        echo '<input type="text" class="status" id="reqStatus" value="' . $reqStatus . '" readonly>';
+                                        echo '<style>#reqStatus{border: none;}</style>';
+
+                                        echo '</div>';
+
+                                        if ($reqStatus === "pending") {
+                                            echo '<div style="display: inline-block;">'; // Container for inline display
+                                            echo '<form action="/see_condemn" method="post">'; // decline form
+                                            echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                            echo '<input type="hidden" class="id" name="id" value="employee">';
+                                            echo '<button type="submit" class="decline">see form</button>';
+                                            echo '<input type="hidden" class="cr_no" name="cr_no" value="' . $crNo . '">';
+                                            echo '</form>';
+                                            echo '</div>';
+                                        }
+
+                                        echo '</td>';
+
+                                        echo '</tr>';
+                                    }
+                                    }
                                 }
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-    </div>
+                                ?>
 
-    <nav>
-    <a href="{{ route ('employee/receiving_repo')}}" class="two">Receiving Report</a>
-        <a href="{{ route ('employee/ack_repo')}}" class="three">Acknowledgement Report</a>
-        <a href="{{ route ('employee/prop_borr')}}" class="four">Property Borrowing</a>
-        <a href="{{ route ('employee/main_req')}}" class="five">Maintenance Request</a>
-        <a href="{{ route ('employee/condemn_req')}}" class="six"   id = "active_page" >Condemnation Request</a>
-        <a href="{{ route ('employee/calib_req')}}" class="six">Calibration Request</a>
-    </nav>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <nav>
+            <a href="{{ route ('employee/receiving_repo')}}" class="two">Receiving Report</a>
+            <a href="{{ route ('employee/ack_repo')}}" class="three">Acknowledgement Report</a>
+            <a href="{{ route ('employee/prop_borr')}}" class="four">Property Borrowing</a>
+            <a href="{{ route ('employee/main_req')}}" class="five">Maintenance Request</a>
+            <a href="{{ route ('employee/condemn_req')}}" class="six" id="active_page">Condemnation Request</a>
+            <a href="{{ route ('employee/calib_req')}}" class="six">Calibration Request</a>
+        </nav>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

@@ -1,0 +1,31 @@
+.selected-unit {
+    font-weight: bold;
+    font-size: 23px;
+    font-style: italic;
+    margin-top: 10px;
+}
+#chartAndMonitoringContainer {
+    display: flex;
+    justify-content: space-between;
+}
+#chart-container {
+    width: 50%; 
+    box-sizing: border-box;
+    border: 5px solid #ccc;
+}
+.real-time-monitoring {
+    width: 45%; 
+    margin-left: 52%; 
+    margin-top: -19%;
+    float: left; 
+    padding: 5px; 
+    box-sizing: border-box; 
+    border: 5px solid #ccc; 
+}
+.real-time-monitoring table {
+    width: 100%; 
+}
+.chart-moni-container{
+    display: flex;
+    flex-wrap: wrap;
+}

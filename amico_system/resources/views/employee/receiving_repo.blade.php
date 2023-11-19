@@ -21,6 +21,13 @@
 
     <div class="navigation">
         <div class="nav-bar">
+            <?php
+
+            use Illuminate\Support\Facades\DB;
+
+            $name = DB::select('select * from users where contact_no = "' . $_COOKIE['name'] . '"');
+            echo  '<a class="user">' . $name[0]->name . ' - ' . $name[0]->role . '</a>';
+            ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -34,16 +41,20 @@
                     <a href="{{ route ('employee/dashB')}}" class="item1">Dashboard</a>
                     <a href="{{ route ('employee/asset_info')}}" class="one">Asset Information</a>
                     <a href="{{ route ('employee/receiving_repo')}}" id="active_tab" class="item1">Forms</a>
-                    <a href="#" class="item">Logout</a>
+                    <a href="{{ route('logout') }}" class="item1">Logout</a>>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class = "container">
+    <div class="container">
         <div class="header">
-            <div><p class="amicoLogo">AMICO ASSET MANAGEMENT</p></div>
-            <div><p class="pageTitle">RECEIVING REPORT</p> </div>
+            <div>
+                <p class="amicoLogo">AMICO ASSET MANAGEMENT</p>
+            </div>
+            <div>
+                <p class="pageTitle">RECEIVING REPORT</p>
+            </div>
         </div>
     </div>
 
@@ -101,42 +112,61 @@
                                 </tr>
                             </thead>
                             <?php
+                            $processedRRNOs = []; // Array to store processed RR_NO values
+
+                            $name = DB::select('select * from users where contact_no = "' . $_COOKIE['name'] . '"');
+
                             if (!empty($results)) {
                                 for ($num = 0; $num < sizeof($results); $num++) {
+
                                     $data = $results[$num];
                                     $rrNo = $data->rr_no;
-                                    $reqStatus = $data->req_status;
-                                    echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
-                                    echo '<tr>';
-                                    echo '<td>' . 'rr_no: ' . $rrNo . '</td>';
-                                    echo '<td>'  . $data->date_acq . '</t   d>';
-                                    echo '<td>';
 
-                                    echo '<div style="display: inline-block;">'; // Container for inline display
-                                    
-                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                    echo '<input type="hidden" class="rr_no" name="rr_no" value="' . $rrNo . '">';
-                                    echo '<input type="text" class="status" id = "reqStatus" value = "'.$reqStatus.'"readonly>';
-                                    echo '<style>#reqStatus{border: none;}</style>';
-                                   
-                                    echo '</div>';
+                                    if ($data->submitted_by === $name[0]->name) {
 
-                                    echo '<div style="display: inline-block;">'; // Container for inline display
-                                    echo '<form action="/see_form" method="post">'; // decline form
-                                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-                                    echo '<input type="hidden" class="id" name="id" value = "employee">';
-                                    echo '<button type="submit" class="decline">see form</button>';
-                                    echo '<input type="hidden" class="rr_no" name="rr_no" value="' . $rrNo . '">';
-                                    echo '</form>';
-                                    echo '</div>';
+                                        // Check if RR_NO has been processed, if yes, skip the iteration
+                                        if (in_array($rrNo, $processedRRNOs)) {
+                                            continue;
+                                        }
 
-                                    echo '</td>';
+                                        // Add the RR_NO to the processed array
+                                        $processedRRNOs[] = $rrNo;
 
+                                        $reqStatus = $data->req_status;
+                                        echo '<input type = "hidden" class = "status" value ="' .  $reqStatus . '">';
+                                        echo '<tr>';
+                                        echo '<td>' . 'rr_no: ' . $rrNo . '</td>';
+                                        echo '<td>'  . $data->date_acq . '</td>';
+                                        echo '<td>';
 
-                                    echo '</tr>';
+                                        echo '<div style="display: inline-block;">'; // Container for inline display
+
+                                        echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                        echo '<input type="hidden" class="rr_no" name="rr_no" value="' . $rrNo . '">';
+                                        echo '<input type="text" class="status" id="reqStatus" value="' . $reqStatus . '"readonly>';
+                                        echo '<style>#reqStatus{border: none;}</style>';
+
+                                        echo '</div>';
+
+                                        if ($reqStatus === "pending") {
+                                            echo '<div style="display: inline-block;">'; // Container for inline display
+                                            echo '<form action="/see_form" method="post">'; // decline form
+                                            echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                                            echo '<input type="hidden" class="id" name="id" value="employee">';
+                                            echo '<button type="submit" class="decline">see form</button>';
+                                            echo '<input type="hidden" class="rr_no" name="rr_no" value="' . $rrNo . '">';
+                                            echo '</form>';
+                                            echo '</div>';
+                                        }
+
+                                        echo '</td>';
+
+                                        echo '</tr>';
+                                    }
                                 }
                             }
                             ?>
+
                             </tbody>
                         </table>
                     </div>

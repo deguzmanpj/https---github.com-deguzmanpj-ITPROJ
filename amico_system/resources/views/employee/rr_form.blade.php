@@ -299,11 +299,6 @@ input[type="radio"]{
         }
     </style>
     <style type="text/css">
-        /*! 
- * Fancy styles for pdf2htmlEX
- * Copyright 2012,2013 Lu Wang <coolwanglu@gmail.com> 
- * https://github.com/coolwanglu/pdf2htmlEX/blob/master/share/LICENSE
- */
         @keyframes fadein {
             from {
                 opacity: 0
@@ -5217,6 +5212,8 @@ input[type="radio"]{
     <input type = "hidden" id = "cb_a" name = "cb_a">
     <input type = "hidden" id = "cb_d" name = "cb_d">
     <div id="resultsData" data-results="{{ json_encode($results) }}"></div>
+
+</script>
     </form>
 </body>
 
