@@ -947,3 +947,6 @@ active page */
 h4{
     font-weight: bold;
 }
+.wrapper {
+    height: 69vh; /* Adjust the height as needed */
+}

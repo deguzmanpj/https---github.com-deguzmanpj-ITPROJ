@@ -60,8 +60,10 @@
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input class="upload" type="file" name="csvFile" accept=".csv">
-                <button class="uploadbtn" type="submit">Upload File</button>
+                <div class="feature-container">
+                    <input class="upload" type="file" name="csvFile" accept=".csv">
+                    <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
             </form>
 
 
@@ -77,12 +79,26 @@
             </div>
             @endif
         </div>
-
-        <div class="table-title">
-            <div class="row">
-                <a href="{{ route ('employee/calib_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
+            <div>
+                <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter">
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="declined">Declined</option>
+                    </select>
             </div>
-        </div>
+
+            <div class="table-title">
+                <div class="row">
+                <input type="text" id="searchInput" placeholder="Search for asset...">
+                    <a href="{{ route ('employee/calib_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
+                <div class="filter-column">    
+                </div>
+
+            </div>
+
+        
 
 
         <div class="wrapper">
@@ -176,5 +192,49 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../res/js/asset_information.js"></script>
 <script src="../res/js/navbar.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#8table3 tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<script>
+        $(document).ready(function () {
+            // Dropdown change event handler
+            $("#statusFilter").change(function () {
+                var selectedStatus = $(this).val();
+                filterTable(selectedStatus);
+            });
+
+            // Function to filter the table based on status
+            function filterTable(status) {
+                $("table tbody tr").each(function () {
+                    var rowStatus = $(this).find('.status').val().toLowerCase();
+                    if (status === 'all' || rowStatus === status) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            // Initial table load (show all)
+            filterTable('all');
+
+            // Search input keyup event handler
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
 
 </html>

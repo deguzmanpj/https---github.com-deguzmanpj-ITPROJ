@@ -86,6 +86,49 @@
         </div>
     </div>
 
+        <!-- search term -->
+        <script>
+        function searchItems() {
+            var searchQuery = document.getElementById('searchTerm').value.toLowerCase();
+
+            includedRows = [];
+
+            // Get all tables on the page
+            var tables = document.getElementsByTagName('table');
+
+            // Loop through each table
+            for (var t = 0; t < tables.length; t++) {
+
+                var table = tables[t];
+                var rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+                //check rows
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].style.display = 'none';
+                    var condition = "false"
+                    for (var j = 0; j < rows[i].querySelectorAll('input[type="text"]').length; j++) {
+                        var cellValue = (rows[i].querySelectorAll('input[type="text"]')[j].value).toLowerCase();
+                        if (cellValue.includes(searchQuery)) {
+                            includedRows.push(i);
+                        }
+                    }
+                }
+            }
+
+            for (var t = 0; t < tables.length; t++) {
+                var table = tables[t];
+                var rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+                for (var z = 0; z < rows.length; z++) { 
+                    if (includedRows.includes(z)) {
+                        rows[z].style.display = 'table-row';
+                    } else {
+                        rows[z].style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+
     <div class="container">
         <div class="form">
             <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -110,7 +153,10 @@
             @endif
         </div>
 
-        <div>
+        <div class="row">
+        <input type="text" name="searchTerm" id="searchTerm" placeholder="Enter search term">
+        <button type="button" onclick="searchItems()">Search</button>
+
             <h4>TABLE FILTER</h4>
             <select id="unitFilter" onchange="filterTable()">
                 <option value="all">All Units</option>

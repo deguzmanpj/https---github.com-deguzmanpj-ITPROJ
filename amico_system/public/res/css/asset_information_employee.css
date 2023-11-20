@@ -577,6 +577,7 @@ active page */
     border: none;
     border-radius: 10px;
     margin-top: 10px;;
+    
 }
 
 .upload {
@@ -655,7 +656,7 @@ active page */
     text-indent: 15px;
     border: none;
     border-radius: 10px;
-    margin-top: 10px;;
+    margin-top: 10px;
 }
 
 .uploadbtn {
@@ -767,4 +768,15 @@ active page */
 
 .search-container{
     margin-left: 57%;
+}
+
+.table-title{
+    display: inline-block;
+}
+
+.features-container{
+    display: inline;
+}
+.wrapper {
+    height: 35vh; /* Adjust the height as needed */
 }

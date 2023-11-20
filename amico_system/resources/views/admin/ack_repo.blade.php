@@ -83,6 +83,7 @@
         <div class="table-title">
 
             <div class="row">
+            <input type="text" id="searchInput" placeholder="Search for asset...">   
             <a href="{{ route ('admin/ack_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
             </div>
         </div>
@@ -104,6 +105,7 @@
                                 <th></th>
                             </tr>
                         </thead>
+                        <tbody>
                         <?php
 if (!empty($results)) {
     $processedArNos = []; // Array to store processed ar_no values
@@ -206,5 +208,23 @@ if (!empty($results)) {
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../res/js/asset_information.js"></script>
 <script src="../res/js/navbar.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("input", function () {
+            var value = $(this).val().toLowerCase();
+            $("#8table3 tbody tr").each(function () {
+                var row = $(this);
+                var assetColumn = row.find("td:eq(0)").text().toLowerCase();
+                var receivedOnColumn = row.find("td:eq(1)").text().toLowerCase();
+                var submittedByColumn = row.find("td:eq(2)").text().toLowerCase();
+
+                var matchFound = assetColumn.includes(value) || receivedOnColumn.includes(value) || submittedByColumn.includes(value);
+
+                row.toggle(matchFound);
+            });
+        });
+    });
+</script>
 
 </html>

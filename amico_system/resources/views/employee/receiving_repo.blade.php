@@ -63,8 +63,10 @@
             <div class="form">
                 <form action="/upload" method="POST" enctype="multipart/form-data">
                     @csrf
+                <div class="feature-container">
                     <input class="upload" type="file" name="csvFile" accept=".csv">
                     <button class="uploadbtn" type="submit">Upload File</button>
+                </div>
                 </form>
 
 
@@ -81,12 +83,19 @@
                 @endif
             </div>
 
-
-
-
+            <div>
+                <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter">
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="declined">Declined</option>
+                    </select>
+            </div>
 
             <div class="table-title">
                 <div class="row">
+                    <input type="text" id="searchInput" placeholder="Search for asset...">
                     <a href="{{ route ('employee/rr_form')}}" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add Entry</a>
                     <!-- <button href="{{ route ('employee/asset_info')}}" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add Entry</button> -->
                     <button type="button" class="btn btn-info leave-note"><i class="fa fa-plus"></i> Leave Note</button>
@@ -109,6 +118,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
+                            <tbody>
                             <?php
                             $processedRRNOs = []; // Array to store processed RR_NO values
 
@@ -250,5 +260,35 @@
 <script src="../res/js/asset_information.js"></script>
 <script src="../res/js/navbar.js"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.getElementById("searchInput");
+        var table = document.getElementById("8table3");
+        var rows = table.getElementsByTagName("tr");
 
-</html>x
+        searchInput.addEventListener("input", function () {
+            var searchText = searchInput.value.toLowerCase();
+
+            for (var i = 1; i < rows.length; i++) { // Start from index 1 to skip the header row
+                var row = rows[i];
+                var assetColumn = row.getElementsByTagName("td")[0]; // Assuming asset is in the first column
+                var receivedOnColumn = row.getElementsByTagName("td")[1]; // Assuming Received On is in the second column
+                var submittedByColumn = row.getElementsByTagName("td")[2]; // Assuming Submitted By is in the third column
+
+                if (assetColumn && receivedOnColumn && submittedByColumn) {
+                    var assetText = assetColumn.textContent.toLowerCase();
+                    var receivedOnText = receivedOnColumn.textContent.toLowerCase();
+                    var submittedByText = submittedByColumn.textContent.toLowerCase();
+
+                    if (assetText.includes(searchText) || receivedOnText.includes(searchText) || submittedByText.includes(searchText)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+</html>

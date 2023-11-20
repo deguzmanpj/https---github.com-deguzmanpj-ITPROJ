@@ -27,9 +27,6 @@
 <body>
     <div class="navigation">
         <div class="nav-bar">
-            <button class="notification-button">
-                <i class="fas fa-bell"></i> <!-- Bell icon -->
-            </button>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -60,14 +57,6 @@
             </div>
         </div>
     </div>
-
-
- 
-        <label for="searchTerm">Search:</label>
-        <input type="text" name="searchTerm" id="searchTerm" placeholder="Enter search term">
-        <button type="button" onclick="searchItems()">Search</button>
-  
-
 
     <!-- search term -->
     <script>
@@ -138,7 +127,10 @@
             @endif
         </div>
 
-        <div>
+        <div class="row">
+        <input type="text" name="searchTerm" id="searchTerm" placeholder="Enter search term">
+        <button type="button" onclick="searchItems()">Search</button>
+
             <h4>TABLE FILTER</h4>
             <select id="unitFilter" onchange="filterTable()">
                 <option value="all">All Units</option>
@@ -209,6 +201,8 @@
                 <option value="acknowledged">Acknowledged</option>
             </select>
             <button onclick="filterTableByUnitAndStatus()">Filter by Unit and Status</button>
+
+            
         </div>
 
         <!-- <div class="table-title">
