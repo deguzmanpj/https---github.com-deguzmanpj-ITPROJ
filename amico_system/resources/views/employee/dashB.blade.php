@@ -1,8 +1,8 @@
-<?php 
-if (!isset($_COOKIE['name'])) {
-    return redirect("/");
-}
-?>
+@if (!isset($_COOKIE['name']))
+    <script>console.log("hello")</script>
+    {{-- Optionally, include a JavaScript redirect if needed --}}
+    <script>window.location.href = "{{ route('/') }}";</script>
+@endif
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +27,7 @@ if (!isset($_COOKIE['name'])) {
 
 <div class="navigation">
 <div class="nav-bar"> 
-<?php
-                use Illuminate\Support\Facades\DB;
-                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
-               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
-               ?>
+
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -190,14 +186,7 @@ if (!isset($_COOKIE['name'])) {
 <script src="../res/js/navbar.js"></script>
 <script src="../res/js/users.js"></script>
 
-        <!-- <nav>
-            <a href="{{ route ('admin/asset_info')}}" class="one">Asset Information</a>
-            <a href="{{ route ('admin/receiving_repo')}}" class="item1" >Receiving Report</a>
-            <a href="{{ route ('admin/ack_repo')}}" class="item1"  id = "active_page" >Acknowledgement Report</a>
-            <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
-            <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
-            <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
-        </nav> -->
+
 
 <script>
     $(document).ready(function () {

@@ -1,3 +1,8 @@
+@if (!isset($_COOKIE['name']))
+    <script>console.log("hello")</script>
+    {{-- Optionally, include a JavaScript redirect if needed --}}
+    <script>window.location.href = "{{ route('/') }}";</script>
+@endif
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,11 +25,6 @@
 
     <div class="navigation">
         <div class="nav-bar">
-        <?php
-                use Illuminate\Support\Facades\DB;
-                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
-               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
-               ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>

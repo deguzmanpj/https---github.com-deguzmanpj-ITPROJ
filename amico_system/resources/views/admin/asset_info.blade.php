@@ -1,3 +1,8 @@
+@if (!isset($_COOKIE['name']))
+    <script>console.log("hello")</script>
+    {{-- Optionally, include a JavaScript redirect if needed --}}
+    <script>window.location.href = "{{ route('/') }}";</script>
+@endif
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +17,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyId9+9gSqxp6pI9HO6wkRWL1R++DFIehS" crossorigin="anonymous">
         <link rel="stylesheet" href="../res/css/asset_information.css">
         <link rel="stylesheet" href="../res/css/navbar.css">
 
@@ -571,18 +575,11 @@
             </div>
 
         </form>
-        <!--<nav>
-        <a href="{{ route ('admin/receiving_repo')}}" class="item1">Receiving Report</a>
-            <a href="{{ route ('admin/ack_repo')}}" class="item1">Acknowledgement Report</a>
-            <a href="{{ route ('admin/prop_borr')}}" class="item1">Property Borrowing</a>
-            <a href="{{ route ('admin/main_req')}}" class="item1">Maintenance Request</a>
-            <a href="{{ route ('admin/condemn_req')}}" class="item1">Condemnation Request</a>
-            <a href="{{ route ('admin/calib_req')}}" class="item1" >Calibration Request</a>
-        </nav>
-                                -->
+        
         <script>
             window.csrf_token = "{{ csrf_token() }}";
         </script>
+
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <!-- Modal for delete confirmation -->
@@ -605,64 +602,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Add this modal structure anywhere in your HTML, preferably near the end of the body -->
-        <div class="modal-body" id="searchResultsContent">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Unit Code</th>
-                        <th>Asset Tag</th>
-                        <th>Asset Description</th>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Serial No</th>
-                        <th>Asset Class</th>
-                        <th>Status</th>
-                        <th>Cost</th>
-                        <th>Warranty</th>
-                        <th>Build Loc</th>
-                        <th>Floor</th>
-                        <th>Spec Area</th>
-                        <th>Note</th>
-                        <th>RR No</th>
-                        <th>Date Acq</th>
-                        <th>Reference</th>
-                        <th>Reference Date</th>
-                        <th>Funded By</th>
-                        <th>RS No Transferred</th>
-                        <th>RS Date</th>
-                        <th>From Loc</th>
-                        <th>Doc No</th>
-                        <th>Doc No Date</th>
-                        <th>Received From</th>
-                        <th>Received By</th>
-                        <th>PB No</th>
-                        <th>PB Date</th>
-                        <th>ID No</th>
-                        <th>Person Accountable</th>
-                        <th>MS No</th>
-                        <th>MS Date</th>
-                        <th>Moni Log</th>
-                        <th>CR No</th>
-                        <th>CR Date</th>
-                        <th>Remarks</th>
-                        <th>AR No</th>
-                        <th>AR Date</th>
-                        <th>ID Number</th>
-                        <th>Name of Employee</th>
-                        <th>CS No</th>
-                        <th>CS Date</th>
-                        <th>Moni Log Calibration</th>
-
-                        <!-- Add other headers as needed -->
-                    </tr>
-                </thead>
-                <tbody id="searchResultsTableBody">
-                    <!-- Search results will be displayed here -->
-                </tbody>
-            </table>
         </div>
 </body>
 

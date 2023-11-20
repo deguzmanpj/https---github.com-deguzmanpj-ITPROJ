@@ -25,10 +25,6 @@ use Illuminate\Support\Facades\Log;
 */
 
 Route::get('/', function () {
-    return view('login');
-});
-
-Route::get('/', function () {
     return view('login'); 
 })->name('/');
 

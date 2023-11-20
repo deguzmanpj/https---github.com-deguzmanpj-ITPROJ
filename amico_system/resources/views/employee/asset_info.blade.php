@@ -1,8 +1,10 @@
+@if (!isset($_COOKIE['name']))
+    <script>console.log("hello")</script>
+    {{-- Optionally, include a JavaScript redirect if needed --}}
+    <script>window.location.href = "{{ route('/') }}";</script>
+@endif
 <!DOCTYPE html>
 <html lang="en">
-
-<?php
-use Illuminate\Support\Facades\Log;?>
 <head>
 
     <head>
@@ -54,11 +56,6 @@ use Illuminate\Support\Facades\Log;?>
 
     <div class="navigation">
     <div class="nav-bar">
-                <?php
-                use Illuminate\Support\Facades\DB;
-                  $name = DB::select('select * from users where contact_no = "'.$_COOKIE['name'].'"');
-               echo  '<a class="user">'.$name[0]->name. ' - ' .$name[0]->role.'</a>';
-               ?>
             <div id="menuToggle" class="toggle-menu active">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -564,16 +561,6 @@ use Illuminate\Support\Facades\Log;?>
                 </div>
             </section>
         </div>
-
-        <nav>
-        <!-- <a href="{{ route ('employee/receiving_repo')}}" class="two">Receiving Report</a>
-        <a href="{{ route ('employee/asset_info')}}" class="one"   id = "active_page" >Asset Information</a>
-        <a href="{{ route ('employee/ack_repo')}}" class="three">Acknowledgement Report</a>
-        <a href="{{ route ('employee/prop_borr')}}" class="four">Property Borrowing</a>
-        <a href="{{ route ('employee/main_req')}}" class="five">Maintenance Request</a>
-        <a href="{{ route ('employee/condemn_req')}}" class="six">Condemnation Request</a>
-        <a href="{{ route ('employee/calib_req')}}" class="six">Calibration Request</a> -->
-        </nav>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

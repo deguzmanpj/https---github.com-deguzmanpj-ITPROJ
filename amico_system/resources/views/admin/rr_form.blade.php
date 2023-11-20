@@ -1,3 +1,8 @@
+@if (!isset($_COOKIE['name']))
+    <script>console.log("hello")</script>
+    {{-- Optionally, include a JavaScript redirect if needed --}}
+    <script>window.location.href = "{{ route('/') }}";</script>
+@endif
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

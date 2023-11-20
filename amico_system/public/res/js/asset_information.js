@@ -230,6 +230,7 @@ $('#overlay').removeClass('blur-in');
                 success: function (data) {
                     // Handle success if needed
                     row.remove(); // Remove the entire row from the table after successful deletion
+                    location.reload();
                 },
                 error: function (error) {
                     // Handle error if needed

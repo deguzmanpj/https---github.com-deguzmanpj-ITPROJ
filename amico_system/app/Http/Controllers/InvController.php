@@ -53,7 +53,7 @@ class InvController extends Controller
 
         request()->session()->regenerateToken();
 
-        // You can add any other additional logic here
+        setcookie('name', '', 0, '/');
 
         return view('login');
     }
